@@ -62,7 +62,7 @@ export default function handler(req, res) {
         return;
       }
 
-      // Auth check helper
+      // Auth check
       const isAuth = () => {
         const header = req.headers['x-mg-token'] || '';
         if (!header) return false;
@@ -75,16 +75,16 @@ export default function handler(req, res) {
         }
       };
 
-      if (!isAuth()) {
-        return res.status(401).json({ error: 'Unauthorized' });
-      }
-
-      // Products list / backup download
+      // Public endpoints (no auth required)
       if (pathname === '/api/products' && method === 'GET') {
         return res.status(200).json(defaultResJson(DEFAULT_PRODUCTS));
       }
 
-      // Create product
+      // Protected endpoints
+      if (!isAuth()) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+
       if (pathname === '/api/products' && method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -102,7 +102,6 @@ export default function handler(req, res) {
         return;
       }
 
-      // Update product
       const putMatch = pathname.match(/^\/api\/products\/(\d+)$/);
       if (putMatch && method === 'PUT') {
         let body = '';
@@ -121,20 +120,17 @@ export default function handler(req, res) {
         return;
       }
 
-      // Delete product
       const delMatch = pathname.match(/^\/api\/products\/(\d+)$/);
       if (delMatch && method === 'DELETE') {
         return res.status(200).json({ ok: true });
       }
 
-      // Backup download
       if (pathname === '/api/backup' && method === 'GET') {
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Content-Disposition', 'attachment; filename=metagro-products.json');
         return res.status(200).json(defaultResJson(DEFAULT_PRODUCTS));
       }
 
-      // Backup restore
       if (pathname === '/api/backup' && method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
