@@ -1,0 +1,16 @@
+RENDER-ENV-VARS.txt
+backend/.env
+backend/data/
+backend/data/uploads/
+backend/data/products.json
+drizzle.config.ts
+generate_data.js
+replace_index_script.js.txt
+tmp_block.txt
+scripts/
+node_modules/
+.git/
+.gitignore
+package-lock.json
+backend/package-lock.json
+backend/node_modules/

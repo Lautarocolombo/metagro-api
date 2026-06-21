@@ -1,0 +1,15 @@
+Electropiolin
+Marca: Rolin
+
+
+Bobinas de Electropiolin Standard
+
+Monofilamentos: 15
+Hebras conductora de electricidad: 6
+
+
+
+Bobinas de Electropiolin Reforzada
+
+Monofilamentos: 18
+Hebras conductora de electricidad: 9

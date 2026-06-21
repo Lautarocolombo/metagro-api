@@ -1,0 +1,19 @@
+
+function deleteProduct(index) {
+  if (!confirm('\u00bfBorrar este producto?')) return;
+  products.splice(index, 1);
+  saveLocal();
+  populateCategoryFilter();
+  renderAdminProducts();
+  renderCatalog();
+}
+
+function addProduct() {
+  const newP = { id: Date.now(), name: 'Producto nuevo', tag: 'General', desc: '', icon: '\uD83D\uDCE6', img: '' };
+  products.push(newP);
+  saveLocal();
+  populateCategoryFilter();
+  renderAdminProducts();
+  renderCatalog();
+  document.getElementById('admin-prod-grid').scrollTop = document.getElementById('admin-prod-grid').scrollHeight;
+}
