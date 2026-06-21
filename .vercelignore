@@ -1,4 +1,5 @@
 RENDER-ENV-VARS.txt
+public/
 backend/.env
 backend/data/
 backend/data/uploads/

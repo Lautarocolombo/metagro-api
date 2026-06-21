@@ -3,15 +3,8 @@
   "version": "2.1.0",
   "private": true,
   "type": "module",
-  "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'Static site'"
-  },
   "dependencies": {
     "jsonwebtoken": "^9.0.3",
     "cors": "^2.8.5"
-  },
-  "devDependencies": {
-    "vercel": "^38.0.0"
   }
 }
