@@ -1467,9 +1467,9 @@ function doLogin() {
   const p = document.getElementById('adminPass').value;
   const errEl = document.getElementById('loginError');
   if (!u || !p) { errEl.style.display = 'block'; errEl.textContent = 'Ingresá usuario y contraseña.'; return; }
-  const stored = (() => { try { return JSON.parse(localStorage.getItem('mg_admin_auth') || '{}'); } catch (e) { return {}; } })();
-  const expectedUser = stored.user || 'metagro';
-  const expectedPass = stored.pass || 'montealegre22';
+  const stored = (() => { try { return JSON.parse(localStorage.getItem('mg_config') || '{}'); } catch (e) { return {}; } })();
+  const expectedUser = stored.adminUser || 'metagro';
+  const expectedPass = stored.adminPass || 'montealegre22';
   if (u === expectedUser && p === expectedPass) {
     sessionStorage.setItem('mg_admin_token', 'offline');
     document.getElementById('adminOverlay').classList.remove('open');
