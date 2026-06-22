@@ -3,11 +3,27 @@
   "version": "2.1.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "dev": "node --watch backend/server.js",
+    "start": "node backend/server.js",
+    "seed": "node seed-db.mjs",
+    "seed:force": "node seed-db.mjs --force",
+    "migrate": "node migrate-db.mjs",
+    "build": "echo 'Frontend estático listo para Vercel — no requiere build step'",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "test": "node scripts/test-api.cjs",
+    "bulk": "node scripts/bulk-upload.mjs",
+    "lint": "echo 'Sin linter configurado' && exit 0"
+  },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "vercel": "^38.0.0"
   }
 }

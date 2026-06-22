@@ -1,8 +1,12 @@
 node_modules/
 .env
+.env.local
 .DS_Store
 *.log
 backend/data/uploads/
 backend/data/products.json
+seed-db.mjs
+migrate-db.mjs
+.vercel
 
 .vercel
