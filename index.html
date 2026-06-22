@@ -1015,7 +1015,7 @@ window.DEFAULT_PRODUCTS = [
 >
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:4000/api'
-  : '/api';
+  : 'https://metagro-api.onrender.com/api';
 
 let products = [];
 let useApi = true;
@@ -1237,8 +1237,12 @@ function updateAdminProduct(index, field, value) {
   }
 }
 
-function deleteProduct(index) {
+async function deleteProduct(index) {
   if (!confirm('¿Borrar este producto?')) return;
+
+  const p = products[index];
+  if (!p) return;
+
   products.splice(index, 1);
   hasUnsavedChanges = true;
   updateUnsavedIndicator();
@@ -1247,6 +1251,7 @@ function deleteProduct(index) {
   renderAdminProducts();
   renderCatalog();
 }
+
 
 function addProduct() {
   const newP = { id: Date.now(), name: 'Producto nuevo', tag: 'General', desc: '', icon: '📦', img: '' };
@@ -1300,8 +1305,32 @@ function compressImage(file, maxWidth = 1200, quality = 0.8) {
   });
 }
 
-function saveProducts() {
+async function saveProducts() {
   saveLocal();
+  try {
+    if (originalProducts.length) {
+      const currentIds = new Set(products.map(p => p.id).filter(Boolean));
+      const originalIds = new Set(originalProducts.map(p => p.id).filter(Boolean));
+      for (const p of products) {
+        if (p.id && !originalIds.has(p.id)) {
+          await api('/products', { method: 'POST', body: JSON.stringify(p) });
+        } else if (p.id && originalIds.has(p.id)) {
+          const orig = originalProducts.find(op => op.id === p.id);
+          if (orig && JSON.stringify(orig) !== JSON.stringify(p)) {
+            await api(`/products/${p.id}`, { method: 'PUT', body: JSON.stringify(p) });
+          }
+        }
+      }
+      for (const p of originalProducts) {
+        if (p.id && !currentIds.has(p.id)) {
+          await api(`/products/${p.id}`, { method: 'DELETE' });
+        }
+      }
+      originalProducts = JSON.parse(JSON.stringify(products || []));
+    }
+  } catch (e) {
+    showError('No se pudieron guardar los cambios en el servidor.');
+  }
   hasUnsavedChanges = false;
   updateUnsavedIndicator();
   const msg = document.getElementById('save-msg-prod');
@@ -1463,23 +1492,32 @@ function closeAdminLogin() {
   document.getElementById('adminOverlay').classList.remove('open');
 }
 
-function doLogin() {
+async function doLogin() {
   const u = document.getElementById('adminUser').value.trim();
   const p = document.getElementById('adminPass').value;
   const errEl = document.getElementById('loginError');
   if (!u || !p) { errEl.style.display = 'block'; errEl.textContent = 'Ingresá usuario y contraseña.'; return; }
-  const stored = (() => { try { return JSON.parse(localStorage.getItem('mg_config') || '{}'); } catch (e) { return {}; } })();
-  const expectedUser = stored.adminUser || 'metagro';
-  const expectedPass = stored.adminPass || 'montealegre22';
-  if (u === expectedUser && p === expectedPass) {
-    sessionStorage.setItem('mg_admin_token', 'offline');
-    document.getElementById('adminOverlay').classList.remove('open');
-    document.getElementById('adminPanel').classList.add('open');
-    renderAdminProducts();
-    syncLocalInfoToInputs();
-    errEl.style.display = 'none';
-  } else {
-    errEl.textContent = 'Usuario o contraseña incorrectos.';
+  try {
+    const res = await api('/admin/login', {
+      method: 'POST',
+      body: JSON.stringify({ username: u, password: p })
+    });
+    const data = await res.json();
+    if (data.token) {
+      sessionStorage.setItem('mg_admin_token', data.token);
+      document.getElementById('adminOverlay').classList.remove('open');
+      document.getElementById('adminPanel').classList.add('open');
+      await fetchProducts();
+      originalProducts = JSON.parse(JSON.stringify(products || []));
+      renderAdminProducts();
+      syncLocalInfoToInputs();
+      errEl.style.display = 'none';
+    } else {
+      errEl.textContent = data.error || 'Usuario o contraseña incorrectos.';
+      errEl.style.display = 'block';
+    }
+  } catch (e) {
+    errEl.textContent = 'Error de conexión con el servidor.';
     errEl.style.display = 'block';
   }
 }
