@@ -283,8 +283,14 @@ section { padding: 5rem 2rem; }
 .info-text-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #777; margin-bottom: 0.2rem; }
 .info-text-value { font-size: 0.95rem; color: var(--cream); line-height: 1.5; }
 .info-text-value a { color: var(--yellow); text-decoration: none; }
-.map-wrap { width: 100%; border-radius: var(--radius); border: 2px solid #2a2a2a; overflow: hidden; display: flex; flex-direction: column; }
-#leaflet-map { width: 100%; height: 300px; }
+.map-wrap {
+  width: 100%; border-radius: var(--radius); border: 2px solid #2a2a2a;
+  overflow: hidden; display: flex; flex-direction: column;
+  position: relative; z-index: 1;
+}
+#leaflet-map { width: 100%; height: 300px; position: relative; z-index: 1; }
+.leaflet-container { z-index: 1 !important; }
+.leaflet-pane { z-index: 2 !important; }
 .map-open-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.75rem 1rem; text-decoration: none; transition: background .2s; }
 .map-open-btn:hover { background: var(--yellow-dark); }
 
