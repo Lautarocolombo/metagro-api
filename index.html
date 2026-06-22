@@ -455,7 +455,8 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Metagro SRL",
-    "description": "Insumos para el agro, alambrados, molinos de viento, aguadas, ferretería y bulonería",
+  "description": "Insumos para el agro, alambrados, molinos de viento, aguadas, ferretería y bulonería",
+
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Gualeguay",
@@ -678,6 +679,29 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
         <button class="btn-add" onclick="addProduct()">➕ Nuevo Producto</button>
         <button class="btn-add" onclick="openBulkUpload()">📁 Carga Masiva</button>
       </div>
+
+      <!-- PANEL DE CONTROL DE ESTADO (API + DB) -->
+      <div style="background:var(--black);border:1px solid #222;border-radius:var(--radius);padding:1.1rem 1.2rem;margin:0 0 1.2rem 0;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);letter-spacing:0.12em;font-size:.9rem;margin-bottom:.7rem;">🧪 Panel de Control de Estado</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;align-items:start;">
+          <div style="background:var(--steel2);border:1px solid #333;border-radius:var(--radius);padding:.9rem;">
+            <div style="color:#aaa;font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-family:'Barlow Condensed',sans-serif;">API (GET /api/health)</div>
+            <div id="state-api" style="margin-top:.35rem;font-family:monospace;color:var(--cream);font-size:.95rem;">—</div>
+          </div>
+          <div style="background:var(--steel2);border:1px solid #333;border-radius:var(--radius);padding:.9rem;">
+            <div style="color:#aaa;font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-family:'Barlow Condensed',sans-serif;">DB (GET /api/products-test/status)</div>
+            <div id="state-db" style="margin-top:.35rem;font-family:monospace;color:var(--cream);font-size:.95rem;">—</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;align-items:center;">
+          <button class="btn-save" style="padding:.6rem 1.2rem;" onclick="runProductsPostDeleteTest()">▶ Probar POST + DELETE (DB)</button>
+          <div id="state-run" style="color:#aaa;font-size:.9rem;">Esperando...</div>
+        </div>
+        <div style="margin-top:.7rem;color:#888;font-size:.82rem;line-height:1.4;">
+          Este test inserta y borra un producto en PostgreSQL para confirmar que el flujo completo funciona.
+        </div>
+      </div>
+
       <div class="admin-prod-grid" id="admin-prod-grid"></div>
       <div class="admin-save-bar">
         <button class="btn-save" onclick="saveProducts()">💾 Guardar Cambios</button>
@@ -760,6 +784,7 @@ window.DEFAULT_PRODUCTS = [
   {
     "id": 1,
     "name": "08 10 Estiradora",
+
     "tag": "Maquinaria",
     "desc": "Equipo para estirado y mantenimiento de alambrados.",
     "icon": "🎭",
@@ -1011,11 +1036,13 @@ window.DEFAULT_PRODUCTS = [
     ]
 ];
 </script>
-<script
->
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:4000/api'
-  : 'https://metagro-api.onrender.com/api';
+<script>
+// Usar la misma URL del dominio en producción (Vercel) para que /api/* apunte al backend desplegado aquí.
+const API_BASE =
+  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:4000/api'
+    : `${window.location.origin}/api`;
+
 
 let products = [];
 let useApi = true;
@@ -1392,6 +1419,87 @@ function handleBulkFiles(input) {
   };
   files.forEach((file, idx) => processFile(file, idx));
   input.value = '';
+}
+
+async function runProductsPostDeleteTest() {
+  const apiEl = document.getElementById('state-api');
+  const dbEl = document.getElementById('state-db');
+  const runEl = document.getElementById('state-run');
+
+  // Mantener compatibilidad: si no existe alguno, no romper el parser
+
+
+  const setRun = (msg) => { if (runEl) runEl.textContent = msg; };
+
+  try {
+    setRun('Ejecutando test POST/DELETE contra PostgreSQL...');
+
+    // 1) API + DB health
+    try {
+      const r1 = await fetch(`${API_BASE}/health`);
+      const ok1 = r1.ok;
+      if (apiEl) apiEl.textContent = ok1 ? `200 OK` : `HTTP ${r1.status}`;
+    } catch (e) {
+      if (apiEl) apiEl.textContent = `ERROR: ${e.message}`;
+    }
+
+    try {
+      const r2 = await fetch(`${API_BASE}/products-test/status`, {
+        headers: { 'x-mg-token': sessionStorage.getItem('mg_admin_token') || '' },
+      });
+      const j2 = await r2.json().catch(() => ({}));
+      if (dbEl) dbEl.textContent = r2.ok ? `200 OK (${j2?.db || 'db connected'})` : `HTTP ${r2.status}`;
+    } catch (e) {
+      if (dbEl) dbEl.textContent = `ERROR: ${e.message}`;
+    }
+
+    // 2) POST
+    const token = sessionStorage.getItem('mg_admin_token');
+    const producto = {
+      id: Date.now(),
+      name: `TEST-${Date.now()}`,
+      tag: 'TEST',
+      desc: 'Producto de prueba para validar persistencia en PostgreSQL',
+      img: ''
+    };
+
+    const postRes = await fetch(`${API_BASE}/products-test`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-mg-token': token || '',
+      },
+      body: JSON.stringify(producto)
+    });
+    const postData = await postRes.json().catch(() => ({}));
+    if (!postRes.ok) throw new Error(`POST fallo HTTP ${postRes.status}: ${JSON.stringify(postData)}`);
+
+    const insertedId = postData?.id;
+    if (!insertedId) throw new Error('POST OK pero no devolvió id');
+
+    // 3) DELETE
+    const delRes = await fetch(`${API_BASE}/products-test/${insertedId}`, {
+      method: 'DELETE',
+      headers: { 'x-mg-token': token || '' }
+    });
+    const delData = await delRes.json().catch(() => ({}));
+    if (!delRes.ok) throw new Error(`DELETE fallo HTTP ${delRes.status}: ${JSON.stringify(delData)}`);
+
+    // 4) Confirmación: GET debe dar 404
+    const getRes = await fetch(`${API_BASE}/products-test/${insertedId}`, {
+      method: 'GET',
+      headers: { 'x-mg-token': token || '' }
+    });
+    if (getRes.ok) {
+      throw new Error('Confirmación fallida: el producto todavía existe en DB');
+    }
+
+    setRun('✅ OK: POST insertó + DELETE borró en PostgreSQL');
+    return { ok: true, insertedId, delete: delData };
+  } catch (e) {
+    setRun(`❌ Falló: ${e.message}`);
+    return { ok: false, error: e.message };
+  }
 }
 
 function saveColors() {
