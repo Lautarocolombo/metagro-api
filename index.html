@@ -1099,18 +1099,23 @@ async function fetchProducts() {
   try {
     const res = await api('/products');
     const data = await res.json();
-    if (Array.isArray(data)) {
-      const remoteById = new Map(data.map(p => [String(p.id), p]));
-      const merged = products.map(p => ({ ...remoteById.get(String(p.id)), ...p })).filter(Boolean);
-      for (const p of data) {
-        if (!merged.find(m => String(m.id) === String(p.id))) merged.push(p);
-      }
-      products = merged;
+    if (Array.isArray(data) && data.length > 0) {
+      products = data.map(p => ({
+        ...p,
+        images: Array.isArray(p.images) ? p.images : (p.img ? [p.img] : [])
+      })).filter(p => p && p.id != null);
       localStorage.setItem('mg_products', JSON.stringify(products));
+    } else if (!data || !data.length) {
+      const saved = localStorage.getItem('mg_products');
+      if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
+      if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
     }
   } catch (e) {
     useApi = false;
-    showError('No se pudo cargar el catálogo. Se mostrarán los productos guardados localmente.');
+    const saved = localStorage.getItem('mg_products');
+    if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
+    if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
+    showError('No se pudo cargar el catálogo. Se mostrarán los productos guardados.');
   } finally {
     populateCategoryFilter();
     renderCatalog();
@@ -1504,12 +1509,17 @@ document.getElementById('cat-grid').addEventListener('click', e => {
 });
 
 function init() {
-  products = [...(typeof DEFAULT_PRODUCTS !== 'undefined' ? DEFAULT_PRODUCTS : [])];
+  let defaults = [];
+  try {
+    defaults = window.DEFAULT_PRODUCTS || [];
+    if (!Array.isArray(defaults)) defaults = [];
+  } catch (e) { defaults = []; }
+  products = [...defaults];
   try {
     const raw = localStorage.getItem('mg_products');
     if (raw) {
       const local = JSON.parse(raw);
-      if (Array.isArray(local) && local.length) {
+      if (Array.isArray(local)) {
         const remoteById = new Map(products.map(p => [String(p.id), p]));
         const merged = [...products];
         for (const p of local) {
@@ -1520,7 +1530,8 @@ function init() {
         products = merged;
       }
     }
-  } catch (e) { products = [...(typeof DEFAULT_PRODUCTS !== 'undefined' ? DEFAULT_PRODUCTS : [])]; }
+  } catch (e) { products = [...defaults]; }
+  if (!products.length) products = [...defaults];
   saveLocal();
   populateCategoryFilter();
   renderCatalog();
@@ -1548,32 +1559,52 @@ function init() {
 function initMap() {
   if (typeof L !== 'undefined' && document.getElementById('leaflet-map')) {
     try {
-      const map = L.map('leaflet-map', { zoomControl: true, scrollWheelZoom: false }).setView([-33.1308927, -59.3156888], 16);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors',
-        maxZoom: 19
-      }).addTo(map);
-      L.marker([-33.1308927, -59.3156888])
-        .addTo(map)
-        .bindPopup('<b>Metagro SRL</b><br/>Gualeguay, Entre Ríos')
-        .openPopup();
+      setTimeout(() => {
+        const mapEl = document.getElementById('leaflet-map');
+        if (!mapEl || !mapEl.offsetWidth) return;
+        const map = L.map('leaflet-map', { zoomControl: true, scrollWheelZoom: false }).setView([-33.1308927, -59.3156888], 16);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors',
+          maxZoom: 19
+        }).addTo(map);
+        L.marker([-33.1308927, -59.3156888])
+          .addTo(map)
+          .bindPopup('<b>Metagro SRL</b><br/>Gualeguay, Entre Ríos')
+          .openPopup();
+        setTimeout(() => map.invalidateSize(), 300);
+      }, 300);
+    } catch (e) { /* map init failed */ }
+  }
+}
+
+function initMap() {
+  if (typeof L !== 'undefined' && document.getElementById('leaflet-map')) {
+    try {
+      setTimeout(() => {
+        const mapEl = document.getElementById('leaflet-map');
+        if (!mapEl || !mapEl.offsetWidth) return;
+        const map = L.map('leaflet-map', { zoomControl: true, scrollWheelZoom: false }).setView([-33.1308927, -59.3156888], 16);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors',
+          maxZoom: 19
+        }).addTo(map);
+        L.marker([-33.1308927, -59.3156888])
+          .addTo(map)
+          .bindPopup('<b>Metagro SRL</b><br/>Gualeguay, Entre Ríos')
+          .openPopup();
+        setTimeout(() => map.invalidateSize(), 300);
+      }, 300);
     } catch (e) { /* map init failed */ }
   }
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    init();
-    initMap();
-    const yearEl = document.getElementById('footer-year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-  });
+  document.addEventListener('DOMContentLoaded', () => { init(); initMap(); });
 } else {
   init();
   initMap();
-  const yearEl = document.getElementById('footer-year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
 }
 </script>
+<script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1/dist/script.js"></script>
 </body>
 </html>
