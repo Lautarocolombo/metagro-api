@@ -1,10 +1,10 @@
-import pool from './lib/pg.js';
+import pool, { initDb } from './lib/pg.js';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
 const corsMiddleware = cors({
   origin: process.env.NODE_ENV === 'production'
-    ? 'https://metagro-srl.vercel.app'
+    ? ['https://metagro-srl.vercel.app', 'https://metagro.com', 'https://www.metagro.com']
     : ['http://localhost:4000', 'http://127.0.0.1:4000'],
   credentials: true
 });
@@ -18,32 +18,6 @@ if (!JWT_SECRET) throw new Error('[API] JWT_SECRET no definido');
 if (!ADMIN_USER || !ADMIN_PASS) throw new Error('[API] ADMIN_USER/ADMIN_PASS no definidos');
 
 const DEFAULT_ICON = '📦';
-
-async function initDb() {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS productos_ganaderos (
-      id SERIAL PRIMARY KEY,
-      categoria VARCHAR(100),
-      nombre VARCHAR(255),
-      descripcion TEXT,
-      especificaciones TEXT,
-      imagen_url VARCHAR(500)
-    )
-  `);
-
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS product_images (
-      id BIGSERIAL PRIMARY KEY,
-      product_id INTEGER NOT NULL REFERENCES productos_ganaderos(id) ON DELETE CASCADE,
-      url TEXT NOT NULL,
-      alt_text TEXT,
-      created_at TIMESTAMP NOT NULL DEFAULT NOW()
-    )
-  `);
-
-  await pool.query('CREATE INDEX IF NOT EXISTS idx_product_images_product_id ON product_images(product_id)');
-  await pool.query('CREATE INDEX IF NOT EXISTS idx_productos_categoria ON productos_ganaderos(categoria)');
-}
 
 initDb().catch(err => {
   console.error('[API] Error inicializando DB:', err);
@@ -74,9 +48,10 @@ export default function handler(req, res) {
     (async () => {
       const method = req.method || 'GET';
       const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
-      const pathname = url.pathname;
+      let pathname = url.pathname;
+      if (pathname.startsWith('/api')) pathname = pathname.slice(4) || '/';
 
-      if (pathname === '/api/admin/login' && method === 'POST') {
+      if (pathname === '/admin/login' && method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
@@ -102,22 +77,7 @@ export default function handler(req, res) {
         catch (e) { return false }
       };
 
-      if (pathname === '/api/products' && method === 'GET') {
-        try {
-          const result = await pool.query('SELECT * FROM productos_ganaderos ORDER BY categoria, id');
-          const products = [];
-          for (const row of result.rows) {
-            const imgs = await pool.query('SELECT url FROM product_images WHERE product_id = $1 ORDER BY id', [row.id]);
-            products.push(productRowToJson(row, imgs.rows.map(r => r.url)));
-          }
-          return res.status(200).json(products);
-        } catch (e) {
-          console.error('[API] GET /api/products error:', e);
-          return res.status(500).json({ error: 'Server error', detail: e.message });
-        }
-      }
-
-      if (pathname === '/api/health' && method === 'GET') {
+      if (pathname === '/health' && method === 'GET') {
         try {
           await pool.query('SELECT 1');
           return res.status(200).json({ ok: true, db: 'connected' });
@@ -126,7 +86,7 @@ export default function handler(req, res) {
         }
       }
 
-      if (pathname === '/api/categories' && method === 'GET') {
+      if (pathname === '/categories' && method === 'GET') {
         try {
           const result = await pool.query(
             'SELECT DISTINCT categoria FROM productos_ganaderos WHERE categoria IS NOT NULL ORDER BY categoria'
@@ -137,9 +97,59 @@ export default function handler(req, res) {
         }
       }
 
+      if (pathname === '/products' && method === 'GET') {
+        try {
+          const result = await pool.query('SELECT * FROM productos_ganaderos ORDER BY categoria, id');
+          const products = [];
+          for (const row of result.rows) {
+            const imgs = await pool.query('SELECT url FROM product_images WHERE product_id = $1 ORDER BY id', [row.id]);
+            products.push(productRowToJson(row, imgs.rows.map(r => r.url)));
+          }
+          return res.status(200).json(products);
+        } catch (e) {
+          return res.status(500).json({ error: 'Server error', detail: e.message });
+        }
+      }
+
+
+      if (pathname === '/site-texts' && method === 'GET') {
+        try {
+          const result = await pool.query('SELECT key, value FROM site_texts');
+          const texts = {};
+          result.rows.forEach(r => { texts[r.key] = r.value });
+          return res.status(200).json({ ok: true, texts });
+        } catch (e) {
+          return res.status(500).json({ error: e.message });
+        }
+      }
+
+      if (pathname === '/site-texts' && method === 'PUT') {
+        if (!isAuth()) return res.status(401).json({ error: 'Unauthorized' });
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+          try {
+            const putMatch = req.url.match(/^\/api\/site-texts\/([^?]+)/);
+            const key = putMatch ? decodeURIComponent(putMatch[1]) : '';
+            if (!key) return res.status(400).json({ error: 'key requerida' });
+            const data = JSON.parse(body || '{}');
+            const value = data.value ?? '';
+            const section = key.startsWith('hero_') ? 'hero' : key.startsWith('vent_') ? 'ventajas' : key.startsWith('cont_') ? 'contacto' : 'root';
+            await pool.query(
+              `INSERT INTO site_texts (section, key, value, updated_at) VALUES ($1, $2, $3, NOW()) ON CONFLICT (key) DO UPDATE SET value = $3, updated_at = NOW()`,
+              [section, key, value]
+            );
+            return res.status(200).json({ ok: true });
+          } catch (e) {
+            return res.status(500).json({ error: e.message });
+          }
+        });
+        return;
+      }
+
       if (!isAuth()) return res.status(401).json({ error: 'Unauthorized' });
 
-      if (pathname === '/api/products' && method === 'POST') {
+      if (pathname === '/products' && method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', async () => {
@@ -155,15 +165,15 @@ export default function handler(req, res) {
 
             const result = await pool.query(
               `INSERT INTO productos_ganaderos
-                (id, categoria, nombre, descripcion, especificaciones, imagen_url)
-               VALUES (COALESCE($1, nextval('productos_ganaderos_id_seq')), $2, $3, $4, $5, $6)
-               ON CONFLICT (id) DO UPDATE SET
-                categoria = EXCLUDED.categoria,
-                nombre = EXCLUDED.nombre,
-                descripcion = EXCLUDED.descripcion,
-                especificaciones = EXCLUDED.especificaciones,
-                imagen_url = EXCLUDED.imagen_url
-               RETURNING id`,
+                 (id, categoria, nombre, descripcion, especificaciones, imagen_url)
+                VALUES (COALESCE($1, nextval('productos_ganaderos_id_seq')), $2, $3, $4, $5, $6)
+                ON CONFLICT (id) DO UPDATE SET
+                 categoria = EXCLUDED.categoria,
+                 nombre = EXCLUDED.nombre,
+                 descripcion = EXCLUDED.descripcion,
+                 especificaciones = EXCLUDED.especificaciones,
+                 imagen_url = EXCLUDED.imagen_url
+                RETURNING id`,
               [productId, data.tag || data.categoria || 'General', data.name || '', data.desc || '', data.desc || '', mainImg]
             );
 
@@ -191,14 +201,13 @@ export default function handler(req, res) {
             };
             return res.status(201).json(out);
           } catch (e) {
-            console.error('[API] POST /api/products error:', e);
             return res.status(400).json({ error: 'Bad request', detail: e.message });
           }
         });
         return;
       }
 
-      const putMatch = pathname.match(/^\/api\/products\/(\d+)$/);
+      const putMatch = pathname.match(/^\/products\/(\d+)$/);
       if (putMatch && method === 'PUT') {
         let body = '';
         req.on('data', chunk => body += chunk);
@@ -215,9 +224,16 @@ export default function handler(req, res) {
 
             await pool.query(
               `UPDATE productos_ganaderos
-               SET categoria = $1, nombre = $2, descripcion = $3, especificaciones = $4, imagen_url = $5
-               WHERE id = $6`,
-              [data.tag || data.categoria || 'General', data.name || '', data.desc || '', data.desc || '', mainImg, productId]
+                 SET categoria = $1, nombre = $2, descripcion = $3, especificaciones = $4, imagen_url = $5
+                 WHERE id = $6`,
+              [
+                data.tag || data.categoria || 'General',
+                data.name || '',
+                data.desc || '',
+                data.especificaciones || data.specifications || data.desc || '',
+                mainImg,
+                productId
+              ]
             );
 
             if (variantImages.length > 0) {
@@ -242,36 +258,33 @@ export default function handler(req, res) {
             };
             return res.status(200).json(out);
           } catch (e) {
-            console.error('[API] PUT /api/products/:id error:', e);
             return res.status(400).json({ error: 'Bad request', detail: e.message });
           }
         });
         return;
       }
 
-      const imgDelMatch = pathname.match(/^\/api\/images\/(\d+)$/);
+      const imgDelMatch = pathname.match(/^\/images\/(\d+)$/);
       if (imgDelMatch && method === 'DELETE') {
         try {
           await pool.query('DELETE FROM product_images WHERE id = $1', [parseInt(imgDelMatch[1])]);
           return res.status(200).json({ ok: true });
         } catch (e) {
-          console.error('[API] DELETE /api/images/:id error:', e);
           return res.status(500).json({ error: 'Server error' });
         }
       }
 
-      const delMatch = pathname.match(/^\/api\/products\/(\d+)$/);
+      const delMatch = pathname.match(/^\/products\/(\d+)$/);
       if (delMatch && method === 'DELETE') {
         try {
           await pool.query('DELETE FROM productos_ganaderos WHERE id = $1', [parseInt(delMatch[1])]);
           return res.status(200).json({ ok: true });
         } catch (e) {
-          console.error('[API] DELETE /api/products/:id error:', e);
           return res.status(500).json({ error: 'Server error' });
         }
       }
 
-      if (pathname === '/api/backup' && method === 'GET') {
+      if (pathname === '/backup' && method === 'GET') {
         try {
           const result = await pool.query('SELECT * FROM productos_ganaderos ORDER BY id');
           const products = [];
@@ -285,12 +298,11 @@ export default function handler(req, res) {
           res.setHeader('Content-Disposition', 'attachment; filename=metagro-products.json');
           return res.status(200).json(products);
         } catch (e) {
-          console.error('[API] GET /api/backup error:', e);
           return res.status(500).json({ error: 'Server error' });
         }
       }
 
-      if (pathname === '/api/backup' && method === 'POST') {
+      if (pathname === '/backup' && method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', async () => {
@@ -305,15 +317,15 @@ export default function handler(req, res) {
 
               const r = await pool.query(
                 `INSERT INTO productos_ganaderos
-                  (id, categoria, nombre, descripcion, especificaciones, imagen_url)
-                 VALUES (COALESCE($1, nextval('productos_ganaderos_id_seq')), $2, $3, $4, $5, $6)
-                 ON CONFLICT (id) DO UPDATE SET
-                  categoria = EXCLUDED.categoria,
-                  nombre = EXCLUDED.nombre,
-                  descripcion = EXCLUDED.descripcion,
-                  especificaciones = EXCLUDED.especificaciones,
-                  imagen_url = EXCLUDED.imagen_url
-                 RETURNING id`,
+                   (id, categoria, nombre, descripcion, especificaciones, imagen_url)
+                  VALUES (COALESCE($1, nextval('productos_ganaderos_id_seq')), $2, $3, $4, $5, $6)
+                  ON CONFLICT (id) DO UPDATE SET
+                   categoria = EXCLUDED.categoria,
+                   nombre = EXCLUDED.nombre,
+                   descripcion = EXCLUDED.descripcion,
+                   especificaciones = EXCLUDED.especificaciones,
+                   imagen_url = EXCLUDED.imagen_url
+                  RETURNING id`,
                 [productId, p.tag || p.categoria || 'General', p.name || '', p.desc || '', p.desc || '', mainImg]
               );
 
@@ -329,14 +341,13 @@ export default function handler(req, res) {
             }
             return res.status(200).json({ ok: true, count });
           } catch (e) {
-            console.error('[API] POST /api/backup error:', e);
             return res.status(400).json({ error: 'Bad request', detail: e.message });
           }
         });
         return;
       }
 
-      if (pathname === '/api/migrate-images' && method === 'POST') {
+      if (pathname === '/migrate-images' && method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', async () => {
@@ -354,8 +365,78 @@ export default function handler(req, res) {
             }
             return res.status(200).json({ ok: true, migrated });
           } catch (e) {
-            console.error('[API] POST /api/migrate-images error:', e);
             return res.status(500).json({ error: 'Server error', detail: e.message });
+          }
+        });
+        return;
+      }
+
+      const testStatusMatch = pathname.match(/^\/products-test\/?$/);
+      if (testStatusMatch && method === 'GET') {
+        try {
+          await pool.query('SELECT 1');
+          const result = await pool.query('SELECT count(*) as total FROM productos_ganaderos');
+          return res.status(200).json({ ok: true, db: 'connected', total: parseInt(result.rows[0].total) });
+        } catch (e) {
+          return res.status(500).json({ ok: false, db: 'disconnected', error: e.message });
+        }
+      }
+
+      const testIdMatch = pathname.match(/^\/products-test\/(\d+)$/);
+      if (pathname === '/products-test' && method === 'POST') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+          try {
+            const data = JSON.parse(body);
+            const result = await pool.query(
+              `INSERT INTO productos_ganaderos (categoria, nombre, descripcion, especificaciones, imagen_url)
+               VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+              [data.tag || data.categoria || 'TEST', data.name || '', data.desc || '', data.desc || '', data.img || '']
+            );
+            const id = result.rows[0].id;
+            return res.status(201).json({ ok: true, id });
+          } catch (e) {
+            return res.status(400).json({ error: 'Bad request', detail: e.message });
+          }
+        });
+        return;
+      }
+
+      if (testIdMatch && method === 'GET') {
+        try {
+          const result = await pool.query('SELECT * FROM productos_ganaderos WHERE id = $1', [parseInt(testIdMatch[1])]);
+          if (!result.rows.length) return res.status(404).json({ error: 'Not found' });
+          return res.status(200).json(result.rows[0]);
+        } catch (e) {
+          return res.status(500).json({ error: 'Server error' });
+        }
+      }
+
+      if (testIdMatch && method === 'DELETE') {
+        try {
+          await pool.query('DELETE FROM productos_ganaderos WHERE id = $1', [parseInt(testIdMatch[1])]);
+          return res.status(200).json({ ok: true });
+        } catch (e) {
+          return res.status(500).json({ error: 'Server error' });
+        }
+      }
+
+      if (pathname === '/guardar-config' && method === 'POST') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+          try {
+            const data = JSON.parse(body || '{}');
+            await pool.query(
+              `INSERT INTO home_content (id, valor, categoria, descripcion) VALUES
+                ('guardar-config', $1, 'config', 'Configuración guardada')
+                ON CONFLICT (id) DO UPDATE SET valor = EXCLUDED.valor, updated_at = NOW()`,
+              [JSON.stringify(data)]
+            );
+            return res.status(200).json({ ok: true });
+          } catch (e) {
+            return res.status(400).json({ error: 'Bad request', detail: e.message });
           }
         });
         return;

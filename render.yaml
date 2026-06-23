@@ -19,3 +19,5 @@ services:
         sync: false
       - key: NODE_ENV
         value: production
+      - key: MIGRATE_KEY
+        sync: false

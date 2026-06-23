@@ -33,7 +33,8 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const token = req.headers['x-mg-token'] || '';
-  const expected = process.env.MG_TOKEN || process.env.METAGRO_TOKEN || 'metagro_campo1983';
+  const expected = process.env.MG_TOKEN || process.env.METAGRO_TOKEN;
+  if (!expected) throw new Error('MG_TOKEN o METAGRO_TOKEN no configurado');
   if (!token || token !== expected) return json(res, 401, { error: 'Unauthorized' });
 
   const path = req.url || '';

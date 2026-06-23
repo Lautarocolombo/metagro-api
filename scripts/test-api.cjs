@@ -58,27 +58,39 @@ async function run() {
     }
   }
 
-  const cats = await request('/api/categories');
-  if (cats.status === 200 && Array.isArray(cats.data)) {
-    console.log(`GET /api/categories → 200 OK (${cats.data.length} categorías)`); passed++;
-  } else {
-    console.log('GET /api/categories falló:', cats.status); failed++;
-  }
-
-  const backup = await request('/api/backup', { method: 'GET' });
-  if (backup.status === 200 && Array.isArray(backup.data)) {
-    console.log(`GET /api/backup → 200 OK (${backup.data.length} items)`); passed++;
-  } else {
-    console.log('GET /api/backup falló:', backup.status); failed++;
-  }
-
+  const loginBody = JSON.stringify({ username: 'metagro', password: 'montealegre22' })
   const login = await request('/api/admin/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: 'test', password: 'test' })
+    body: loginBody
   });
-  if (login.status === 401) { console.log('POST /api/admin/login → 401 (credenciales inválidas)`'); passed++ }
-  else { console.log('POST /api/admin/login esperaba 401, obtuvo:', login.status); failed++ }
+  let token = null;
+  if (login.status === 200 && login.data && login.data.token) {
+    console.log('POST /api/admin/login → 200 OK (token obtenido)');
+    token = login.data.token;
+    passed++;
+  } else {
+    console.log('POST /api/admin/login falló:', login.status, login.data);
+    failed++;
+  }
+
+  const cats = await request('/api/categories', {
+    headers: token ? { 'x-mg-token': token } : {}
+  });
+  if (cats.status === 200 && Array.isArray(cats.data)) {
+    console.log(`GET /api/categories → 200 OK (${cats.data.length} categorías)`); passed++;
+  } else {
+    console.log('GET /api/categories falló:', cats.status, cats.data); failed++;
+  }
+
+  const backup = await request('/api/backup', {
+    headers: token ? { 'x-mg-token': token } : {}
+  });
+  if (backup.status === 200 && Array.isArray(backup.data)) {
+    console.log(`GET /api/backup → 200 OK (${backup.data.length} items)`); passed++;
+  } else {
+    console.log('GET /api/backup falló:', backup.status, backup.data); failed++;
+  }
 
   console.log(`\nResultado: ${passed}  ${failed}\n`);
   process.exit(failed > 0 ? 1 : 0);

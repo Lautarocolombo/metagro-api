@@ -1,4 +1,15 @@
-import pool from '../api/lib/pg.js';
+import pool from './lib/pg.js';
+
+const ALLOWED_ORIGINS = process.env.NODE_ENV === 'production'
+  ? ['https://metagro-srl.vercel.app', 'https://metagro.com', 'https://www.metagro.com']
+  : ['http://localhost:4000', 'http://127.0.0.1:4000'];
+
+function setCors(res) {
+  const origin = ALLOWED_ORIGINS[0];
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-mg-token');
+}
 
 function isAuth(req) {
   const header = req.headers['x-mg-token'] || '';
@@ -6,8 +17,8 @@ function isAuth(req) {
   if (!token || !header) return false;
   if (header === token) return true;
   try {
-    const jwt = await import('jsonwebtoken');
-    return !!jwt.default.verify(header, process.env.JWT_SECRET || '');
+    const jwt = require('jsonwebtoken');
+    return !!jwt.verify(header, process.env.JWT_SECRET || '');
   } catch { return false; }
 }
 
@@ -126,11 +137,7 @@ async function restore(req, res) {
 }
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.NODE_ENV === 'production'
-    ? 'https://metagro-srl.vercel.app'
-    : 'http://localhost:4000');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-mg-token');
+  setCors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);

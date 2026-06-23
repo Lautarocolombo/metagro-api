@@ -8,8 +8,8 @@ if (!JWT_SECRET) throw new Error('[guardar-config] JWT_SECRET no definido')
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
-    ? 'https://metagro.com.ar'
-    : 'http://localhost:4000',
+    ? ['https://metagro.com', 'https://www.metagro.com']
+    : ['http://localhost:4000', 'http://127.0.0.1:4000'],
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, x-mg-token',
 }

@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://metagro-api.onrender.com/api/$1" }
+  "framework": null,
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "**/*.{png,jpg,jpeg,svg,ico,webp}", "use": "@vercel/static" },
+    { "src": "api/index.js", "use": "@vercel/node" }
   ],
-  "functions": {
-    "api/index.js": {},
-    "api/guardar-config.js": {},
-    "api/health.js": {},
-    "api/products-test.js": {},
-    "api/products-test-status.js": {}
-  }
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
