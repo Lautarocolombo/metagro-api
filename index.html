@@ -2601,11 +2601,9 @@ function switchTab(tabId, btn) {
   if (btn) btn.classList.add('active');
 
   if (tabId === 'tab-leyendas') {
-    requestAnimationFrame(() => {
-      if (typeof loadSiteTextsIntoTab === 'function') {
-        loadSiteTextsIntoTab();
-      }
-    });
+    if (typeof loadSiteTextsIntoTab === 'function') {
+      loadSiteTextsIntoTab();
+    }
   }
 }
 
