@@ -2,15 +2,10 @@ const fs = require('fs')
 const path = require('path')
 require('dotenv').config()
 
-const ADMIN_USER = process.env.ADMIN_USER
-const ADMIN_PASS = process.env.ADMIN_PASS
+const ADMIN_USER = process.env.ADMIN_USER || 'metagro'
+const ADMIN_PASS = process.env.ADMIN_PASS || 'montealegre22'
 const DATA_DIR = path.join(__dirname, 'data')
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json')
-
-if (!ADMIN_USER || !ADMIN_PASS) {
-  console.error('[backup] Faltan ADMIN_USER y ADMIN_PASS en el entorno.')
-  process.exit(1)
-}
 
 function readProducts() {
   try {

@@ -1,525 +1,1514 @@
 [
   {
+    "id": 1,
+    "name": "A - Rosca Hembra 2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/A - Rosca Hembra 2.jpg",
+    "imagen_url": "productos/A - Rosca Hembra 2.jpg",
+    "images": [
+      "productos/A - Rosca Hembra 2.jpg"
+    ]
+  },
+  {
     "id": 2,
+    "name": "Acople Rapido a palanca aluminio",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Acople Rapido a palanca aluminio.jpg",
+    "imagen_url": "productos/Acople Rapido a palanca aluminio.jpg",
+    "images": [
+      "productos/Acople Rapido a palanca aluminio.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Acople rapido con palanca plastico - copia",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Acople rapido con palanca plastico - copia.jpg",
+    "imagen_url": "productos/Acople rapido con palanca plastico - copia.jpg",
+    "images": [
+      "productos/Acople rapido con palanca plastico - copia.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Adaptador BIN",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Adaptador BIN.jpeg",
+    "imagen_url": "productos/Adaptador BIN.jpeg",
+    "images": [
+      "productos/Adaptador BIN.jpeg"
+    ]
+  },
+  {
+    "id": 5,
     "name": "Aislador W",
     "tag": "Aisladores",
-    "desc": "Marca: Rolin",
-    "icon": "⚡",
+    "desc": "",
+    "icon": "",
     "img": "productos/Aislador W.jpg",
     "imagen_url": "productos/Aislador W.jpg",
     "images": [
       "productos/Aislador W.jpg"
-    ],
-    "variants": []
+    ]
   },
   {
-    "id": 3,
-    "name": "Arreadores",
-    "tag": "Arreadores",
-    "desc": "Modelos de arreadores para diferentes tipos de alambrado.",
-    "icon": "🐣",
+    "id": 6,
+    "name": "Arandela Grower",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arandela Grower.jpeg",
+    "imagen_url": "productos/Arandela Grower.jpeg",
+    "images": [
+      "productos/Arandela Grower.jpeg"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Arandela plana Zincada",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arandela plana Zincada.jpg",
+    "imagen_url": "productos/Arandela plana Zincada.jpg",
+    "images": [
+      "productos/Arandela plana Zincada.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Arreador b",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
     "img": "productos/Arreador b.jpeg",
     "imagen_url": "productos/Arreador b.jpeg",
     "images": [
-      "productos/Arreador b.jpeg",
-      "productos/Arreador con pilas.jpeg",
-      "productos/Arreador corto y largo.jpeg",
-      "productos/Arreador mango.jpg",
-      "productos/Arreador puas.jpg",
-      "productos/Arreador Tapa Roscada b.jpg",
-      "productos/Arreador.jpg",
-      "productos/Arredor Tapa roscada.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Arreador B",
-        "img": "productos/Arreador b.jpeg"
-      },
-      {
-        "name": "Arreador con Pilas",
-        "img": "productos/Arreador con pilas.jpeg"
-      },
-      {
-        "name": "Arreador Corto y Largo",
-        "img": "productos/Arreador corto y largo.jpeg"
-      },
-      {
-        "name": "Arreador Mango",
-        "img": "productos/Arreador mango.jpg"
-      },
-      {
-        "name": "Arreador Puas",
-        "img": "productos/Arreador puas.jpg"
-      },
-      {
-        "name": "Arreador Tapa Roscada",
-        "img": "productos/Arreador Tapa Roscada b.jpg"
-      },
-      {
-        "name": "Arreador",
-        "img": "productos/Arreador.jpg"
-      },
-      {
-        "name": "Arredor Tapa Roscada",
-        "img": "productos/Arredor Tapa roscada.jpg"
-      }
+      "productos/Arreador b.jpeg"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Arreador con pilas",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador con pilas.jpeg",
+    "imagen_url": "productos/Arreador con pilas.jpeg",
+    "images": [
+      "productos/Arreador con pilas.jpeg"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Arreador corto y largo",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador corto y largo.jpeg",
+    "imagen_url": "productos/Arreador corto y largo.jpeg",
+    "images": [
+      "productos/Arreador corto y largo.jpeg"
     ]
   },
   {
     "id": 11,
-    "name": "Bebedero Cemento",
-    "tag": "Bebederos",
-    "desc": "Bebedero de cemento para ganado, resistente y durable.",
-    "icon": "💧",
-    "img": "productos/bebederos cemento.JPG",
-    "imagen_url": "productos/bebederos cemento.JPG",
+    "name": "Arreador mango",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador mango.jpg",
+    "imagen_url": "productos/Arreador mango.jpg",
     "images": [
-      "productos/bebederos cemento.JPG"
-    ],
-    "variants": []
+      "productos/Arreador mango.jpg"
+    ]
   },
   {
     "id": 12,
-    "name": "Bobinas Electropiolín",
-    "tag": "Bobinas",
-    "desc": "Electropiolín Rolin · Disponible en 250, 500, 750 y 1000 mts. Standard y Reforzada.",
-    "icon": "🔄",
-    "img": "productos/bobina 1000.jpg",
-    "imagen_url": "productos/bobina 1000.jpg",
+    "name": "Arreador puas",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador puas.jpg",
+    "imagen_url": "productos/Arreador puas.jpg",
     "images": [
-      "productos/bobina 1000.jpg",
-      "productos/bobina 250.jpg",
-      "productos/bobina 500.jpg",
-      "productos/bobina 750.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Bobina 250 mts",
-        "img": "productos/bobina 250.jpg"
-      },
-      {
-        "name": "Bobina 500 mts",
-        "img": "productos/bobina 500.jpg"
-      },
-      {
-        "name": "Bobina 750 mts",
-        "img": "productos/bobina 750.jpg"
-      },
-      {
-        "name": "Bobina 1000 mts",
-        "img": "productos/bobina 1000.jpg"
-      }
+      "productos/Arreador puas.jpg"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Arreador Tapa Roscada b",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador Tapa Roscada b.jpg",
+    "imagen_url": "productos/Arreador Tapa Roscada b.jpg",
+    "images": [
+      "productos/Arreador Tapa Roscada b.jpg"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Arreador",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador.jpg",
+    "imagen_url": "productos/Arreador.jpg",
+    "images": [
+      "productos/Arreador.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Arredor Tapa roscada",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arredor Tapa roscada.jpg",
+    "imagen_url": "productos/Arredor Tapa roscada.jpg",
+    "images": [
+      "productos/Arredor Tapa roscada.jpg"
     ]
   },
   {
     "id": 16,
-    "name": "Cable Subterráneo Rolin 1.8mm",
-    "tag": "Cables",
-    "desc": "Cable subterráneo de 1.8 mm para instalaciones eléctricas rurales.",
-    "icon": "🔌",
-    "img": "productos/Cable subterraneo Rolin 1.8mm.jpg",
-    "imagen_url": "productos/Cable subterraneo Rolin 1.8mm.jpg",
+    "name": "Autoperforante Madera",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Autoperforante Madera.jpg",
+    "imagen_url": "productos/Autoperforante Madera.jpg",
     "images": [
-      "productos/Cable subterraneo Rolin 1.8mm.jpg"
-    ],
-    "variants": []
+      "productos/Autoperforante Madera.jpg"
+    ]
   },
   {
     "id": 17,
-    "name": "Campanitas",
-    "tag": "Campanitas",
-    "desc": "Campanitas para alambados, con y sin trabas.",
-    "icon": "🔔",
-    "img": "productos/Campanita.jpg",
-    "imagen_url": "productos/Campanita.jpg",
+    "name": "Autoperforante Metal",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Autoperforante Metal.jpeg",
+    "imagen_url": "productos/Autoperforante Metal.jpeg",
     "images": [
-      "productos/Campanita.jpg",
-      "productos/Campanita con Trabas.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Campanita",
-        "img": "productos/Campanita.jpg"
-      },
-      {
-        "name": "Campanita con Trabas",
-        "img": "productos/Campanita con Trabas.jpg"
-      }
+      "productos/Autoperforante Metal.jpeg"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "B - Rosca Macho a Palanca 3",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/B - Rosca Macho a Palanca 3.jpg",
+    "imagen_url": "productos/B - Rosca Macho a Palanca 3.jpg",
+    "images": [
+      "productos/B - Rosca Macho a Palanca 3.jpg"
     ]
   },
   {
     "id": 19,
-    "name": "Carreteles",
-    "tag": "Carreteles",
-    "desc": "Carreteles con hilo eléctrico y estructuras metálicas y plásticas. Trípodes disponibles.",
-    "icon": "📦",
-    "img": "productos/Carretel con Hilo 500 Mts.jpg",
-    "imagen_url": "productos/Carretel con Hilo 500 Mts.jpg",
+    "name": "bebederos cemento",
+    "tag": "Bebederos",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bebederos cemento.JPG",
+    "imagen_url": "productos/bebederos cemento.JPG",
     "images": [
-      "productos/Carretel con Hilo 500 Mts.jpg",
-      "productos/Carretel con Hilo 750 Mts.jpg",
-      "productos/Carretel Vacio - Estructura Metal.jpg",
-      "productos/Carretel Vacio - Estructura Plastica.jpeg",
-      "productos/Tripode para carretel.jpeg",
-      "productos/Tripode para carretel 2.jpeg",
-      "productos/Tripode para carretel 3.jpeg"
-    ],
-    "variants": [
-      {
-        "name": "Carretel con Hilo 500 mts",
-        "img": "productos/Carretel con Hilo 500 Mts.jpg"
-      },
-      {
-        "name": "Carretel con Hilo 750 mts",
-        "img": "productos/Carretel con Hilo 750 Mts.jpg"
-      },
-      {
-        "name": "Carretel Vacío Estructura Metal",
-        "img": "productos/Carretel Vacio - Estructura Metal.jpg"
-      },
-      {
-        "name": "Carretel Vacío Estructura Plástica",
-        "img": "productos/Carretel Vacio - Estructura Plastica.jpeg"
-      },
-      {
-        "name": "Trípode para Carretel",
-        "img": "productos/Tripode para carretel.jpeg"
-      },
-      {
-        "name": "Trípode para Carretel 2",
-        "img": "productos/Tripode para carretel 2.jpeg"
-      },
-      {
-        "name": "Trípode para Carretel 3",
-        "img": "productos/Tripode para carretel 3.jpeg"
-      }
+      "productos/bebederos cemento.JPG"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Blanca 1",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Blanca 1.jpg",
+    "imagen_url": "productos/Blanca 1.jpg",
+    "images": [
+      "productos/Blanca 1.jpg"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Blanca 2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Blanca 2.jpg",
+    "imagen_url": "productos/Blanca 2.jpg",
+    "images": [
+      "productos/Blanca 2.jpg"
     ]
   },
   {
     "id": 22,
-    "name": "Medidores de Batería",
-    "tag": "General",
-    "desc": "Medidores de batería para control eléctrico en instalaciones rurales.",
-    "icon": "📦",
-    "img": "productos/Medidor de bateria.jpg",
-    "imagen_url": "productos/Medidor de bateria.jpg",
+    "name": "bobina 1000",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 1000.jpg",
+    "imagen_url": "productos/bobina 1000.jpg",
     "images": [
-      "productos/Medidor de bateria.jpg",
-      "productos/Medidor de bateria 1.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Medidor de Batería",
-        "img": "productos/Medidor de bateria.jpg"
-      },
-      {
-        "name": "Medidor de Batería 1",
-        "img": "productos/Medidor de bateria 1.jpg"
-      }
+      "productos/bobina 1000.jpg"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "bobina 250",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 250.jpg",
+    "imagen_url": "productos/bobina 250.jpg",
+    "images": [
+      "productos/bobina 250.jpg"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "bobina 500",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 500.jpg",
+    "imagen_url": "productos/bobina 500.jpg",
+    "images": [
+      "productos/bobina 500.jpg"
     ]
   },
   {
     "id": 25,
-    "name": "Manijas Aisladas",
-    "tag": "Aisladores",
-    "desc": "Manijas aisladas con resorte y reforzadas.",
-    "icon": "⚡",
-    "img": "productos/Manija Aislada Reforzada.jpg",
-    "imagen_url": "productos/Manija Aislada Reforzada.jpg",
+    "name": "bobina 750",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 750.jpg",
+    "imagen_url": "productos/bobina 750.jpg",
     "images": [
-      "productos/Manija Aislada Reforzada.jpg",
-      "productos/Manija Aislada con resorte.jpg",
-      "productos/Manija Puntera.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Manija Aislada con Resorte",
-        "img": "productos/Manija Aislada con resorte.jpg"
-      },
-      {
-        "name": "Manija Aislada Reforzada",
-        "img": "productos/Manija Aislada Reforzada.jpg"
-      },
-      {
-        "name": "Manija Puntera",
-        "img": "productos/Manija Puntera.jpg"
-      }
+      "productos/bobina 750.jpg"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Buje reduccion",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Buje reduccion.jpg",
+    "imagen_url": "productos/Buje reduccion.jpg",
+    "images": [
+      "productos/Buje reduccion.jpg"
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Bulon Cabeza Hexagonal Dorado",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Hexagonal Dorado.jpg",
+    "imagen_url": "productos/Bulon Cabeza Hexagonal Dorado.jpg",
+    "images": [
+      "productos/Bulon Cabeza Hexagonal Dorado.jpg"
     ]
   },
   {
     "id": 28,
-    "name": "Medidores de Batería 1",
-    "tag": "General",
-    "desc": "Medidor de batería adicional.",
-    "icon": "📦",
-    "img": "productos/Medidor de bateria 1.jpg",
-    "imagen_url": "productos/Medidor de bateria 1.jpg",
+    "name": "Bulon Cabeza Hexagonal",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Hexagonal.jpg",
+    "imagen_url": "productos/Bulon Cabeza Hexagonal.jpg",
     "images": [
-      "productos/Medidor de bateria 1.jpg"
-    ],
-    "variants": []
+      "productos/Bulon Cabeza Hexagonal.jpg"
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Bulon Cabeza Redonda",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Redonda.jpeg",
+    "imagen_url": "productos/Bulon Cabeza Redonda.jpeg",
+    "images": [
+      "productos/Bulon Cabeza Redonda.jpeg"
+    ]
   },
   {
     "id": 30,
-    "name": "Pluviómetros",
-    "tag": "Pluviometros",
-    "desc": "Pluviómetros chico y grande para medición de lluvia.",
-    "icon": "🌧️",
-    "img": "productos/pluviometro grande.jpg",
-    "imagen_url": "productos/pluviometro grande.jpg",
+    "name": "C - Espiga a Palanca 3",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/C - Espiga a Palanca 3.jpg",
+    "imagen_url": "productos/C - Espiga a Palanca 3.jpg",
     "images": [
-      "productos/pluviometro grande.jpg",
-      "productos/pluviometro chicho.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Pluviómetro Chico",
-        "img": "productos/pluviometro chicho.jpg"
-      },
-      {
-        "name": "Pluviómetro Grande",
-        "img": "productos/pluviometro grande.jpg"
-      }
+      "productos/C - Espiga a Palanca 3.jpg"
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Cable Dogo",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable Dogo.jpg",
+    "imagen_url": "productos/Cable Dogo.jpg",
+    "images": [
+      "productos/Cable Dogo.jpg"
     ]
   },
   {
     "id": 32,
-    "name": "Postes de Quebracho",
-    "tag": "Postes",
-    "desc": "Postes de quebracho natural y colorado para alambados y tranqueras.",
-    "icon": "🌳",
-    "img": "productos/Postes Quebracho.JPG",
-    "imagen_url": "productos/Postes Quebracho.JPG",
+    "name": "Cable subterraneo Rolin 1.8mm",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable subterraneo Rolin 1.8mm.jpg",
+    "imagen_url": "productos/Cable subterraneo Rolin 1.8mm.jpg",
     "images": [
-      "productos/Postes Quebracho.JPG",
-      "productos/Poste Quebracho 2.JPG",
-      "productos/Postes Quebracho 3.JPG",
-      "productos/Pôste quebracho.JPG",
-      "productos/postes de quebracho colorado.JPG"
-    ],
-    "variants": [
-      {
-        "name": "Poste Quebracho",
-        "img": "productos/Postes Quebracho.JPG"
-      },
-      {
-        "name": "Poste Quebracho 2",
-        "img": "productos/Poste Quebracho 2.JPG"
-      },
-      {
-        "name": "Postes Quebracho 3",
-        "img": "productos/Postes Quebracho 3.JPG"
-      },
-      {
-        "name": "Pôste Quebracho",
-        "img": "productos/Pôste quebracho.JPG"
-      },
-      {
-        "name": "Postes de Quebracho Colorado",
-        "img": "productos/postes de quebracho colorado.JPG"
-      }
+      "productos/Cable subterraneo Rolin 1.8mm.jpg"
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Cable",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable.jpeg",
+    "imagen_url": "productos/Cable.jpeg",
+    "images": [
+      "productos/Cable.jpeg"
+    ]
+  },
+  {
+    "id": 34,
+    "name": "CAdena Balde 2",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena Balde 2.jpg",
+    "imagen_url": "productos/CAdena Balde 2.jpg",
+    "images": [
+      "productos/CAdena Balde 2.jpg"
+    ]
+  },
+  {
+    "id": 35,
+    "name": "CAdena Balde",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena Balde.jpg",
+    "imagen_url": "productos/CAdena Balde.jpg",
+    "images": [
+      "productos/CAdena Balde.jpg"
+    ]
+  },
+  {
+    "id": 36,
+    "name": "CAdena",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena.jpg",
+    "imagen_url": "productos/CAdena.jpg",
+    "images": [
+      "productos/CAdena.jpg"
     ]
   },
   {
     "id": 37,
-    "name": "Alambre Reforzado",
-    "tag": "General",
-    "desc": "Alambre de acero reforzado para alambados de gran extensión.",
-    "icon": "📦",
-    "img": "productos/reforzada 500.jpg",
-    "imagen_url": "productos/reforzada 500.jpg",
+    "name": "Campanita con Trabas",
+    "tag": "Campanitas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Campanita con Trabas.jpg",
+    "imagen_url": "productos/Campanita con Trabas.jpg",
     "images": [
-      "productos/reforzada 500.jpg",
-      "productos/reforzada 750.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Alambre Reforzado 500",
-        "img": "productos/reforzada 500.jpg"
-      },
-      {
-        "name": "Alambre Reforzado 750",
-        "img": "productos/reforzada 750.jpg"
-      }
+      "productos/Campanita con Trabas.jpg"
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Campanita",
+    "tag": "Campanitas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Campanita.jpg",
+    "imagen_url": "productos/Campanita.jpg",
+    "images": [
+      "productos/Campanita.jpg"
     ]
   },
   {
     "id": 39,
-    "name": "Regulables",
-    "tag": "Regulables",
-    "desc": "Tensores regulables para alambados.",
-    "icon": "🔧",
-    "img": "productos/Regulable Ajustable.jpeg",
-    "imagen_url": "productos/Regulable Ajustable.jpeg",
+    "name": "Carretel con Hilo 500 Mts",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel con Hilo 500 Mts.jpg",
+    "imagen_url": "productos/Carretel con Hilo 500 Mts.jpg",
     "images": [
-      "productos/Regulable Ajustable.jpeg",
-      "productos/Regulable con Gancho y Mariposa.jpeg"
-    ],
-    "variants": [
-      {
-        "name": "Regulable Ajustable",
-        "img": "productos/Regulable Ajustable.jpeg"
-      },
-      {
-        "name": "Regulable con Gancho y Mariposa",
-        "img": "productos/Regulable con Gancho y Mariposa.jpeg"
-      }
+      "productos/Carretel con Hilo 500 Mts.jpg"
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Carretel con Hilo 750 Mts",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel con Hilo 750 Mts.jpg",
+    "imagen_url": "productos/Carretel con Hilo 750 Mts.jpg",
+    "images": [
+      "productos/Carretel con Hilo 750 Mts.jpg"
     ]
   },
   {
     "id": 41,
-    "name": "Roldana Plástico",
-    "tag": "Roldanas",
-    "desc": "Roldana de plástico para carreteles y herramientas.",
-    "icon": "⚙️",
-    "img": "productos/Roldana Plastico.jpg",
-    "imagen_url": "productos/Roldana Plastico.jpg",
+    "name": "Carretel Vacio - Estructura Metal",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel Vacio - Estructura Metal.jpg",
+    "imagen_url": "productos/Carretel Vacio - Estructura Metal.jpg",
     "images": [
-      "productos/Roldana Plastico.jpg"
-    ],
-    "variants": []
+      "productos/Carretel Vacio - Estructura Metal.jpg"
+    ]
   },
   {
     "id": 42,
-    "name": "Separador Corto",
-    "tag": "Separadores",
-    "desc": "Separador corto para alambrados y postes.",
-    "icon": "🔒",
-    "img": "productos/Separador Corto.jpg",
-    "imagen_url": "productos/Separador Corto.jpg",
+    "name": "Carretel Vacio - Estructura Plastica",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel Vacio - Estructura Plastica.jpeg",
+    "imagen_url": "productos/Carretel Vacio - Estructura Plastica.jpeg",
     "images": [
-      "productos/Separador Corto.jpg"
-    ],
-    "variants": []
+      "productos/Carretel Vacio - Estructura Plastica.jpeg"
+    ]
   },
   {
     "id": 43,
-    "name": "Terminales",
-    "tag": "Terminales",
-    "desc": "Terminales eléctricos livianos y reforzados para conexiones.",
-    "icon": "🔌",
-    "img": "productos/Terminal Liviano.jpg",
-    "imagen_url": "productos/Terminal Liviano.jpg",
+    "name": "Caños Galvanizados",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Caños Galvanizados.jpg",
+    "imagen_url": "productos/Caños Galvanizados.jpg",
     "images": [
-      "productos/Terminal Liviano.jpg",
-      "productos/Terminal Reforzado.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Terminal Liviano",
-        "img": "productos/Terminal Liviano.jpg"
-      },
-      {
-        "name": "Terminal Reforzado",
-        "img": "productos/Terminal Reforzado.jpg"
-      }
+      "productos/Caños Galvanizados.jpg"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Cupla",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cupla.jpg",
+    "imagen_url": "productos/Cupla.jpg",
+    "images": [
+      "productos/Cupla.jpg"
     ]
   },
   {
     "id": 45,
-    "name": "Torniquetes",
-    "tag": "Torniquetes",
-    "desc": "Torniquetes Nº 8 y Nº 9, en negro y zincado. Para alambados de más de 50 mts.",
-    "icon": "🔗",
-    "img": "productos/Torniquete Nº8 Negro.jpg",
-    "imagen_url": "productos/Torniquete Nº8 Negro.jpg",
+    "name": "D - Rosca Hembra Palanca",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/D - Rosca Hembra Palanca.jpg",
+    "imagen_url": "productos/D - Rosca Hembra Palanca.jpg",
     "images": [
-      "productos/Torniquete Nº8 Negro.jpg",
-      "productos/Torniquete Nº8 Zincado.jpg",
-      "productos/Torniquete Nº9 Negro.jpeg",
-      "productos/Torniquete Nº9Tv Zincado.jpeg"
-    ],
-    "variants": [
-      {
-        "name": "Torniquete Nº8 Negro",
-        "img": "productos/Torniquete Nº8 Negro.jpg"
-      },
-      {
-        "name": "Torniquete Nº8 Zincado",
-        "img": "productos/Torniquete Nº8 Zincado.jpg"
-      },
-      {
-        "name": "Torniquete Nº9 Negro",
-        "img": "productos/Torniquete Nº9 Negro.jpeg"
-      },
-      {
-        "name": "Torniquete Nº9 Tv Zincado",
-        "img": "productos/Torniquete Nº9Tv Zincado.jpeg"
-      }
+      "productos/D - Rosca Hembra Palanca.jpg"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "E - Espiga  2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/E - Espiga  2.jpg",
+    "imagen_url": "productos/E - Espiga  2.jpg",
+    "images": [
+      "productos/E - Espiga  2.jpg"
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Entre rosca",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Entre rosca.jpg",
+    "imagen_url": "productos/Entre rosca.jpg",
+    "images": [
+      "productos/Entre rosca.jpg"
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Esclusa 2 Pulgadas",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esclusa 2 Pulgadas.jpeg",
+    "imagen_url": "productos/Esclusa 2 Pulgadas.jpeg",
+    "images": [
+      "productos/Esclusa 2 Pulgadas.jpeg"
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Esclusa 3 Pulgadas",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esclusa 3 Pulgadas.jpeg",
+    "imagen_url": "productos/Esclusa 3 Pulgadas.jpeg",
+    "images": [
+      "productos/Esclusa 3 Pulgadas.jpeg"
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Esferica Mariposa",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esferica Mariposa.jpg",
+    "imagen_url": "productos/Esferica Mariposa.jpg",
+    "images": [
+      "productos/Esferica Mariposa.jpg"
+    ]
+  },
+  {
+    "id": 51,
+    "name": "Eslabon abierto",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Eslabon abierto.jpg",
+    "imagen_url": "productos/Eslabon abierto.jpg",
+    "images": [
+      "productos/Eslabon abierto.jpg"
     ]
   },
   {
     "id": 52,
-    "name": "Varillas",
-    "tag": "Varillas",
-    "desc": "Varillas con rulos y varilla plástica para alambados.",
-    "icon": "🌵",
-    "img": "productos/Varilla Con 1 Rulo.jpg",
-    "imagen_url": "productos/Varilla Con 1 Rulo.jpg",
+    "name": "Gancho - Ojo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Gancho - Ojo.jpg",
+    "imagen_url": "productos/Gancho - Ojo.jpg",
     "images": [
-      "productos/Varilla Con 1 Rulo.jpg",
-      "productos/Varilla con 2 Rulos.jpg",
-      "productos/Varilla Plastica.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Varilla Con 1 Rulo",
-        "img": "productos/Varilla Con 1 Rulo.jpg"
-      },
-      {
-        "name": "Varilla con 2 Rulos",
-        "img": "productos/Varilla con 2 Rulos.jpg"
-      },
-      {
-        "name": "Varilla Plástica",
-        "img": "productos/Varilla Plastica.jpg"
-      }
+      "productos/Gancho - Ojo.jpg"
+    ]
+  },
+  {
+    "id": 53,
+    "name": "GAncho J Estira Tejido",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/GAncho J Estira Tejido.jpg",
+    "imagen_url": "productos/GAncho J Estira Tejido.jpg",
+    "images": [
+      "productos/GAncho J Estira Tejido.jpg"
+    ]
+  },
+  {
+    "id": 54,
+    "name": "Grillete corazon 1",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Grillete corazon 1.jpg",
+    "imagen_url": "productos/Grillete corazon 1.jpg",
+    "images": [
+      "productos/Grillete corazon 1.jpg"
     ]
   },
   {
     "id": 55,
-    "name": "Velas Eléctricas",
-    "tag": "Instalacion Electrica",
-    "desc": "Velas de encendido para instalación eléctrica rural.",
-    "icon": "💡",
-    "img": "productos/Velas Electrico 1.jpg",
-    "imagen_url": "productos/Velas Electrico 1.jpg",
+    "name": "Grillete Recto",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Grillete Recto.jpg",
+    "imagen_url": "productos/Grillete Recto.jpg",
     "images": [
-      "productos/Velas Electrico 1.jpg",
-      "productos/Velas Eletrico 2.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Vela Eléctrico 1",
-        "img": "productos/Velas Electrico 1.jpg"
-      },
-      {
-        "name": "Vela Eléctrico 2",
-        "img": "productos/Velas Eletrico 2.jpg"
-      }
+      "productos/Grillete Recto.jpg"
+    ]
+  },
+  {
+    "id": 56,
+    "name": "Guardacabo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Guardacabo.jpg",
+    "imagen_url": "productos/Guardacabo.jpg",
+    "images": [
+      "productos/Guardacabo.jpg"
     ]
   },
   {
     "id": 57,
-    "name": "Voltímetros",
+    "name": "Llave ESferica 2",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica 2.jpg",
+    "imagen_url": "productos/Llave ESferica 2.jpg",
+    "images": [
+      "productos/Llave ESferica 2.jpg"
+    ]
+  },
+  {
+    "id": 58,
+    "name": "Llave ESferica Plastica 2",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 2.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 2.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 2.jpg"
+    ]
+  },
+  {
+    "id": 59,
+    "name": "Llave ESferica Plastica 3",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 3.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 3.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 3.jpg"
+    ]
+  },
+  {
+    "id": 60,
+    "name": "Llave ESferica Plastica 4",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 4.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 4.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 4.jpg"
+    ]
+  },
+  {
+    "id": 61,
+    "name": "Llave ESferica Plastica Duke",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica Duke.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica Duke.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica Duke.jpg"
+    ]
+  },
+  {
+    "id": 62,
+    "name": "Llave ESferica Plastica",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica.jpg"
+    ]
+  },
+  {
+    "id": 63,
+    "name": "Llave Esferica",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave Esferica.jpg",
+    "imagen_url": "productos/Llave Esferica.jpg",
+    "images": [
+      "productos/Llave Esferica.jpg"
+    ]
+  },
+  {
+    "id": 64,
+    "name": "Manija Aislada con resorte",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Aislada con resorte.jpg",
+    "imagen_url": "productos/Manija Aislada con resorte.jpg",
+    "images": [
+      "productos/Manija Aislada con resorte.jpg"
+    ]
+  },
+  {
+    "id": 65,
+    "name": "Manija Aislada Reforzada",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Aislada Reforzada.jpg",
+    "imagen_url": "productos/Manija Aislada Reforzada.jpg",
+    "images": [
+      "productos/Manija Aislada Reforzada.jpg"
+    ]
+  },
+  {
+    "id": 66,
+    "name": "Manija Puntera",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Puntera.jpg",
+    "imagen_url": "productos/Manija Puntera.jpg",
+    "images": [
+      "productos/Manija Puntera.jpg"
+    ]
+  },
+  {
+    "id": 67,
+    "name": "Medidor de bateria 1",
+    "tag": "Medidores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Medidor de bateria 1.jpg",
+    "imagen_url": "productos/Medidor de bateria 1.jpg",
+    "images": [
+      "productos/Medidor de bateria 1.jpg"
+    ]
+  },
+  {
+    "id": 68,
+    "name": "Medidor de bateria",
+    "tag": "Medidores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Medidor de bateria.jpg",
+    "imagen_url": "productos/Medidor de bateria.jpg",
+    "images": [
+      "productos/Medidor de bateria.jpg"
+    ]
+  },
+  {
+    "id": 69,
+    "name": "Modelo A - Rosca Hembra",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo A - Rosca Hembra.jpg",
+    "imagen_url": "productos/Modelo A - Rosca Hembra.jpg",
+    "images": [
+      "productos/Modelo A - Rosca Hembra.jpg"
+    ]
+  },
+  {
+    "id": 70,
+    "name": "Modelo C - Espiga",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo C - Espiga.jpg",
+    "imagen_url": "productos/Modelo C - Espiga.jpg",
+    "images": [
+      "productos/Modelo C - Espiga.jpg"
+    ]
+  },
+  {
+    "id": 71,
+    "name": "Modelo D - Rosca  Hembra",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo D - Rosca  Hembra.jpg",
+    "imagen_url": "productos/Modelo D - Rosca  Hembra.jpg",
+    "images": [
+      "productos/Modelo D - Rosca  Hembra.jpg"
+    ]
+  },
+  {
+    "id": 72,
+    "name": "Modelo E - Eespiga",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo E - Eespiga.jpg",
+    "imagen_url": "productos/Modelo E - Eespiga.jpg",
+    "images": [
+      "productos/Modelo E - Eespiga.jpg"
+    ]
+  },
+  {
+    "id": 73,
+    "name": "Niple Galvanizados 2",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Niple Galvanizados 2.jpg",
+    "imagen_url": "productos/Niple Galvanizados 2.jpg",
+    "images": [
+      "productos/Niple Galvanizados 2.jpg"
+    ]
+  },
+  {
+    "id": 74,
+    "name": "Niple Galvanizados",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Niple Galvanizados.jpg",
+    "imagen_url": "productos/Niple Galvanizados.jpg",
+    "images": [
+      "productos/Niple Galvanizados.jpg"
+    ]
+  },
+  {
+    "id": 75,
+    "name": "Plastica",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Plastica.jpg",
+    "imagen_url": "productos/Plastica.jpg",
+    "images": [
+      "productos/Plastica.jpg"
+    ]
+  },
+  {
+    "id": 76,
+    "name": "pluviometro chicho",
+    "tag": "Pluviometros",
+    "desc": "",
+    "icon": "",
+    "img": "productos/pluviometro chicho.jpg",
+    "imagen_url": "productos/pluviometro chicho.jpg",
+    "images": [
+      "productos/pluviometro chicho.jpg"
+    ]
+  },
+  {
+    "id": 77,
+    "name": "pluviometro grande",
+    "tag": "Pluviometros",
+    "desc": "",
+    "icon": "",
+    "img": "productos/pluviometro grande.jpg",
+    "imagen_url": "productos/pluviometro grande.jpg",
+    "images": [
+      "productos/pluviometro grande.jpg"
+    ]
+  },
+  {
+    "id": 78,
+    "name": "Poste Quebracho 2",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Poste Quebracho 2.JPG",
+    "imagen_url": "productos/Poste Quebracho 2.JPG",
+    "images": [
+      "productos/Poste Quebracho 2.JPG"
+    ]
+  },
+  {
+    "id": 79,
+    "name": "Poste Quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Poste Quebracho.JPG",
+    "imagen_url": "productos/Poste Quebracho.JPG",
+    "images": [
+      "productos/Poste Quebracho.JPG"
+    ]
+  },
+  {
+    "id": 80,
+    "name": "postes de quebracho colorado",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/postes de quebracho colorado.JPG",
+    "imagen_url": "productos/postes de quebracho colorado.JPG",
+    "images": [
+      "productos/postes de quebracho colorado.JPG"
+    ]
+  },
+  {
+    "id": 81,
+    "name": "Postes Quebracho 3",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Postes Quebracho 3.JPG",
+    "imagen_url": "productos/Postes Quebracho 3.JPG",
+    "images": [
+      "productos/Postes Quebracho 3.JPG"
+    ]
+  },
+  {
+    "id": 82,
+    "name": "Postes Quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Postes Quebracho.JPG",
+    "imagen_url": "productos/Postes Quebracho.JPG",
+    "images": [
+      "productos/Postes Quebracho.JPG"
+    ]
+  },
+  {
+    "id": 83,
+    "name": "Prensa Cable",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Prensa Cable.jpg",
+    "imagen_url": "productos/Prensa Cable.jpg",
+    "images": [
+      "productos/Prensa Cable.jpg"
+    ]
+  },
+  {
+    "id": 84,
+    "name": "Pôste quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Pôste quebracho.JPG",
+    "imagen_url": "productos/Pôste quebracho.JPG",
+    "images": [
+      "productos/Pôste quebracho.JPG"
+    ]
+  },
+  {
+    "id": 85,
+    "name": "reforzada 500",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/reforzada 500.jpg",
+    "imagen_url": "productos/reforzada 500.jpg",
+    "images": [
+      "productos/reforzada 500.jpg"
+    ]
+  },
+  {
+    "id": 86,
+    "name": "reforzada 750",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/reforzada 750.jpg",
+    "imagen_url": "productos/reforzada 750.jpg",
+    "images": [
+      "productos/reforzada 750.jpg"
+    ]
+  },
+  {
+    "id": 87,
+    "name": "Regulable Ajustable",
+    "tag": "Regulables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Regulable Ajustable.jpeg",
+    "imagen_url": "productos/Regulable Ajustable.jpeg",
+    "images": [
+      "productos/Regulable Ajustable.jpeg"
+    ]
+  },
+  {
+    "id": 88,
+    "name": "Regulable con Gancho y Mariposa",
+    "tag": "Regulables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Regulable con Gancho y Mariposa.jpeg",
+    "imagen_url": "productos/Regulable con Gancho y Mariposa.jpeg",
+    "images": [
+      "productos/Regulable con Gancho y Mariposa.jpeg"
+    ]
+  },
+  {
+    "id": 89,
+    "name": "Roldana Plastico",
+    "tag": "Roldanas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Roldana Plastico.jpg",
+    "imagen_url": "productos/Roldana Plastico.jpg",
+    "images": [
+      "productos/Roldana Plastico.jpg"
+    ]
+  },
+  {
+    "id": 90,
+    "name": "Separador Corto",
+    "tag": "Separadores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Separador Corto.jpg",
+    "imagen_url": "productos/Separador Corto.jpg",
+    "images": [
+      "productos/Separador Corto.jpg"
+    ]
+  },
+  {
+    "id": 91,
+    "name": "Tapon Goma 2",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma 2.jpg",
+    "imagen_url": "productos/Tapon Goma 2.jpg",
+    "images": [
+      "productos/Tapon Goma 2.jpg"
+    ]
+  },
+  {
+    "id": 92,
+    "name": "Tapon Goma 3",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma 3.jpg",
+    "imagen_url": "productos/Tapon Goma 3.jpg",
+    "images": [
+      "productos/Tapon Goma 3.jpg"
+    ]
+  },
+  {
+    "id": 93,
+    "name": "Tapon Goma",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma.jpg",
+    "imagen_url": "productos/Tapon Goma.jpg",
+    "images": [
+      "productos/Tapon Goma.jpg"
+    ]
+  },
+  {
+    "id": 94,
+    "name": "Tarugo fischer 10 hueco solo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tarugo fischer 10 hueco solo.jpg",
+    "imagen_url": "productos/Tarugo fischer 10 hueco solo.jpg",
+    "images": [
+      "productos/Tarugo fischer 10 hueco solo.jpg"
+    ]
+  },
+  {
+    "id": 95,
+    "name": "tarugo fischer con balde",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/tarugo fischer con balde.jpg",
+    "imagen_url": "productos/tarugo fischer con balde.jpg",
+    "images": [
+      "productos/tarugo fischer con balde.jpg"
+    ]
+  },
+  {
+    "id": 96,
+    "name": "tarugo fischer Nº6 x 30 caja",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/tarugo fischer Nº6 x 30 caja.jpg",
+    "imagen_url": "productos/tarugo fischer Nº6 x 30 caja.jpg",
+    "images": [
+      "productos/tarugo fischer Nº6 x 30 caja.jpg"
+    ]
+  },
+  {
+    "id": 97,
+    "name": "Terminal Liviano",
+    "tag": "Terminales",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Terminal Liviano.jpg",
+    "imagen_url": "productos/Terminal Liviano.jpg",
+    "images": [
+      "productos/Terminal Liviano.jpg"
+    ]
+  },
+  {
+    "id": 98,
+    "name": "Terminal Reforzado",
+    "tag": "Terminales",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Terminal Reforzado.jpg",
+    "imagen_url": "productos/Terminal Reforzado.jpg",
+    "images": [
+      "productos/Terminal Reforzado.jpg"
+    ]
+  },
+  {
+    "id": 99,
+    "name": "todos los acoples y adaptadores",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/todos los acoples y adaptadores.jpg",
+    "imagen_url": "productos/todos los acoples y adaptadores.jpg",
+    "images": [
+      "productos/todos los acoples y adaptadores.jpg"
+    ]
+  },
+  {
+    "id": 100,
+    "name": "Tornillos tirafondo",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tornillos tirafondo.jpg",
+    "imagen_url": "productos/Tornillos tirafondo.jpg",
+    "images": [
+      "productos/Tornillos tirafondo.jpg"
+    ]
+  },
+  {
+    "id": 101,
+    "name": "Torniquete Nº8 Negro",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº8 Negro.jpg",
+    "imagen_url": "productos/Torniquete Nº8 Negro.jpg",
+    "images": [
+      "productos/Torniquete Nº8 Negro.jpg"
+    ]
+  },
+  {
+    "id": 102,
+    "name": "Torniquete Nº8 Zincado",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº8 Zincado.jpg",
+    "imagen_url": "productos/Torniquete Nº8 Zincado.jpg",
+    "images": [
+      "productos/Torniquete Nº8 Zincado.jpg"
+    ]
+  },
+  {
+    "id": 103,
+    "name": "Torniquete Nº9 Negro",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº9 Negro.jpeg",
+    "imagen_url": "productos/Torniquete Nº9 Negro.jpeg",
+    "images": [
+      "productos/Torniquete Nº9 Negro.jpeg"
+    ]
+  },
+  {
+    "id": 104,
+    "name": "Torniquete Nº9Tv Zincado",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº9Tv Zincado.jpeg",
+    "imagen_url": "productos/Torniquete Nº9Tv Zincado.jpeg",
+    "images": [
+      "productos/Torniquete Nº9Tv Zincado.jpeg"
+    ]
+  },
+  {
+    "id": 105,
+    "name": "Tripode para carretel 2",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel 2.jpeg",
+    "imagen_url": "productos/Tripode para carretel 2.jpeg",
+    "images": [
+      "productos/Tripode para carretel 2.jpeg"
+    ]
+  },
+  {
+    "id": 106,
+    "name": "Tripode para carretel 3",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel 3.jpeg",
+    "imagen_url": "productos/Tripode para carretel 3.jpeg",
+    "images": [
+      "productos/Tripode para carretel 3.jpeg"
+    ]
+  },
+  {
+    "id": 107,
+    "name": "Tripode para carretel",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel.jpeg",
+    "imagen_url": "productos/Tripode para carretel.jpeg",
+    "images": [
+      "productos/Tripode para carretel.jpeg"
+    ]
+  },
+  {
+    "id": 108,
+    "name": "Tuerca Zincada",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tuerca Zincada.jpg",
+    "imagen_url": "productos/Tuerca Zincada.jpg",
+    "images": [
+      "productos/Tuerca Zincada.jpg"
+    ]
+  },
+  {
+    "id": 109,
+    "name": "Valvula Flotante 2",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Flotante 2.jpg",
+    "imagen_url": "productos/Valvula Flotante 2.jpg",
+    "images": [
+      "productos/Valvula Flotante 2.jpg"
+    ]
+  },
+  {
+    "id": 110,
+    "name": "Valvula flotante Plastica",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula flotante Plastica.jpg",
+    "imagen_url": "productos/Valvula flotante Plastica.jpg",
+    "images": [
+      "productos/Valvula flotante Plastica.jpg"
+    ]
+  },
+  {
+    "id": 111,
+    "name": "Valvula Flotante",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Flotante.jpg",
+    "imagen_url": "productos/Valvula Flotante.jpg",
+    "images": [
+      "productos/Valvula Flotante.jpg"
+    ]
+  },
+  {
+    "id": 112,
+    "name": "Valvula Foglia",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Foglia.png",
+    "imagen_url": "productos/Valvula Foglia.png",
+    "images": [
+      "productos/Valvula Foglia.png"
+    ]
+  },
+  {
+    "id": 113,
+    "name": "Valvula Fundicion completa",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Fundicion completa.jpg",
+    "imagen_url": "productos/Valvula Fundicion completa.jpg",
+    "images": [
+      "productos/Valvula Fundicion completa.jpg"
+    ]
+  },
+  {
+    "id": 114,
+    "name": "Valvula Fundicion",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Fundicion.jpg",
+    "imagen_url": "productos/Valvula Fundicion.jpg",
+    "images": [
+      "productos/Valvula Fundicion.jpg"
+    ]
+  },
+  {
+    "id": 115,
+    "name": "Valvula Hansen",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Hansen.jpg",
+    "imagen_url": "productos/Valvula Hansen.jpg",
+    "images": [
+      "productos/Valvula Hansen.jpg"
+    ]
+  },
+  {
+    "id": 116,
+    "name": "Valvula Hierro Verde sola a",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Hierro Verde sola a.png",
+    "imagen_url": "productos/Valvula Hierro Verde sola a.png",
+    "images": [
+      "productos/Valvula Hierro Verde sola a.png"
+    ]
+  },
+  {
+    "id": 117,
+    "name": "valvula Plastica completa roja",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/valvula Plastica completa roja.jpg",
+    "imagen_url": "productos/valvula Plastica completa roja.jpg",
+    "images": [
+      "productos/valvula Plastica completa roja.jpg"
+    ]
+  },
+  {
+    "id": 118,
+    "name": "Varilla Con 1 Rulo",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Con 1 Rulo.jpg",
+    "imagen_url": "productos/Varilla Con 1 Rulo.jpg",
+    "images": [
+      "productos/Varilla Con 1 Rulo.jpg"
+    ]
+  },
+  {
+    "id": 119,
+    "name": "Varilla con 2 Rulos",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla con 2 Rulos.jpg",
+    "imagen_url": "productos/Varilla con 2 Rulos.jpg",
+    "images": [
+      "productos/Varilla con 2 Rulos.jpg"
+    ]
+  },
+  {
+    "id": 120,
+    "name": "Varilla Galvanizada",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Galvanizada.JPG",
+    "imagen_url": "productos/Varilla Galvanizada.JPG",
+    "images": [
+      "productos/Varilla Galvanizada.JPG"
+    ]
+  },
+  {
+    "id": 121,
+    "name": "Varilla Plastica",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Plastica.jpg",
+    "imagen_url": "productos/Varilla Plastica.jpg",
+    "images": [
+      "productos/Varilla Plastica.jpg"
+    ]
+  },
+  {
+    "id": 122,
+    "name": "Varilla Roscada",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Roscada.jpg",
+    "imagen_url": "productos/Varilla Roscada.jpg",
+    "images": [
+      "productos/Varilla Roscada.jpg"
+    ]
+  },
+  {
+    "id": 123,
+    "name": "Velas Electrico 1",
     "tag": "Instalacion Electrica",
-    "desc": "Voltímetros para control de instalaciones eléctricas en campo.",
-    "icon": "💡",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Velas Electrico 1.jpg",
+    "imagen_url": "productos/Velas Electrico 1.jpg",
+    "images": [
+      "productos/Velas Electrico 1.jpg"
+    ]
+  },
+  {
+    "id": 124,
+    "name": "Velas Eletrico 2",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Velas Eletrico 2.jpg",
+    "imagen_url": "productos/Velas Eletrico 2.jpg",
+    "images": [
+      "productos/Velas Eletrico 2.jpg"
+    ]
+  },
+  {
+    "id": 125,
+    "name": "Voltimetro 1",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Voltimetro 1.jpg",
+    "imagen_url": "productos/Voltimetro 1.jpg",
+    "images": [
+      "productos/Voltimetro 1.jpg"
+    ]
+  },
+  {
+    "id": 126,
+    "name": "Voltimetro",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
     "img": "productos/Voltimetro.jpg",
     "imagen_url": "productos/Voltimetro.jpg",
     "images": [
-      "productos/Voltimetro.jpg",
-      "productos/Voltimetro 1.jpg"
-    ],
-    "variants": [
-      {
-        "name": "Voltímetro",
-        "img": "productos/Voltimetro.jpg"
-      },
-      {
-        "name": "Voltímetro 1",
-        "img": "productos/Voltimetro 1.jpg"
-      }
+      "productos/Voltimetro.jpg"
     ]
   }
 ]

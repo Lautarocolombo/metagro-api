@@ -11,10 +11,21 @@ const corsMiddleware = cors({
   credentials: true
 });
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-metagro-2026';
-const ADMIN_USER = process.env.ADMIN_USER || 'metagro';
-const ADMIN_PASS = process.env.ADMIN_PASS || 'montealegre22';
-const MG_TOKEN = process.env.MG_TOKEN || process.env.METAGRO_TOKEN || 'dev-token-metagro';
+let JWT_SECRET = process.env.JWT_SECRET;
+let ADMIN_USER = process.env.ADMIN_USER;
+let ADMIN_PASS = process.env.ADMIN_PASS;
+let MG_TOKEN = process.env.MG_TOKEN || process.env.METAGRO_TOKEN;
+
+if (!JWT_SECRET) {
+  if (isProd) throw new Error('[API] JWT_SECRET no definido. Configúrala en Vercel Dashboard → Settings → Environment Variables.');
+  JWT_SECRET = 'dev-secret-metagro-2026';
+}
+if (isProd && (!ADMIN_USER || !ADMIN_PASS)) {
+  throw new Error('[API] ADMIN_USER y ADMIN_PASS son requeridos en producción.');
+}
+if (!ADMIN_USER) ADMIN_USER = 'metagro';
+if (!ADMIN_PASS) ADMIN_PASS = 'montealegre22';
+if (!MG_TOKEN) MG_TOKEN = 'dev-token-metagro';
 
 if (!JWT_SECRET) throw new Error('[API] JWT_SECRET no definido');
 if (!ADMIN_USER || !ADMIN_PASS) throw new Error('[API] ADMIN_USER/ADMIN_PASS no definidos');

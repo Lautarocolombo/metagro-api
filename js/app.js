@@ -808,6 +808,12 @@ function saveSiteTexts() {
   localStorage.setItem('mg_site_texts', JSON.stringify(texts));
   addHistoryEntry(prevTexts, texts);
   fetchAndApplyTexts();
+  Object.entries(texts).forEach(([key, value]) => {
+    api(`/api/site-texts/${encodeURIComponent(key)}`, {
+      method: 'PUT',
+      body: JSON.stringify({ value })
+    }).catch(() => {});
+  });
   const msg = document.getElementById('save-msg-texts');
   if (msg) { msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2500); }
   showToast('✓ Todos los textos guardados');

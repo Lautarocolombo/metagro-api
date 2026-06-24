@@ -1,0 +1,3498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Metagro SRL - Insumos para el agro en Gualeguay, Entre Ríos. Alambrados, molinos de viento, aguadas, ferretería y bulonería. Más de 43 años de trayectoria." />
+  <meta name="keywords" content="metagro, insumos agro, alambrados, molinos de viento, aguadas, gualeguay, entre rios" />
+  <meta name="author" content="Metagro SRL" />
+  <meta property="og:title" content="Metagro SRL – Insumos para el Agro" />
+  <meta property="og:description" content="Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería en Gualeguay, Entre Ríos." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://metagro.com.ar/logo/Logo.jpg" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+  <title>Metagro SRL – Insumos para el Agro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <link rel="stylesheet" href="styles/main.css" />
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --yellow: #F5C800; --yellow-dark: #d4ab00;
+  --black: #111111; --steel: #1a1a1a; --steel2: #2a2a2a;
+  --cream: #F5F0E8; --radius: 4px;
+}
+html { scroll-behavior: smooth; scroll-padding-top: 62px; }
+body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--cream); overflow-x: hidden; }
+
+/* ── APP STATES ── */
+.app-error {
+  position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
+  z-index: 2000; background: #c0392b; color: #fff;
+  padding: 0.7rem 1.4rem; border-radius: var(--radius);
+  font-size: 0.9rem; opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.app-error.show { opacity: 1; }
+.app-toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 2000; display: flex; flex-direction: column; gap: 0.5rem; }
+.app-toast {
+  background: var(--steel); color: var(--cream); border: 1px solid #333;
+  padding: 0.7rem 1.2rem; border-radius: var(--radius); font-size: 0.9rem;
+  opacity: 0; transform: translateY(8px); transition: all .25s;
+}
+.app-toast.show { opacity: 1; transform: translateY(0); }
+.app-toast--success { border-left: 3px solid #27ae60; }
+.app-toast--error { border-left: 3px solid #c0392b; }
+
+/* ── SKELETON LOADING ── */
+.cat-card--skeleton { pointer-events: none; }
+.cat-img-placeholder--skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+.skeleton-line { height: 12px; background: #222; border-radius: 4px; }
+.skeleton-line--title { width: 70%; height: 16px; margin-bottom: 0.6rem; }
+.skeleton-line--text { width: 100%; margin-bottom: 0.4rem; }
+.skeleton-line--tag { width: 40%; height: 10px; }
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* ── NAV ── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: #0b0b0b;
+  border-bottom: 2px solid var(--yellow);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 30px;
+  height: 62px;
+}
+
+.navbar-logo {
+  display: flex; align-items: center;
+  font-weight: bold;
+  color: var(--yellow);
+  font-size: 1.2rem;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.navbar-logo img {
+  height: 44px;
+  width: 44px;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.navbar-logo .logo-text {
+  margin-left: 0.65rem;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.menu-link:hover { color: var(--yellow); }
+.menu-link:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-whatsapp {
+  background-color: var(--yellow);
+  color: #000000;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.btn-whatsapp:hover { background-color: var(--yellow-dark); }
+.btn-whatsapp:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+
+.btn-admin {
+  background-color: transparent;
+  color: #ffffff;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  border: 1px solid #444444;
+  border-radius: 4px;
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-admin:hover { background-color: #ffffff; color: #000000; }
+.btn-admin:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--cream); transition: all .2s; }
+.hamburger:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
+
+/* ── PHOTO STRIP ── */
+.photo-strip {
+  margin-top: 62px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  height: 300px; overflow: hidden;
+}
+.photo-strip-img { overflow: hidden; position: relative; }
+.photo-strip-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.photo-strip-img:hover img { transform: scale(1.05); }
+.photo-strip-img + .photo-strip-img { border-left: 4px solid var(--black); }
+/* Overlay texto sobre la franja */
+.photo-strip-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 60%);
+  display: flex; align-items: flex-end; padding: 1rem 1.2rem;
+  pointer-events: none;
+}
+.photo-strip-overlay span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.75rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--yellow);
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--steel); position: relative; overflow: hidden;
+  display: flex; align-items: center;
+}
+.hero::before {
+  content: ''; position: absolute; top: -10%; right: -5%;
+  width: 52%; height: 130%; background: var(--yellow);
+  transform: skewX(-8deg); z-index: 0;
+}
+.hero::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 28px 28px; z-index: 0;
+}
+.hero-content {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto; padding: 5rem 2rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+}
+.hero-eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); margin-bottom: 1rem; }
+.hero-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 0.95; text-transform: uppercase; color: var(--cream); margin-bottom: 1.5rem; }
+.hero-title em { color: var(--yellow); font-style: normal; }
+.hero-desc { font-size: 1rem; line-height: 1.65; color: #bbb; max-width: 420px; margin-bottom: 2.5rem; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary { background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.8rem 2rem; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: background .2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+.btn-primary:hover { background: var(--yellow-dark); }
+.btn-outline { background: transparent; color: var(--cream); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.8rem 2rem; border: 2px solid var(--cream); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: all .2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+.btn-outline:hover { border-color: var(--yellow); color: var(--yellow); }
+.hero-stats { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1.5rem; }
+.stat-card { background: var(--black); border-left: 4px solid var(--yellow); padding: 1.2rem 1.6rem; border-radius: var(--radius); }
+.stat-number { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 3rem; color: var(--yellow); line-height: 1; }
+.stat-label { font-size: 0.82rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+/* ── SECTIONS ── */
+section { padding: 5rem 2rem; }
+.container { max-width: 1200px; margin: 0 auto; }
+.section-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--yellow); margin-bottom: 0.5rem; }
+.section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(2rem, 4vw, 3.2rem); text-transform: uppercase; color: var(--cream); margin-bottom: 2.5rem; line-height: 1; }
+.section-title span { color: var(--yellow); }
+.divider { width: 48px; height: 3px; background: var(--yellow); margin-bottom: 2.5rem; }
+
+/* ── BANNER entre nav y productos ── */
+.brand-banner {
+  background: var(--yellow); padding: 0.55rem 2rem;
+  display: flex; align-items: center; justify-content: center; gap: 3rem;
+  overflow: hidden;
+}
+.brand-banner span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 0.82rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--black); white-space: nowrap;
+}
+.brand-banner-dot { width: 4px; height: 4px; background: var(--black); border-radius: 50%; flex-shrink: 0; }
+
+/* ── PRODUCTOS ── */
+#productos { background: var(--steel); }
+
+.cat-tools {
+  display: grid;
+  grid-template-columns: 1fr 220px 120px;
+  gap: 0.8rem;
+  align-items: center;
+  margin: 0 0 1.8rem 0;
+}
+
+.cat-search {
+  width: 100%;
+  background: var(--black);
+  border: 1px solid #333;
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  color: var(--cream);
+  font-size: 0.95rem;
+  outline: none;
+}
+.cat-search:focus { border-color: var(--yellow); }
+
+.cat-filter {
+  width: 100%;
+  background: var(--black);
+  border: 1px solid #333;
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  color: var(--cream);
+  font-size: 0.95rem;
+  outline: none;
+}
+.cat-filter:focus { border-color: var(--yellow); }
+
+.cat-clear {
+  width: 100%;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background .2s;
+}
+.cat-clear:hover { background: var(--yellow-dark); }
+
+.api-status-bar {
+  display: none;
+  background: #c0392b;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+.api-status-bar.show { display: block; }
+
+@media (max-width: 768px) {
+  .cat-tools {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+.cat-card { background: var(--black); border: 1px solid #2a2a2a; border-radius: var(--radius); overflow: hidden; transition: border-color .25s, transform .25s, box-shadow .25s; display: flex; flex-direction: column; }
+.cat-card:hover { border-color: var(--yellow); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(245,200,0,.12); }
+.cat-card:focus-within { border-color: var(--yellow); }
+.cat-img-placeholder { width: 100%; height: 260px; background: #0d0d0d; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; overflow: hidden; flex-shrink: 0; }
+.cat-img-placeholder--noimg { height: 90px; font-size: 2.2rem; }
+.cat-icon-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.cat-img-placeholder img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 1.2rem; background: #0a0a0a; }
+.cat-variants { display: flex; gap: 0; border-top: 1px solid #2a2a2a; overflow-x: auto; flex-shrink: 0; }
+.cat-variants img { width: 60px; height: 60px; object-fit: cover; border-right: 1px solid #2a2a2a; flex-shrink: 0; cursor: pointer; opacity: 0.8; transition: opacity .2s; }
+.cat-variants img:hover { opacity: 1; }
+.cat-body { padding: 1.2rem 1.4rem; }
+.cat-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.25rem; text-transform: uppercase; color: var(--cream); margin-bottom: 0.4rem; }
+.cat-desc { font-size: 0.85rem; color: #888; line-height: 1.55; white-space: pre-line; }
+.cat-tag { display: inline-block; margin-top: 0.8rem; background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 2px; }
+.cat-wa-btn {
+  display: flex; align-items: center; gap: 0.4rem; margin-top: 0.9rem;
+  background: transparent; border: 1px solid #333; border-radius: var(--radius);
+  color: #aaa; font-size: 0.8rem; padding: 0.4rem 0.8rem; cursor: pointer;
+  text-decoration: none; transition: all .2s; width: fit-content;
+}
+.cat-wa-btn:hover { border-color: #25D366; color: #25D366; }
+.cat-empty { grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: #666; font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── VENTAJAS ── */
+#ventajas { background: var(--black); }
+.vent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2rem; }
+.vent-item { border-top: 2px solid var(--yellow); padding-top: 1.2rem; }
+.vent-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+.vent-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; color: var(--cream); margin-bottom: 0.4rem; }
+.vent-desc { font-size: 0.85rem; color: #888; line-height: 1.6; }
+
+/* ── INFO LOCAL ── */
+#info { background: var(--steel); }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.info-block { display: flex; flex-direction: column; gap: 1.5rem; }
+.info-item { display: flex; gap: 1rem; align-items: flex-start; }
+.info-icon { width: 42px; height: 42px; flex-shrink: 0; background: var(--yellow); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.info-text-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #777; margin-bottom: 0.2rem; }
+.info-text-value { font-size: 0.95rem; color: var(--cream); line-height: 1.5; }
+.info-text-value a { color: var(--yellow); text-decoration: none; }
+.map-wrap {
+  width: 100%; border-radius: var(--radius); border: 2px solid #2a2a2a;
+  overflow: hidden; display: flex; flex-direction: column;
+  position: relative; z-index: 1;
+}
+#leaflet-map { width: 100%; height: 300px; position: relative; z-index: 1; border: 2px solid var(--yellow); border-radius: 10px; overflow: hidden; }
+.leaflet-container { z-index: 1 !important; }
+.leaflet-pane { z-index: 2 !important; }
+.map-open-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.75rem 1rem; text-decoration: none; transition: background .2s; }
+.map-open-btn:hover { background: var(--yellow-dark); }
+
+/* ── CTA ── */
+#contacto { background: var(--yellow); }
+#contacto .section-label { color: var(--black); opacity: .6; }
+#contacto .section-title { color: var(--black); }
+#contacto .divider { background: var(--black); opacity: .25; }
+.cta-inner { max-width: 700px; }
+.cta-desc { font-size: 1rem; color: #333; margin-bottom: 2rem; line-height: 1.7; }
+.btn-wa { background: var(--black); color: var(--yellow); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 1rem 2.2rem; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; transition: background .2s; }
+.btn-wa:hover { background: #222; }
+.btn-tel { background: transparent; color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 1rem 2rem; border: 2px solid var(--black); border-radius: var(--radius); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; transition: background .2s; }
+.btn-tel:hover { background: rgba(0,0,0,.08); }
+.cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ── FOOTER ── */
+footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2rem; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: start; }
+.footer-brand { display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.4rem; color: var(--cream); display: flex; align-items: center; gap: 0.5rem; }
+.footer-logo span { color: var(--yellow); }
+.footer-logo-img, .footer-logo img { height: 36px; width: 36px; object-fit: contain; border-radius: 3px; }
+.footer-tagline { font-size: 0.82rem; color: #555; font-style: italic; }
+.footer-col-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); margin-bottom: 0.8rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.footer-links a { font-size: 0.85rem; color: #666; text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--cream); }
+.footer-bottom { max-width: 1200px; margin: 2rem auto 0; padding-top: 1.2rem; border-top: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer-copy { font-size: 0.78rem; color: #444; }
+.footer-copy strong { color: var(--yellow); }
+.footer-actions { display: flex; align-items: center; gap: 2.5rem; }
+.wa-float-footer { display: inline-flex; align-items: center; gap: 0.3rem; background: #25D366; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.8rem; border-radius: var(--radius); text-decoration: none; transition: all .2s; letter-spacing: 0.04em; }
+.wa-float-footer:hover { background: #1ebc57; transform: translateY(-1px); }
+.admin-trigger { background: none; border: none; color: #2a2a2a; font-size: 0.7rem; cursor: pointer; padding: 0.2rem 0.5rem; transition: color .2s; }
+.admin-trigger:hover { color: #555; }
+
+/* ── ADMIN ── */
+.admin-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; }
+.admin-overlay.open { display: flex; }
+.admin-login-box { background: var(--steel); border: 1px solid #333; border-top: 3px solid var(--yellow); border-radius: 6px; padding: 2.5rem; width: 100%; max-width: 380px; }
+.admin-login-box h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.8rem; text-transform: uppercase; color: var(--cream); margin-bottom: 0.3rem; }
+.admin-login-box p { font-size: 0.82rem; color: #666; margin-bottom: 2rem; }
+.admin-field { margin-bottom: 1.2rem; }
+.admin-field label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: #888; margin-bottom: 0.4rem; }
+.admin-field input { width: 100%; background: var(--black); border: 1px solid #333; border-radius: var(--radius); padding: 0.65rem 0.9rem; color: var(--cream); font-size: 0.95rem; outline: none; transition: border-color .2s; }
+.admin-field input:focus { border-color: var(--yellow); }
+.admin-error { color: #e74c3c; font-size: 0.82rem; margin-bottom: 1rem; display: none; }
+.btn-admin-login { width: 100%; background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.75rem; border: none; border-radius: var(--radius); cursor: pointer; transition: background .2s; }
+.btn-admin-login:hover { background: var(--yellow-dark); }
+.btn-cancel { width: 100%; background: transparent; color: #666; font-size: 0.85rem; border: none; padding: 0.5rem; cursor: pointer; margin-top: 0.8rem; transition: color .2s; }
+.btn-cancel:hover { color: var(--cream); }
+.admin-panel { display: none; position: fixed; inset: 0; z-index: 999; background: #0d0d0d; overflow-y: auto; }
+.admin-panel.open { display: block; }
+.admin-topbar { background: var(--black); border-bottom: 2px solid var(--yellow); padding: 0 2rem; height: 58px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+.admin-topbar-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.3rem; text-transform: uppercase; color: var(--cream); }
+.admin-topbar-title span { color: var(--yellow); }
+.btn-logout { background: transparent; color: #888; border: 1px solid #333; border-radius: var(--radius); padding: 0.35rem 1rem; font-size: 0.82rem; cursor: pointer; transition: all .2s; }
+.btn-logout:hover { color: var(--cream); border-color: #666; }
+.admin-body { max-width: 960px; margin: 0 auto; padding: 2rem; }
+.admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; border-bottom: 1px solid #222; }
+.admin-tab { background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 0.6rem 1.2rem; color: #666; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all .2s; }
+.admin-tab.active { color: var(--yellow); border-bottom-color: var(--yellow); }
+.admin-tab-content { display: none; }
+.admin-tab-content.active { display: block; }
+.admin-prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+.admin-prod-card { background: var(--steel); border: 1px solid #2a2a2a; border-radius: 6px; overflow: hidden; }
+.admin-prod-card-header { background: var(--black); padding: 0.8rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2a2a2a; }
+.admin-prod-card-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; text-transform: uppercase; color: var(--yellow); }
+.admin-prod-card-body { padding: 1rem; display: flex; flex-direction: column; gap: 0.8rem; }
+.admin-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: #666; display: block; margin-bottom: 0.25rem; }
+.admin-input { width: 100%; background: var(--black); border: 1px solid #333; border-radius: var(--radius); padding: 0.5rem 0.7rem; color: var(--cream); font-size: 0.88rem; outline: none; transition: border-color .2s; }
+.admin-input:focus { border-color: var(--yellow); }
+.admin-textarea { width: 100%; background: var(--black); border: 1px solid #333; border-radius: var(--radius); padding: 0.5rem 0.7rem; color: var(--cream); font-size: 0.85rem; outline: none; resize: vertical; min-height: 70px; transition: border-color .2s; font-family: inherit; }
+.admin-textarea:focus { border-color: var(--yellow); }
+.img-preview-wrap { position: relative; width: 100%; height: 120px; background: var(--black); border: 1px dashed #333; border-radius: var(--radius); overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s; }
+.img-preview-wrap:hover { border-color: var(--yellow); }
+.img-preview-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.img-preview-label { font-size: 0.72rem; color: #555; text-align: center; margin-top: 0.25rem; }
+.file-input-hidden { display: none; }
+.admin-prod-toolbar { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+.btn-del { background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 1rem; padding: 0.2rem 0.4rem; transition: color .2s; }
+.btn-del:hover { color: #ff6b6b; }
+.btn-add { background: var(--steel2); color: var(--cream); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.5rem 1.2rem; border: 1px solid #333; border-radius: var(--radius); cursor: pointer; transition: all .2s; }
+.btn-add:hover { border-color: var(--yellow); color: var(--yellow); }
+.bulk-overlay { display: none; position: fixed; inset: 0; z-index: 1100; background: rgba(0,0,0,.88); backdrop-filter: blur(6px); align-items: center; justify-content: center; }
+.bulk-box { background: var(--steel); border: 1px solid #333; border-top: 3px solid var(--yellow); border-radius: 6px; padding: 2.5rem; width: 100%; max-width: 560px; }
+.bulk-box h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; color: var(--cream); margin-bottom: 0.4rem; }
+.bulk-box p { font-size: 0.88rem; color: #888; margin-bottom: 1.5rem; }
+.bulk-drop { background: var(--black); border: 2px dashed #333; border-radius: var(--radius); padding: 2.5rem; text-align: center; color: #aaa; cursor: pointer; transition: border-color .2s; }
+.bulk-drop:hover { border-color: var(--yellow); color: var(--cream); }
+.bulk-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.bulk-item { background: var(--steel2); border: 1px solid #333; border-radius: var(--radius); padding: 0.4rem 0.7rem; font-size: 0.82rem; color: var(--cream); }
+.bulk-bar-wrap { width: 100%; height: 6px; background: var(--black); border-radius: 3px; margin-top: 1rem; overflow: hidden; }
+.bulk-bar { height: 100%; background: var(--yellow); width: 0%; transition: width .3s; text-align: center; font-size: 0; }
+.color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.color-field { display: flex; align-items: center; gap: 0.8rem; background: var(--steel); border: 1px solid #2a2a2a; border-radius: var(--radius); padding: 0.8rem 1rem; }
+.color-field input[type="color"] { width: 40px; height: 40px; border: none; border-radius: 4px; cursor: pointer; background: none; padding: 0; }
+.color-field-info { flex: 1; }
+.color-field-name { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #888; }
+.color-field-hex { font-family: monospace; font-size: 0.9rem; color: var(--cream); }
+.admin-save-bar { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #222; }
+.btn-save { background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.65rem 1.8rem; border: none; border-radius: var(--radius); cursor: pointer; transition: background .2s; }
+.btn-save:hover { background: var(--yellow-dark); }
+.save-msg { font-size: 0.85rem; color: #4caf50; display: none; }
+.save-msg.show { display: inline; }
+.config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.config-field { display: flex; flex-direction: column; gap: 0.3rem; }
+
+/* ── BACK TO TOP ── */
+.back-to-top {
+  position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 200;
+  background: var(--steel); color: var(--cream); border: 1px solid #333;
+  border-radius: 50%; width: 44px; height: 44px; font-size: 1.2rem;
+  cursor: pointer; opacity: 0; pointer-events: none; transition: all .3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.back-to-top.show { opacity: 1; pointer-events: auto; }
+.back-to-top:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .navbar-menu, .navbar-actions { display: none; }
+  .hamburger { display: flex; }
+  .navbar-menu.open { display: flex; flex-direction: column; position: absolute; top: 62px; left: 0; right: 0; background: #0b0b0b; border-bottom: 2px solid var(--yellow); padding: 1rem 30px; gap: 1.2rem; }
+  .hero::before { display: none; }
+  .hero-content { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
+  .stat-card { flex: 1; min-width: 130px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-actions { justify-content: center; }
+  .color-grid, .config-grid { grid-template-columns: 1fr; }
+  .admin-prod-grid { grid-template-columns: 1fr; }
+  .photo-strip { height: 160px; }
+  .brand-banner { gap: 1.5rem; padding: 0.5rem 1rem; overflow-x: auto; }
+}
+
+/* ── PRODUCT MODAL ── */
+.product-modal { visibility: hidden; opacity: 0; position: fixed; inset: 0; z-index: 900; background: rgba(0,0,0,.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 1rem; transition: opacity .2s, visibility .2s; }
+.product-modal.open { visibility: visible; opacity: 1; }
+.product-modal-content { background: var(--steel); border: 1px solid #333; border-top: 3px solid var(--yellow); border-radius: 6px; width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; transform: translateY(10px); transition: transform .2s; }
+.product-modal.open .product-modal-content { transform: translateY(0); }
+.product-modal-close { position: absolute; top: 0.8rem; right: 0.8rem; background: var(--black); border: 1px solid #333; color: var(--cream); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; z-index: 2; }
+.product-modal-body { display: grid; grid-template-columns: 1fr 1fr; }
+.product-modal-image { background: #0a0a0a; min-height: 260px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.product-modal-image img { width: 100%; height: 100%; object-fit: contain; padding: 1.5rem; }
+.product-modal-info { padding: 1.8rem; display: flex; flex-direction: column; gap: 0.8rem; }
+.product-modal-tag { background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 2px; width: fit-content; }
+.product-modal-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.6rem; text-transform: uppercase; color: var(--cream); }
+.product-modal-desc { font-size: 0.95rem; color: #bbb; line-height: 1.6; }
+.product-modal-actions { display: flex; gap: 0.8rem; margin-top: 0.5rem; flex-wrap: wrap; }
+@media (max-width: 768px) {
+  .product-modal-body { grid-template-columns: 1fr; }
+  .product-modal-image { min-height: 220px; }
+}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Metagro SRL",
+  "description": "Insumos para el agro, alambrados, molinos de viento, aguadas, ferretería y bulonería",
+
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Gualeguay",
+      "addressRegion": "Entre Ríos",
+      "addressCountry": "AR"
+    },
+    "telephone": "+5403444466919",
+    "openingHours": "Mo-Fr 08:00-12:00,15:00-19:00, Sa 08:00-12:00"
+  }
+  </script>
+</head>
+<body>
+<div class="app-error" id="app-error" role="alert" aria-live="assertive"></div>
+<div class="app-toast-container" id="app-toast-container" aria-live="polite"></div>
+
+<!-- NAV -->
+<header class="navbar">
+  <div class="navbar-logo">
+    <img src="logo/Logo.jpg" alt="Metagro SRL" class="logo-img" />
+    <span class="logo-text">MetagroSRL</span>
+  </div>
+
+  <nav class="navbar-menu" id="navLinks">
+    <a href="#productos" class="menu-link">PRODUCTOS</a>
+    <a href="#ventajas" class="menu-link">NOSOTROS</a>
+    <a href="#info" class="menu-link">LOCAL</a>
+    <a href="#contacto" class="menu-link">CONTACTO</a>
+  </nav>
+
+  <div class="navbar-actions">
+    <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-whatsapp">
+      <span class="icon">💬</span> WHATSAPP
+    </a>
+    <button class="btn-admin" onclick="openAdminLogin()">
+      <span class="icon">⚙</span> ADMIN
+    </button>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- FRANJA DE FOTOS -->
+<div class="photo-strip">
+  <div class="photo-strip-img">
+    <img src="image/imagen 1.jpeg" alt="Metagro" />
+    <div class="photo-strip-overlay"><span>Desde 1983</span></div>
+  </div>
+  <div class="photo-strip-img">
+    <img src="image/imagen 2.jpeg" alt="Metagro" />
+    <div class="photo-strip-overlay"><span>Siempre junto al campo</span></div>
+  </div>
+  <div class="photo-strip-img">
+    <img src="image/imagen 3.jpeg" alt="Metagro" />
+    <div class="photo-strip-overlay"><span>Gualeguay · Entre Ríos</span></div>
+      </div>
+    </div>
+    <div class="admin-tab-content" id="tab-leyendas">
+      <p style="color:#888;font-size:.9rem;margin-bottom:1.5rem;">
+        Editá los textos e íconos de la página principal. Los cambios se aplican al guardar.
+      </p>
+
+      <!-- BLOQUE 1: Configuración del Banner Principal -->
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">🏠 Banner Principal (Hero)</div>
+        <form onsubmit="event.preventDefault(); saveSiteTexts();">
+          <div class="config-grid">
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 1 del Título (Ej: "SIEMPRE JUNTO")</label>
+            <input class="admin-input" id="txt-hero-linea-1" placeholder="SIEMPRE JUNTO" />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 2 del Título (Ej: "AL CAMPO.")</label>
+            <input class="admin-input" id="txt-hero-linea-2" placeholder="AL CAMPO." />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Bajada de Texto / Subtítulo</label>
+            <textarea class="admin-textarea" id="txt-hero-desc" rows="3" placeholder="Insumos para la agroganadería..."></textarea>
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Número del Stat (ej: 43)</label>
+            <input class="admin-input" id="txt-hero-numero" placeholder="43" />
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Texto del Stat (ej: Años en el mercado)</label>
+            <input class="admin-input" id="txt-hero-etiqueta" placeholder="Años en el mercado" />
+          </div>
+          </div>
+          <button type="submit" class="btn-save" style="margin-top:1rem;">💾 Guardar Banner Principal</button>
+        </form>
+      </div>
+
+      <!-- BLOQUE 2: Configuración de la Sección Ventajas -->
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">⚡ Tarjetas de Ventajas</div>
+        <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá, eliminá o agregá tarjetas de la sección "Ventajas Metagro".</p>
+
+        <div id="leyendas-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+
+        <button class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
+        <button class="btn-save" onclick="saveSiteTexts()" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
+      </div>
+
+      <!-- BLOQUE 3: Historial de Cambios -->
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">📋 Historial de Cambios</div>
+        <div id="leyendas-history" style="max-height:300px;overflow-y:auto;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:1rem;">
+          <p style="color:#666;font-size:.85rem;">Sin cambios registrados</p>
+        </div>
+      </div>
+
+      <div class="admin-save-bar">
+        <span class="save-msg" id="save-msg-texts">✓ Cambios guardados</span>
+      </div>
+    </div>
+  </div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Gualeguay, Entre Ríos · Desde 1983</p>
+      <h1 class="hero-title">Siempre<br/>junto<br/>al <em>campo.</em></h1>
+      <p class="hero-desc">Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería. Atención personalizada, precios competitivos y cuenta corriente para nuestros clientes.</p>
+      <div class="hero-actions">
+        <a href="#productos" class="btn-primary">Ver Productos</a>
+        <a href="#contacto" class="btn-outline">📞 Contactarnos</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-number">43</div><div class="stat-label">Años en el mercado</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section id="productos">
+  <div class="container">
+    <p class="section-label">Lo que ofrecemos</p>
+    <h2 class="section-title">Nuestros <span>Productos</span></h2>
+    <div class="divider"></div>
+
+    <div class="cat-tools" role="search">
+      <input id="cat-search" class="cat-search" type="search" placeholder="Buscar producto..." autocomplete="off" />
+      <select id="cat-filter" class="cat-filter" aria-label="Filtrar por categoría">
+        <option value="__all__">Todas las categorías</option>
+      </select>
+      <button id="cat-clear" class="cat-clear" type="button">Limpiar</button>
+    </div>
+    <div id="api-status-bar" class="api-status-bar">Sin conexión con el servidor. Mostrando datos guardados localmente.</div>
+    <div class="cat-grid" id="cat-grid"></div>
+  </div>
+</section>
+
+<!-- VENTAJAS -->
+<section id="ventajas">
+  <div class="container">
+    <p class="section-label">Por qué elegirnos</p>
+    <h2 class="section-title">Ventajas <span>Metagro</span></h2>
+    <div class="divider"></div>
+    <div class="vent-grid">
+      <div class="vent-item"><div class="vent-icon">⚡</div><div class="vent-title">Atención Rápida</div><div class="vent-desc">Atendemos más rápido que la competencia. Tu tiempo en el campo vale.</div></div>
+      <div class="vent-item"><div class="vent-icon">🤝</div><div class="vent-title">Cuenta Corriente</div><div class="vent-desc">Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.</div></div>
+      <div class="vent-item"><div class="vent-icon">💰</div><div class="vent-title">Mejores Precios</div><div class="vent-desc">Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.</div></div>
+      <div class="vent-item"><div class="vent-icon">📦</div><div class="vent-title">Stock Permanente</div><div class="vent-desc">Amplia disponibilidad de productos para que no pares tu trabajo.</div></div>
+      <div class="vent-item"><div class="vent-icon">🏆</div><div class="vent-title">43 Años de Experiencia</div><div class="vent-desc">Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.</div></div>
+      <div class="vent-item"><div class="vent-icon">🌿</div><div class="vent-title">Especialistas en el Agro</div><div class="vent-desc">Asesoramiento técnico para agroganaderos, molineros y alambradores.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO LOCAL -->
+<section id="info">
+  <div class="container">
+    <p class="section-label">Dónde encontrarnos</p>
+    <h2 class="section-title">Nuestro <span>Local</span></h2>
+    <div class="divider"></div>
+    <div class="info-grid">
+      <div class="info-block">
+        <div class="info-item"><div class="info-icon">📍</div><div><div class="info-text-label">Dirección</div><div class="info-text-value" data-dir-text>Gualeguay, Entre Ríos<br/>Argentina · CP 2840</div></div></div>
+        <div class="info-item"><div class="info-icon">📞</div><div><div class="info-text-label">Teléfono</div><div class="info-text-value"><a data-tel-href href="tel:+5403444466919">03444 – 466919</a></div></div></div>
+        <div class="info-item"><div class="info-icon">💬</div><div><div class="info-text-label">WhatsApp</div><div class="info-text-value"><a data-wa-href href="https://wa.me/5403444466919" target="_blank">Escribinos directo por WhatsApp</a></div></div></div>
+        <div class="info-item"><div class="info-icon">🕐</div><div><div class="info-text-label">Horario de atención</div><div class="info-text-value">Lunes a Viernes: 8:00 – 12:00 / 15:00 – 19:00<br/>Sábados: 8:00 – 12:00</div></div></div>
+        <div class="info-item"><div class="info-icon">📅</div><div><div class="info-text-label">En el mercado desde</div><div class="info-text-value">1983 · 43 años de trayectoria</div></div></div>
+      </div>
+      <div>
+        <div class="map-wrap">
+          <div id="leaflet-map"></div>
+          <a href="https://www.google.com/maps/place/Metagro+SRL/@-33.1308927,-59.3156888,17z" target="_blank" rel="noopener" class="map-open-btn">📍 Abrir en Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="cta-inner">
+      <p class="section-label">Contacto</p>
+      <h2 class="section-title">¿Necesitás un producto?<br/>Consultanos.</h2>
+      <div class="divider"></div>
+      <p class="cta-desc">Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rápido por WhatsApp o por teléfono.</p>
+      <div class="cta-btns">
+        <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-wa">💬 WhatsApp</a>
+        <a data-tel-href href="tel:+5403444466919" class="btn-tel">📞 03444 – 466919</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN LOGIN -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-login-box">
+    <h2>🔒 Admin <span style="color:var(--yellow)">Metagro</span></h2>
+    <p>Ingresá tu usuario y contraseña para acceder al panel.</p>
+    <div class="admin-field"><label>Usuario</label><input type="text" id="adminUser" placeholder="usuario" autocomplete="username" /></div>
+    <div class="admin-field"><label>Contraseña</label><input type="password" id="adminPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" /></div>
+    <div class="admin-error" id="loginError">Usuario o contraseña incorrectos.</div>
+    <button class="btn-admin-login" onclick="doLogin()">Ingresar</button>
+    <button class="btn-cancel" onclick="closeAdminLogin()">Cancelar</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-topbar">
+    <div class="admin-topbar-title">PANEL <span>METAGRO</span></div>
+    <button class="btn-logout" onclick="doLogout()">CERRAR SESIÓN</button>
+  </div>
+
+  <div class="admin-body">
+    <div class="admin-tabs">
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-productos')">📦 Productos</button>
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-colores')">🎨 Colores</button>
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-info')">📍 Info Local</button>
+      <button class="admin-tab active" onclick="switchAdminTab(event, 'tab-leyendas')">📝 Leyendas</button>
+    </div>
+
+    <div id="tab-productos" class="admin-tab-content">
+      <div class="admin-prod-toolbar">
+        <button class="btn-add" onclick="addProduct()">➕ Nuevo Producto</button>
+        <button class="btn-add" onclick="openBulkUpload()">📁 Carga Masiva</button>
+        <button class="btn-add" id="btn-sync-db" onclick="syncFromDB()">🔄 Sincronizar DB</button>
+        <button class="btn-add" onclick="syncToDB()" style="background:#1a5f2a;border-color:#27ae60;">📤 Migrar Todo a DB</button>
+      </div>
+      <div id="prod-count-bar" style="color:#888;font-size:.82rem;margin-bottom:.8rem;"></div>
+      <div class="admin-prod-grid" id="admin-prod-grid"></div>
+      <div class="admin-save-bar">
+        <button class="btn-save" onclick="saveProducts()">💾 Guardar Cambios</button>
+        <span class="save-msg" id="save-msg-prod">✓ Cambios guardados</span>
+      </div>
+    </div>
+
+    <div id="tab-colores" class="admin-tab-content">
+      <p style="color:#888;font-size:.9rem;margin-bottom:1.5rem;">Modificá los colores principales del sitio. Los cambios se aplican en tiempo real.</p>
+      <div class="color-grid">
+        <div class="color-field"><input type="color" id="color-yellow" value="#F5C800" oninput="applyColor('--yellow',this.value);document.getElementById('hex-yellow').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Color Principal</div><div class="color-field-hex" id="hex-yellow">#F5C800</div></div></div>
+        <div class="color-field"><input type="color" id="color-black" value="#111111" oninput="applyColor('--black',this.value);document.getElementById('hex-black').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Color Secundario</div><div class="color-field-hex" id="hex-black">#111111</div></div></div>
+        <div class="color-field"><input type="color" id="color-steel" value="#1a1a1a" oninput="applyColor('--steel',this.value);document.getElementById('hex-steel').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Fondo Secciones</div><div class="color-field-hex" id="hex-steel">#1a1a1a</div></div></div>
+        <div class="color-field"><input type="color" id="color-cream" value="#F5F0E8" oninput="applyColor('--cream',this.value);document.getElementById('hex-cream').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Color de Texto</div><div class="color-field-hex" id="hex-cream">#F5F0E8</div></div></div>
+      </div>
+      <div class="admin-save-bar">
+        <button class="btn-save" onclick="saveColors()">💾 Guardar Colores</button>
+        <button style="background:var(--steel2);color:#aaa;border:1px solid #333;border-radius:4px;padding:.6rem 1.2rem;cursor:pointer;font-size:.9rem;" onclick="resetColors()">↩ Restaurar originales</button>
+        <span class="save-msg" id="save-msg-color">✓ Colores guardados</span>
+      </div>
+    </div>
+
+    <div id="tab-info" class="admin-tab-content">
+      <div class="config-grid">
+        <div class="config-field"><label class="admin-label">Teléfono</label><input class="admin-input" id="cfg-tel" value="03444 – 466919" /></div>
+        <div class="config-field"><label class="admin-label">Número WhatsApp (con código de país)</label><input class="admin-input" id="cfg-wa" value="5403444466919" /></div>
+        <div class="config-field"><label class="admin-label">Horario Semana</label><input class="admin-input" id="cfg-horario1" value="Lunes a Viernes: 8:00 – 12:00 / 15:00 – 19:00" /></div>
+        <div class="config-field"><label class="admin-label">Horario Sábado</label><input class="admin-input" id="cfg-horario2" value="Sábados: 8:00 – 12:00" /></div>
+        <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Dirección</label><input class="admin-input" id="cfg-dir" value="Gualeguay, Entre Ríos · Argentina · CP 2840" /></div>
+        <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Mensaje pre-cargado en WhatsApp</label><input class="admin-input" id="cfg-wamsg" value="Hola Metagro! Quiero consultar sobre sus productos." /></div>
+        <div class="config-field"><label class="admin-label">Usuario Admin</label><input class="admin-input" id="cfg-admin-user" value="metagro" /></div>
+        <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Contraseña Admin</label><input class="admin-input" id="cfg-admin-pass" type="password" /></div>
+      </div>
+      <div class="admin-save-bar">
+        <button class="btn-save" onclick="saveLocalInfo()">💾 Guardar Info</button>
+        <span class="save-msg" id="save-msg-local">✓ Información guardada</span>
+      </div>
+    </div>
+
+    <div id="tab-leyendas" class="admin-tab-content active">
+      <div style="background:#1a3a1a;border:2px solid #27ae60;padding:2rem;margin-bottom:2rem;border-radius:8px;">
+        <h2 style="color:#27ae60;margin-bottom:1rem;">✅ PANEL LEYENDAS CARGADO</h2>
+        <p style="color:#ccc;">Si ves esto, el panel se renderiza correctamente.</p>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">🏠 Banner Principal (Hero)</div>
+        <form onsubmit="event.preventDefault(); saveSiteTexts();">
+          <div class="config-grid">
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 1 del Título (Ej: "SIEMPRE JUNTO")</label>
+            <input class="admin-input" id="txt-hero-linea-1" placeholder="SIEMPRE JUNTO" />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 2 del Título (Ej: "AL CAMPO.")</label>
+            <input class="admin-input" id="txt-hero-linea-2" placeholder="AL CAMPO." />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Bajada de Texto / Subtítulo</label>
+            <textarea class="admin-textarea" id="txt-hero-desc" rows="3" placeholder="Insumos para la agroganadería..."></textarea>
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Número del Stat (ej: 43)</label>
+            <input class="admin-input" id="txt-hero-numero" placeholder="43" />
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Texto del Stat (ej: Años en el mercado)</label>
+            <input class="admin-input" id="txt-hero-etiqueta" placeholder="Años en el mercado" />
+          </div>
+          </div>
+          <button type="submit" class="btn-save" style="margin-top:1rem;">💾 Guardar Banner Principal</button>
+        </form>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">⚡ Tarjetas de Ventajas</div>
+        <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá, eliminá o agregá tarjetas de la sección "Ventajas Metagro".</p>
+        <div id="leyendas-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+        <button class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
+        <button class="btn-save" onclick="saveSiteTexts()" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">📋 Historial de Cambios</div>
+        <div id="leyendas-history" style="max-height:300px;overflow-y:auto;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:1rem;">
+          <p style="color:#666;font-size:.85rem;">Sin cambios registrados</p>
+        </div>
+      </div>
+
+      <div class="admin-save-bar">
+        <span class="save-msg" id="save-msg-texts">✓ Cambios guardados</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bulk-overlay" id="bulk-zone" style="display:none">
+  <div class="bulk-box">
+    <h3>📁 Carga Masiva de Productos</h3>
+    <p>Subí imágenes y editá nombre/categoría luego de la carga automática.</p>
+    <div class="bulk-drop" onclick="document.getElementById('bulk-input').click()">
+      <div>📸 Arrastrá las imágenes acá o hacé clic para seleccionar</div>
+      <input type="file" accept="image/*" multiple class="file-input-hidden" id="bulk-input" onchange="handleBulkFiles(this)" />
+    </div>
+    <label style="margin-top:.8rem;font-size:.9rem;color:#ccc">Nombres opcionales (uno por línea, coincide con el orden de archivos)</label>
+    <textarea id="bulk-names" class="admin-textarea" rows="4" placeholder="Torniquete Nº10&#10;Regulable Premium&#10;..."></textarea>
+    <div id="bulk-list" class="bulk-list"></div>
+    <div class="bulk-bar-wrap"><div class="bulk-bar" id="bulk-bar"></div></div>
+    <div class="admin-save-bar" style="margin-top:1rem">
+      <button class="btn-save" onclick="closeBulkUpload()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="product-modal" id="productModal" onclick="if(event.target===this)closeProductModal()">
+  <div class="product-modal-content">
+    <button class="product-modal-close" onclick="closeProductModal()">✕</button>
+    <div class="product-modal-body">
+      <div class="product-modal-image" id="modalImage"></div>
+      <div class="product-modal-info">
+        <div class="product-modal-tag" id="modalTag"></div>
+        <h2 class="product-modal-name" id="modalName"></h2>
+        <p class="product-modal-desc" id="modalDesc"></p>
+        <div class="product-modal-actions">
+          <a href="#" class="btn-wa" id="modalWa" target="_blank">💬 Consultar por WhatsApp</a>
+          <button class="btn-outline" onclick="closeProductModal()">Volver</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+window.DEFAULT_PRODUCTS = [
+  {
+    "id": 1,
+    "name": "A - Rosca Hembra 2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/A - Rosca Hembra 2.jpg",
+    "imagen_url": "productos/A - Rosca Hembra 2.jpg",
+    "images": [
+      "productos/A - Rosca Hembra 2.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Acople Rapido a palanca aluminio",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Acople Rapido a palanca aluminio.jpg",
+    "imagen_url": "productos/Acople Rapido a palanca aluminio.jpg",
+    "images": [
+      "productos/Acople Rapido a palanca aluminio.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Acople rapido con palanca plastico - copia",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Acople rapido con palanca plastico - copia.jpg",
+    "imagen_url": "productos/Acople rapido con palanca plastico - copia.jpg",
+    "images": [
+      "productos/Acople rapido con palanca plastico - copia.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Adaptador BIN",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Adaptador BIN.jpeg",
+    "imagen_url": "productos/Adaptador BIN.jpeg",
+    "images": [
+      "productos/Adaptador BIN.jpeg"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Aislador W",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Aislador W.jpg",
+    "imagen_url": "productos/Aislador W.jpg",
+    "images": [
+      "productos/Aislador W.jpg"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Arandela Grower",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arandela Grower.jpeg",
+    "imagen_url": "productos/Arandela Grower.jpeg",
+    "images": [
+      "productos/Arandela Grower.jpeg"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Arandela plana Zincada",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arandela plana Zincada.jpg",
+    "imagen_url": "productos/Arandela plana Zincada.jpg",
+    "images": [
+      "productos/Arandela plana Zincada.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Arreador b",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador b.jpeg",
+    "imagen_url": "productos/Arreador b.jpeg",
+    "images": [
+      "productos/Arreador b.jpeg"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Arreador con pilas",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador con pilas.jpeg",
+    "imagen_url": "productos/Arreador con pilas.jpeg",
+    "images": [
+      "productos/Arreador con pilas.jpeg"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Arreador corto y largo",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador corto y largo.jpeg",
+    "imagen_url": "productos/Arreador corto y largo.jpeg",
+    "images": [
+      "productos/Arreador corto y largo.jpeg"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Arreador mango",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador mango.jpg",
+    "imagen_url": "productos/Arreador mango.jpg",
+    "images": [
+      "productos/Arreador mango.jpg"
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Arreador puas",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador puas.jpg",
+    "imagen_url": "productos/Arreador puas.jpg",
+    "images": [
+      "productos/Arreador puas.jpg"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Arreador Tapa Roscada b",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador Tapa Roscada b.jpg",
+    "imagen_url": "productos/Arreador Tapa Roscada b.jpg",
+    "images": [
+      "productos/Arreador Tapa Roscada b.jpg"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Arreador",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador.jpg",
+    "imagen_url": "productos/Arreador.jpg",
+    "images": [
+      "productos/Arreador.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Arredor Tapa roscada",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arredor Tapa roscada.jpg",
+    "imagen_url": "productos/Arredor Tapa roscada.jpg",
+    "images": [
+      "productos/Arredor Tapa roscada.jpg"
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Autoperforante Madera",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Autoperforante Madera.jpg",
+    "imagen_url": "productos/Autoperforante Madera.jpg",
+    "images": [
+      "productos/Autoperforante Madera.jpg"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Autoperforante Metal",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Autoperforante Metal.jpeg",
+    "imagen_url": "productos/Autoperforante Metal.jpeg",
+    "images": [
+      "productos/Autoperforante Metal.jpeg"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "B - Rosca Macho a Palanca 3",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/B - Rosca Macho a Palanca 3.jpg",
+    "imagen_url": "productos/B - Rosca Macho a Palanca 3.jpg",
+    "images": [
+      "productos/B - Rosca Macho a Palanca 3.jpg"
+    ]
+  },
+  {
+    "id": 19,
+    "name": "bebederos cemento",
+    "tag": "Bebederos",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bebederos cemento.JPG",
+    "imagen_url": "productos/bebederos cemento.JPG",
+    "images": [
+      "productos/bebederos cemento.JPG"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Blanca 1",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Blanca 1.jpg",
+    "imagen_url": "productos/Blanca 1.jpg",
+    "images": [
+      "productos/Blanca 1.jpg"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Blanca 2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Blanca 2.jpg",
+    "imagen_url": "productos/Blanca 2.jpg",
+    "images": [
+      "productos/Blanca 2.jpg"
+    ]
+  },
+  {
+    "id": 22,
+    "name": "bobina 1000",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 1000.jpg",
+    "imagen_url": "productos/bobina 1000.jpg",
+    "images": [
+      "productos/bobina 1000.jpg"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "bobina 250",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 250.jpg",
+    "imagen_url": "productos/bobina 250.jpg",
+    "images": [
+      "productos/bobina 250.jpg"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "bobina 500",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 500.jpg",
+    "imagen_url": "productos/bobina 500.jpg",
+    "images": [
+      "productos/bobina 500.jpg"
+    ]
+  },
+  {
+    "id": 25,
+    "name": "bobina 750",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 750.jpg",
+    "imagen_url": "productos/bobina 750.jpg",
+    "images": [
+      "productos/bobina 750.jpg"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Buje reduccion",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Buje reduccion.jpg",
+    "imagen_url": "productos/Buje reduccion.jpg",
+    "images": [
+      "productos/Buje reduccion.jpg"
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Bulon Cabeza Hexagonal Dorado",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Hexagonal Dorado.jpg",
+    "imagen_url": "productos/Bulon Cabeza Hexagonal Dorado.jpg",
+    "images": [
+      "productos/Bulon Cabeza Hexagonal Dorado.jpg"
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Bulon Cabeza Hexagonal",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Hexagonal.jpg",
+    "imagen_url": "productos/Bulon Cabeza Hexagonal.jpg",
+    "images": [
+      "productos/Bulon Cabeza Hexagonal.jpg"
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Bulon Cabeza Redonda",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Redonda.jpeg",
+    "imagen_url": "productos/Bulon Cabeza Redonda.jpeg",
+    "images": [
+      "productos/Bulon Cabeza Redonda.jpeg"
+    ]
+  },
+  {
+    "id": 30,
+    "name": "C - Espiga a Palanca 3",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/C - Espiga a Palanca 3.jpg",
+    "imagen_url": "productos/C - Espiga a Palanca 3.jpg",
+    "images": [
+      "productos/C - Espiga a Palanca 3.jpg"
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Cable Dogo",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable Dogo.jpg",
+    "imagen_url": "productos/Cable Dogo.jpg",
+    "images": [
+      "productos/Cable Dogo.jpg"
+    ]
+  },
+  {
+    "id": 32,
+    "name": "Cable subterraneo Rolin 1.8mm",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable subterraneo Rolin 1.8mm.jpg",
+    "imagen_url": "productos/Cable subterraneo Rolin 1.8mm.jpg",
+    "images": [
+      "productos/Cable subterraneo Rolin 1.8mm.jpg"
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Cable",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable.jpeg",
+    "imagen_url": "productos/Cable.jpeg",
+    "images": [
+      "productos/Cable.jpeg"
+    ]
+  },
+  {
+    "id": 34,
+    "name": "CAdena Balde 2",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena Balde 2.jpg",
+    "imagen_url": "productos/CAdena Balde 2.jpg",
+    "images": [
+      "productos/CAdena Balde 2.jpg"
+    ]
+  },
+  {
+    "id": 35,
+    "name": "CAdena Balde",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena Balde.jpg",
+    "imagen_url": "productos/CAdena Balde.jpg",
+    "images": [
+      "productos/CAdena Balde.jpg"
+    ]
+  },
+  {
+    "id": 36,
+    "name": "CAdena",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena.jpg",
+    "imagen_url": "productos/CAdena.jpg",
+    "images": [
+      "productos/CAdena.jpg"
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Campanita con Trabas",
+    "tag": "Campanitas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Campanita con Trabas.jpg",
+    "imagen_url": "productos/Campanita con Trabas.jpg",
+    "images": [
+      "productos/Campanita con Trabas.jpg"
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Campanita",
+    "tag": "Campanitas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Campanita.jpg",
+    "imagen_url": "productos/Campanita.jpg",
+    "images": [
+      "productos/Campanita.jpg"
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Carretel con Hilo 500 Mts",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel con Hilo 500 Mts.jpg",
+    "imagen_url": "productos/Carretel con Hilo 500 Mts.jpg",
+    "images": [
+      "productos/Carretel con Hilo 500 Mts.jpg"
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Carretel con Hilo 750 Mts",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel con Hilo 750 Mts.jpg",
+    "imagen_url": "productos/Carretel con Hilo 750 Mts.jpg",
+    "images": [
+      "productos/Carretel con Hilo 750 Mts.jpg"
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Carretel Vacio - Estructura Metal",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel Vacio - Estructura Metal.jpg",
+    "imagen_url": "productos/Carretel Vacio - Estructura Metal.jpg",
+    "images": [
+      "productos/Carretel Vacio - Estructura Metal.jpg"
+    ]
+  },
+  {
+    "id": 42,
+    "name": "Carretel Vacio - Estructura Plastica",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel Vacio - Estructura Plastica.jpeg",
+    "imagen_url": "productos/Carretel Vacio - Estructura Plastica.jpeg",
+    "images": [
+      "productos/Carretel Vacio - Estructura Plastica.jpeg"
+    ]
+  },
+  {
+    "id": 43,
+    "name": "Caños Galvanizados",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Caños Galvanizados.jpg",
+    "imagen_url": "productos/Caños Galvanizados.jpg",
+    "images": [
+      "productos/Caños Galvanizados.jpg"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Cupla",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cupla.jpg",
+    "imagen_url": "productos/Cupla.jpg",
+    "images": [
+      "productos/Cupla.jpg"
+    ]
+  },
+  {
+    "id": 45,
+    "name": "D - Rosca Hembra Palanca",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/D - Rosca Hembra Palanca.jpg",
+    "imagen_url": "productos/D - Rosca Hembra Palanca.jpg",
+    "images": [
+      "productos/D - Rosca Hembra Palanca.jpg"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "E - Espiga  2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/E - Espiga  2.jpg",
+    "imagen_url": "productos/E - Espiga  2.jpg",
+    "images": [
+      "productos/E - Espiga  2.jpg"
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Entre rosca",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Entre rosca.jpg",
+    "imagen_url": "productos/Entre rosca.jpg",
+    "images": [
+      "productos/Entre rosca.jpg"
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Esclusa 2 Pulgadas",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esclusa 2 Pulgadas.jpeg",
+    "imagen_url": "productos/Esclusa 2 Pulgadas.jpeg",
+    "images": [
+      "productos/Esclusa 2 Pulgadas.jpeg"
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Esclusa 3 Pulgadas",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esclusa 3 Pulgadas.jpeg",
+    "imagen_url": "productos/Esclusa 3 Pulgadas.jpeg",
+    "images": [
+      "productos/Esclusa 3 Pulgadas.jpeg"
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Esferica Mariposa",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esferica Mariposa.jpg",
+    "imagen_url": "productos/Esferica Mariposa.jpg",
+    "images": [
+      "productos/Esferica Mariposa.jpg"
+    ]
+  },
+  {
+    "id": 51,
+    "name": "Eslabon abierto",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Eslabon abierto.jpg",
+    "imagen_url": "productos/Eslabon abierto.jpg",
+    "images": [
+      "productos/Eslabon abierto.jpg"
+    ]
+  },
+  {
+    "id": 52,
+    "name": "Gancho - Ojo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Gancho - Ojo.jpg",
+    "imagen_url": "productos/Gancho - Ojo.jpg",
+    "images": [
+      "productos/Gancho - Ojo.jpg"
+    ]
+  },
+  {
+    "id": 53,
+    "name": "GAncho J Estira Tejido",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/GAncho J Estira Tejido.jpg",
+    "imagen_url": "productos/GAncho J Estira Tejido.jpg",
+    "images": [
+      "productos/GAncho J Estira Tejido.jpg"
+    ]
+  },
+  {
+    "id": 54,
+    "name": "Grillete corazon 1",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Grillete corazon 1.jpg",
+    "imagen_url": "productos/Grillete corazon 1.jpg",
+    "images": [
+      "productos/Grillete corazon 1.jpg"
+    ]
+  },
+  {
+    "id": 55,
+    "name": "Grillete Recto",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Grillete Recto.jpg",
+    "imagen_url": "productos/Grillete Recto.jpg",
+    "images": [
+      "productos/Grillete Recto.jpg"
+    ]
+  },
+  {
+    "id": 56,
+    "name": "Guardacabo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Guardacabo.jpg",
+    "imagen_url": "productos/Guardacabo.jpg",
+    "images": [
+      "productos/Guardacabo.jpg"
+    ]
+  },
+  {
+    "id": 57,
+    "name": "Llave ESferica 2",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica 2.jpg",
+    "imagen_url": "productos/Llave ESferica 2.jpg",
+    "images": [
+      "productos/Llave ESferica 2.jpg"
+    ]
+  },
+  {
+    "id": 58,
+    "name": "Llave ESferica Plastica 2",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 2.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 2.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 2.jpg"
+    ]
+  },
+  {
+    "id": 59,
+    "name": "Llave ESferica Plastica 3",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 3.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 3.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 3.jpg"
+    ]
+  },
+  {
+    "id": 60,
+    "name": "Llave ESferica Plastica 4",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 4.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 4.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 4.jpg"
+    ]
+  },
+  {
+    "id": 61,
+    "name": "Llave ESferica Plastica Duke",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica Duke.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica Duke.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica Duke.jpg"
+    ]
+  },
+  {
+    "id": 62,
+    "name": "Llave ESferica Plastica",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica.jpg"
+    ]
+  },
+  {
+    "id": 63,
+    "name": "Llave Esferica",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave Esferica.jpg",
+    "imagen_url": "productos/Llave Esferica.jpg",
+    "images": [
+      "productos/Llave Esferica.jpg"
+    ]
+  },
+  {
+    "id": 64,
+    "name": "Manija Aislada con resorte",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Aislada con resorte.jpg",
+    "imagen_url": "productos/Manija Aislada con resorte.jpg",
+    "images": [
+      "productos/Manija Aislada con resorte.jpg"
+    ]
+  },
+  {
+    "id": 65,
+    "name": "Manija Aislada Reforzada",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Aislada Reforzada.jpg",
+    "imagen_url": "productos/Manija Aislada Reforzada.jpg",
+    "images": [
+      "productos/Manija Aislada Reforzada.jpg"
+    ]
+  },
+  {
+    "id": 66,
+    "name": "Manija Puntera",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Puntera.jpg",
+    "imagen_url": "productos/Manija Puntera.jpg",
+    "images": [
+      "productos/Manija Puntera.jpg"
+    ]
+  },
+  {
+    "id": 67,
+    "name": "Medidor de bateria 1",
+    "tag": "Medidores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Medidor de bateria 1.jpg",
+    "imagen_url": "productos/Medidor de bateria 1.jpg",
+    "images": [
+      "productos/Medidor de bateria 1.jpg"
+    ]
+  },
+  {
+    "id": 68,
+    "name": "Medidor de bateria",
+    "tag": "Medidores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Medidor de bateria.jpg",
+    "imagen_url": "productos/Medidor de bateria.jpg",
+    "images": [
+      "productos/Medidor de bateria.jpg"
+    ]
+  },
+  {
+    "id": 69,
+    "name": "Modelo A - Rosca Hembra",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo A - Rosca Hembra.jpg",
+    "imagen_url": "productos/Modelo A - Rosca Hembra.jpg",
+    "images": [
+      "productos/Modelo A - Rosca Hembra.jpg"
+    ]
+  },
+  {
+    "id": 70,
+    "name": "Modelo C - Espiga",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo C - Espiga.jpg",
+    "imagen_url": "productos/Modelo C - Espiga.jpg",
+    "images": [
+      "productos/Modelo C - Espiga.jpg"
+    ]
+  },
+  {
+    "id": 71,
+    "name": "Modelo D - Rosca  Hembra",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo D - Rosca  Hembra.jpg",
+    "imagen_url": "productos/Modelo D - Rosca  Hembra.jpg",
+    "images": [
+      "productos/Modelo D - Rosca  Hembra.jpg"
+    ]
+  },
+  {
+    "id": 72,
+    "name": "Modelo E - Eespiga",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo E - Eespiga.jpg",
+    "imagen_url": "productos/Modelo E - Eespiga.jpg",
+    "images": [
+      "productos/Modelo E - Eespiga.jpg"
+    ]
+  },
+  {
+    "id": 73,
+    "name": "Niple Galvanizados 2",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Niple Galvanizados 2.jpg",
+    "imagen_url": "productos/Niple Galvanizados 2.jpg",
+    "images": [
+      "productos/Niple Galvanizados 2.jpg"
+    ]
+  },
+  {
+    "id": 74,
+    "name": "Niple Galvanizados",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Niple Galvanizados.jpg",
+    "imagen_url": "productos/Niple Galvanizados.jpg",
+    "images": [
+      "productos/Niple Galvanizados.jpg"
+    ]
+  },
+  {
+    "id": 75,
+    "name": "Plastica",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Plastica.jpg",
+    "imagen_url": "productos/Plastica.jpg",
+    "images": [
+      "productos/Plastica.jpg"
+    ]
+  },
+  {
+    "id": 76,
+    "name": "pluviometro chicho",
+    "tag": "Pluviometros",
+    "desc": "",
+    "icon": "",
+    "img": "productos/pluviometro chicho.jpg",
+    "imagen_url": "productos/pluviometro chicho.jpg",
+    "images": [
+      "productos/pluviometro chicho.jpg"
+    ]
+  },
+  {
+    "id": 77,
+    "name": "pluviometro grande",
+    "tag": "Pluviometros",
+    "desc": "",
+    "icon": "",
+    "img": "productos/pluviometro grande.jpg",
+    "imagen_url": "productos/pluviometro grande.jpg",
+    "images": [
+      "productos/pluviometro grande.jpg"
+    ]
+  },
+  {
+    "id": 78,
+    "name": "Poste Quebracho 2",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Poste Quebracho 2.JPG",
+    "imagen_url": "productos/Poste Quebracho 2.JPG",
+    "images": [
+      "productos/Poste Quebracho 2.JPG"
+    ]
+  },
+  {
+    "id": 79,
+    "name": "Poste Quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Poste Quebracho.JPG",
+    "imagen_url": "productos/Poste Quebracho.JPG",
+    "images": [
+      "productos/Poste Quebracho.JPG"
+    ]
+  },
+  {
+    "id": 80,
+    "name": "postes de quebracho colorado",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/postes de quebracho colorado.JPG",
+    "imagen_url": "productos/postes de quebracho colorado.JPG",
+    "images": [
+      "productos/postes de quebracho colorado.JPG"
+    ]
+  },
+  {
+    "id": 81,
+    "name": "Postes Quebracho 3",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Postes Quebracho 3.JPG",
+    "imagen_url": "productos/Postes Quebracho 3.JPG",
+    "images": [
+      "productos/Postes Quebracho 3.JPG"
+    ]
+  },
+  {
+    "id": 82,
+    "name": "Postes Quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Postes Quebracho.JPG",
+    "imagen_url": "productos/Postes Quebracho.JPG",
+    "images": [
+      "productos/Postes Quebracho.JPG"
+    ]
+  },
+  {
+    "id": 83,
+    "name": "Prensa Cable",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Prensa Cable.jpg",
+    "imagen_url": "productos/Prensa Cable.jpg",
+    "images": [
+      "productos/Prensa Cable.jpg"
+    ]
+  },
+  {
+    "id": 84,
+    "name": "Pôste quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Pôste quebracho.JPG",
+    "imagen_url": "productos/Pôste quebracho.JPG",
+    "images": [
+      "productos/Pôste quebracho.JPG"
+    ]
+  },
+  {
+    "id": 85,
+    "name": "reforzada 500",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/reforzada 500.jpg",
+    "imagen_url": "productos/reforzada 500.jpg",
+    "images": [
+      "productos/reforzada 500.jpg"
+    ]
+  },
+  {
+    "id": 86,
+    "name": "reforzada 750",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/reforzada 750.jpg",
+    "imagen_url": "productos/reforzada 750.jpg",
+    "images": [
+      "productos/reforzada 750.jpg"
+    ]
+  },
+  {
+    "id": 87,
+    "name": "Regulable Ajustable",
+    "tag": "Regulables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Regulable Ajustable.jpeg",
+    "imagen_url": "productos/Regulable Ajustable.jpeg",
+    "images": [
+      "productos/Regulable Ajustable.jpeg"
+    ]
+  },
+  {
+    "id": 88,
+    "name": "Regulable con Gancho y Mariposa",
+    "tag": "Regulables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Regulable con Gancho y Mariposa.jpeg",
+    "imagen_url": "productos/Regulable con Gancho y Mariposa.jpeg",
+    "images": [
+      "productos/Regulable con Gancho y Mariposa.jpeg"
+    ]
+  },
+  {
+    "id": 89,
+    "name": "Roldana Plastico",
+    "tag": "Roldanas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Roldana Plastico.jpg",
+    "imagen_url": "productos/Roldana Plastico.jpg",
+    "images": [
+      "productos/Roldana Plastico.jpg"
+    ]
+  },
+  {
+    "id": 90,
+    "name": "Separador Corto",
+    "tag": "Separadores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Separador Corto.jpg",
+    "imagen_url": "productos/Separador Corto.jpg",
+    "images": [
+      "productos/Separador Corto.jpg"
+    ]
+  },
+  {
+    "id": 91,
+    "name": "Tapon Goma 2",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma 2.jpg",
+    "imagen_url": "productos/Tapon Goma 2.jpg",
+    "images": [
+      "productos/Tapon Goma 2.jpg"
+    ]
+  },
+  {
+    "id": 92,
+    "name": "Tapon Goma 3",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma 3.jpg",
+    "imagen_url": "productos/Tapon Goma 3.jpg",
+    "images": [
+      "productos/Tapon Goma 3.jpg"
+    ]
+  },
+  {
+    "id": 93,
+    "name": "Tapon Goma",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma.jpg",
+    "imagen_url": "productos/Tapon Goma.jpg",
+    "images": [
+      "productos/Tapon Goma.jpg"
+    ]
+  },
+  {
+    "id": 94,
+    "name": "Tarugo fischer 10 hueco solo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tarugo fischer 10 hueco solo.jpg",
+    "imagen_url": "productos/Tarugo fischer 10 hueco solo.jpg",
+    "images": [
+      "productos/Tarugo fischer 10 hueco solo.jpg"
+    ]
+  },
+  {
+    "id": 95,
+    "name": "tarugo fischer con balde",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/tarugo fischer con balde.jpg",
+    "imagen_url": "productos/tarugo fischer con balde.jpg",
+    "images": [
+      "productos/tarugo fischer con balde.jpg"
+    ]
+  },
+  {
+    "id": 96,
+    "name": "tarugo fischer Nº6 x 30 caja",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/tarugo fischer Nº6 x 30 caja.jpg",
+    "imagen_url": "productos/tarugo fischer Nº6 x 30 caja.jpg",
+    "images": [
+      "productos/tarugo fischer Nº6 x 30 caja.jpg"
+    ]
+  },
+  {
+    "id": 97,
+    "name": "Terminal Liviano",
+    "tag": "Terminales",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Terminal Liviano.jpg",
+    "imagen_url": "productos/Terminal Liviano.jpg",
+    "images": [
+      "productos/Terminal Liviano.jpg"
+    ]
+  },
+  {
+    "id": 98,
+    "name": "Terminal Reforzado",
+    "tag": "Terminales",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Terminal Reforzado.jpg",
+    "imagen_url": "productos/Terminal Reforzado.jpg",
+    "images": [
+      "productos/Terminal Reforzado.jpg"
+    ]
+  },
+  {
+    "id": 99,
+    "name": "todos los acoples y adaptadores",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/todos los acoples y adaptadores.jpg",
+    "imagen_url": "productos/todos los acoples y adaptadores.jpg",
+    "images": [
+      "productos/todos los acoples y adaptadores.jpg"
+    ]
+  },
+  {
+    "id": 100,
+    "name": "Tornillos tirafondo",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tornillos tirafondo.jpg",
+    "imagen_url": "productos/Tornillos tirafondo.jpg",
+    "images": [
+      "productos/Tornillos tirafondo.jpg"
+    ]
+  },
+  {
+    "id": 101,
+    "name": "Torniquete Nº8 Negro",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº8 Negro.jpg",
+    "imagen_url": "productos/Torniquete Nº8 Negro.jpg",
+    "images": [
+      "productos/Torniquete Nº8 Negro.jpg"
+    ]
+  },
+  {
+    "id": 102,
+    "name": "Torniquete Nº8 Zincado",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº8 Zincado.jpg",
+    "imagen_url": "productos/Torniquete Nº8 Zincado.jpg",
+    "images": [
+      "productos/Torniquete Nº8 Zincado.jpg"
+    ]
+  },
+  {
+    "id": 103,
+    "name": "Torniquete Nº9 Negro",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº9 Negro.jpeg",
+    "imagen_url": "productos/Torniquete Nº9 Negro.jpeg",
+    "images": [
+      "productos/Torniquete Nº9 Negro.jpeg"
+    ]
+  },
+  {
+    "id": 104,
+    "name": "Torniquete Nº9Tv Zincado",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº9Tv Zincado.jpeg",
+    "imagen_url": "productos/Torniquete Nº9Tv Zincado.jpeg",
+    "images": [
+      "productos/Torniquete Nº9Tv Zincado.jpeg"
+    ]
+  },
+  {
+    "id": 105,
+    "name": "Tripode para carretel 2",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel 2.jpeg",
+    "imagen_url": "productos/Tripode para carretel 2.jpeg",
+    "images": [
+      "productos/Tripode para carretel 2.jpeg"
+    ]
+  },
+  {
+    "id": 106,
+    "name": "Tripode para carretel 3",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel 3.jpeg",
+    "imagen_url": "productos/Tripode para carretel 3.jpeg",
+    "images": [
+      "productos/Tripode para carretel 3.jpeg"
+    ]
+  },
+  {
+    "id": 107,
+    "name": "Tripode para carretel",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel.jpeg",
+    "imagen_url": "productos/Tripode para carretel.jpeg",
+    "images": [
+      "productos/Tripode para carretel.jpeg"
+    ]
+  },
+  {
+    "id": 108,
+    "name": "Tuerca Zincada",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tuerca Zincada.jpg",
+    "imagen_url": "productos/Tuerca Zincada.jpg",
+    "images": [
+      "productos/Tuerca Zincada.jpg"
+    ]
+  },
+  {
+    "id": 109,
+    "name": "Valvula Flotante 2",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Flotante 2.jpg",
+    "imagen_url": "productos/Valvula Flotante 2.jpg",
+    "images": [
+      "productos/Valvula Flotante 2.jpg"
+    ]
+  },
+  {
+    "id": 110,
+    "name": "Valvula flotante Plastica",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula flotante Plastica.jpg",
+    "imagen_url": "productos/Valvula flotante Plastica.jpg",
+    "images": [
+      "productos/Valvula flotante Plastica.jpg"
+    ]
+  },
+  {
+    "id": 111,
+    "name": "Valvula Flotante",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Flotante.jpg",
+    "imagen_url": "productos/Valvula Flotante.jpg",
+    "images": [
+      "productos/Valvula Flotante.jpg"
+    ]
+  },
+  {
+    "id": 112,
+    "name": "Valvula Foglia",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Foglia.png",
+    "imagen_url": "productos/Valvula Foglia.png",
+    "images": [
+      "productos/Valvula Foglia.png"
+    ]
+  },
+  {
+    "id": 113,
+    "name": "Valvula Fundicion completa",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Fundicion completa.jpg",
+    "imagen_url": "productos/Valvula Fundicion completa.jpg",
+    "images": [
+      "productos/Valvula Fundicion completa.jpg"
+    ]
+  },
+  {
+    "id": 114,
+    "name": "Valvula Fundicion",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Fundicion.jpg",
+    "imagen_url": "productos/Valvula Fundicion.jpg",
+    "images": [
+      "productos/Valvula Fundicion.jpg"
+    ]
+  },
+  {
+    "id": 115,
+    "name": "Valvula Hansen",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Hansen.jpg",
+    "imagen_url": "productos/Valvula Hansen.jpg",
+    "images": [
+      "productos/Valvula Hansen.jpg"
+    ]
+  },
+  {
+    "id": 116,
+    "name": "Valvula Hierro Verde sola a",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Hierro Verde sola a.png",
+    "imagen_url": "productos/Valvula Hierro Verde sola a.png",
+    "images": [
+      "productos/Valvula Hierro Verde sola a.png"
+    ]
+  },
+  {
+    "id": 117,
+    "name": "valvula Plastica completa roja",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/valvula Plastica completa roja.jpg",
+    "imagen_url": "productos/valvula Plastica completa roja.jpg",
+    "images": [
+      "productos/valvula Plastica completa roja.jpg"
+    ]
+  },
+  {
+    "id": 118,
+    "name": "Varilla Con 1 Rulo",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Con 1 Rulo.jpg",
+    "imagen_url": "productos/Varilla Con 1 Rulo.jpg",
+    "images": [
+      "productos/Varilla Con 1 Rulo.jpg"
+    ]
+  },
+  {
+    "id": 119,
+    "name": "Varilla con 2 Rulos",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla con 2 Rulos.jpg",
+    "imagen_url": "productos/Varilla con 2 Rulos.jpg",
+    "images": [
+      "productos/Varilla con 2 Rulos.jpg"
+    ]
+  },
+  {
+    "id": 120,
+    "name": "Varilla Galvanizada",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Galvanizada.JPG",
+    "imagen_url": "productos/Varilla Galvanizada.JPG",
+    "images": [
+      "productos/Varilla Galvanizada.JPG"
+    ]
+  },
+  {
+    "id": 121,
+    "name": "Varilla Plastica",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Plastica.jpg",
+    "imagen_url": "productos/Varilla Plastica.jpg",
+    "images": [
+      "productos/Varilla Plastica.jpg"
+    ]
+  },
+  {
+    "id": 122,
+    "name": "Varilla Roscada",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Roscada.jpg",
+    "imagen_url": "productos/Varilla Roscada.jpg",
+    "images": [
+      "productos/Varilla Roscada.jpg"
+    ]
+  },
+  {
+    "id": 123,
+    "name": "Velas Electrico 1",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Velas Electrico 1.jpg",
+    "imagen_url": "productos/Velas Electrico 1.jpg",
+    "images": [
+      "productos/Velas Electrico 1.jpg"
+    ]
+  },
+  {
+    "id": 124,
+    "name": "Velas Eletrico 2",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Velas Eletrico 2.jpg",
+    "imagen_url": "productos/Velas Eletrico 2.jpg",
+    "images": [
+      "productos/Velas Eletrico 2.jpg"
+    ]
+  },
+  {
+    "id": 125,
+    "name": "Voltimetro 1",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Voltimetro 1.jpg",
+    "imagen_url": "productos/Voltimetro 1.jpg",
+    "images": [
+      "productos/Voltimetro 1.jpg"
+    ]
+  },
+  {
+    "id": 126,
+    "name": "Voltimetro",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Voltimetro.jpg",
+    "imagen_url": "productos/Voltimetro.jpg",
+    "images": [
+      "productos/Voltimetro.jpg"
+    ]
+  }
+];
+</script>
+
+<script>
+// Usar la misma URL del dominio en producción (Vercel) para que /api/* apunte al backend desplegado aquí.
+const API_BASE =
+  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:4000/api'
+    : (window.METAGRO_API_BASE || `${window.location.origin}/api`);
+
+
+let products = [];
+let useApi = true;
+let hasUnsavedChanges = false;
+let originalProducts = [];
+
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function encodeImgPath(path) {
+  if (!path) return '';
+  if (path.startsWith('data:') || path.startsWith('http')) return path;
+  return path.split('/').map(segment => encodeURIComponent(segment)).join('/');
+}
+
+async function api(path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+  const token = sessionStorage.getItem('mg_admin_token');
+  if (token) headers['x-mg-token'] = token;
+  const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+  if (!res.ok) throw new Error(`API ${res.status}`);
+  return res;
+}
+
+function showError(message) {
+  const el = document.getElementById('app-error');
+  if (!el) return;
+  el.textContent = message;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 4000);
+}
+
+function showToast(message, type = 'success') {
+  const existing = document.querySelector('.app-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = `app-toast app-toast--${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => toast.classList.add('show'));
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+function renderSkeletons(count = 6) {
+  const grid = document.getElementById('cat-grid');
+  if (!grid) return;
+  grid.innerHTML = Array.from({ length: count }).map(() => `
+    <div class="cat-card cat-card--skeleton">
+      <div class="cat-img-placeholder cat-img-placeholder--skeleton"></div>
+      <div class="cat-body">
+        <div class="skeleton-line skeleton-line--title"></div>
+        <div class="skeleton-line skeleton-line--text"></div>
+        <div class="skeleton-line skeleton-line--tag"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function normalizeProducts(arr) {
+  if (!Array.isArray(arr)) return [];
+  return arr.map(p => {
+    const imgMain = p.img || p.imagen_url || p.imagen || '';
+    const imgs = Array.isArray(p.images) && p.images.length
+      ? p.images
+      : (imgMain ? [imgMain] : []);
+    return {
+      id:         p.id ?? null,
+      name:       p.name || p.nombre || '',
+      tag:        p.tag || p.categoria || p.category || 'General',
+      desc:       p.desc || p.descripcion || p.description || '',
+      icon:       p.icon || '',
+      img:        imgMain,
+      imagen_url: p.imagen_url || imgMain,
+      images:     imgs
+    };
+  }).filter(p => p.id != null);
+}
+
+async function fetchProducts() {
+  if (!useApi) return;
+  renderSkeletons();
+  try {
+    const res = await api('/products');
+    const data = await res.json();
+    if (Array.isArray(data) && data.length > 0) {
+      products = normalizeProducts(data);
+      localStorage.setItem('mg_products', JSON.stringify(products));
+    } else if (!data || !data.length) {
+      const saved = localStorage.getItem('mg_products');
+      if (saved) { try { products = JSON.parse(saved); } catch (e) { /* localStorage corrupto, ignorar */ } }
+      if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
+    }
+  } catch (e) {
+    useApi = false;
+    const saved = localStorage.getItem('mg_products');
+    if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
+    if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
+    showError('No se pudo cargar el catálogo. Se mostrarán los productos guardados.');
+    const bar = document.getElementById('api-status-bar');
+    if (bar) bar.classList.add('show');
+  } finally {
+    populateCategoryFilter();
+    renderCatalog();
+  }
+}
+
+function localFallback() {
+  try {
+    const raw = localStorage.getItem('mg_products');
+    if (raw) products = JSON.parse(raw);
+  } catch (e) {
+    products = [];
+  }
+}
+
+function saveLocal() {
+  localStorage.setItem('mg_products', JSON.stringify(products));
+}
+
+function populateCategoryFilter() {
+  const sel = document.getElementById('cat-filter');
+  if (!sel) return;
+  const current = sel.value;
+  const set = new Set(products.map(p => (p.tag || '').trim()).filter(Boolean));
+  const cats = Array.from(set).sort((a, b) => a.localeCompare(b, 'es'));
+  sel.innerHTML = '<option value="__all__">Todas las categorías</option>' +
+    cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+  sel.value = cats.includes(current) ? current : '__all__';
+}
+
+function getSelectedProducts() {
+  const q = (document.getElementById('cat-search')?.value || '').trim().toLowerCase();
+  const cat = document.getElementById('cat-filter')?.value || '__all__';
+  return products
+    .map((p, i) => ({ p, i }))
+    .filter(({ p }) => {
+      const name = (p.name || '').toLowerCase();
+      const desc = (p.desc || '').toLowerCase();
+      const tag = (p.tag || '').toLowerCase();
+      const matchesQ = !q || name.includes(q) || desc.includes(q) || tag.includes(q);
+      const matchesCat = cat === '__all__' || (p.tag || '') === cat;
+      return matchesQ && matchesCat;
+    });
+}
+
+function renderCatalog() {
+    const totalEl = document.getElementById('prod-total-display');
+  if (totalEl && products.length) {
+    totalEl.style.display = 'block';
+    const items = getSelectedProducts();
+    totalEl.textContent = items.length + ' de ' + products.length + ' productos';
+  }
+const grid = document.getElementById('cat-grid');
+  if (!grid) return;
+  const items = getSelectedProducts();
+  if (!items.length) {
+    grid.innerHTML = '<div class="cat-empty">No se encontraron productos.</div>';
+    return;
+  }
+  grid.innerHTML = items.map(({ p, i }) => {
+    const allImages = Array.isArray(p.images) ? p.images : (p.img ? [p.img] : []);
+    const mainImg = allImages[0] || '';
+    const hasImg = !!mainImg;
+    const descClean = (p.desc || '')
+      .split(/\r?\n/)
+      .map(line => line.split(' | ').pop() || line)
+      .map(line => line.trim())
+      .filter(line => line && line !== (p.tag || '') && line !== (p.name || ''));
+    const descHtml = descClean.length
+      ? `<div class="cat-desc">${escapeHtml(descClean.join('\n'))}</div>`
+      : '';
+    const iconSafe = escapeHtml(p.icon || '📦');
+    const imgOnError = hasImg ? ` onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\\'cat-icon-fallback\\'>${iconSafe}</span>')"` : '';
+    const thumbs = allImages.slice(1).map(src => `<img src="${encodeImgPath(src)}" alt="" loading="lazy" />`).join('');
+    return `
+    <div class="cat-card" data-index="${i}">
+      <div class="cat-img-placeholder${hasImg ? '' : ' cat-img-placeholder--noimg'}">
+        ${hasImg ? `<img src="${encodeImgPath(mainImg)}" loading="lazy" alt="${escapeHtml(p.name || '')}"${imgOnError} />` : `<span class="cat-icon-fallback">${iconSafe}</span>`}
+      </div>
+      ${thumbs ? `<div class="cat-variants">${thumbs}</div>` : ''}
+      <div class="cat-body">
+        <div class="cat-name">${escapeHtml(p.name)}</div>
+        ${descHtml}
+        <span class="cat-tag">${escapeHtml(p.tag)}</span>
+      </div>
+    </div>
+  `;}).join('');
+}
+
+function toggleMenu() {
+  const menu = document.getElementById('navLinks');
+  menu.classList.toggle('open');
+}
+
+
+function renderAdminProducts() {
+  const countEl = document.getElementById('prod-count-bar');
+  if (countEl) countEl.textContent = products.length + ' productos cargados';
+  const grid = document.getElementById('admin-prod-grid');
+  if (!grid) return;
+  grid.innerHTML = products.map((p, i) => `
+    <div class="admin-prod-card" data-index="${i}">
+      <div class="admin-prod-card-header">
+        <span class="admin-prod-card-title">${escapeHtml(p.name || 'Sin nombre')}</span>
+        <button class="btn-del" onclick="deleteProduct(${i})" title="Eliminar">🗑</button>
+      </div>
+      <div class="admin-prod-card-body">
+        <label class="admin-label">Nombre</label>
+        <input class="admin-input" data-field="name" value="${escapeHtml(p.name || '')}" onchange="updateAdminProduct(${i},'name',this.value)" />
+        <label class="admin-label">Categoría</label>
+        <input class="admin-input" data-field="tag" value="${escapeHtml(p.tag || '')}" onchange="updateAdminProduct(${i},'tag',this.value)" />
+        <label class="admin-label">Descripción</label>
+        <textarea class="admin-textarea" data-field="desc" onchange="updateAdminProduct(${i},'desc',this.value)">${escapeHtml(p.desc || '')}</textarea>
+        <label class="admin-label">Imagen (ruta o base64)</label>
+        <input class="admin-input" data-field="img" value="${escapeHtml(p.img || '')}" onchange="updateAdminProduct(${i},'img',this.value)" placeholder="productos/foto.jpg" />
+        <div class="img-preview-wrap" onclick="this.querySelector('input').click()">
+          ${p.img ? `<img src="${p.img}" alt="preview" />` : '<span style="color:#555;font-size:.8rem">Sin imagen</span>'}
+          <input type="file" accept="image/*" class="file-input-hidden" onchange="handleAdminImage(this, ${i})" />
+        </div>
+        <span class="img-preview-label">Clic para cambiar imagen</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateAdminProduct(index, field, value) {
+  if (products[index]) {
+    products[index][field] = value;
+    hasUnsavedChanges = true;
+    updateUnsavedIndicator();
+  }
+}
+
+async function deleteProduct(index) {
+  if (!confirm('¿Borrar este producto?')) return;
+  const p = products[index];
+  if (!p) return;
+  if (p.id && originalProducts.find(op => op.id === p.id)) {
+    try {
+      await api(`/products/${p.id}`, { method: 'DELETE' });
+    } catch(e) {
+      showToast('No se pudo eliminar del servidor. Se eliminó localmente.', 'error');
+    }
+  }
+  originalProducts = originalProducts.filter(op => op.id !== p.id);
+  products.splice(index, 1);
+  hasUnsavedChanges = false;
+  saveLocal();
+  populateCategoryFilter();
+  renderAdminProducts();
+  renderCatalog();
+  showToast('Producto eliminado');
+}
+
+
+function addProduct() {
+  const newP = { id: Date.now(), name: 'Producto nuevo', tag: 'General', desc: '', icon: '📦', img: '' };
+  products.push(newP);
+  hasUnsavedChanges = true;
+  updateUnsavedIndicator();
+  saveLocal();
+  populateCategoryFilter();
+  renderAdminProducts();
+  renderCatalog();
+  document.getElementById('admin-prod-grid').scrollTop = document.getElementById('admin-prod-grid').scrollHeight;
+}
+
+async function handleAdminImage(input, index) {
+  const file = input.files[0];
+  if (!file) return;
+  try {
+    const base64 = await compressImage(file);
+    if (products[index]) {
+      products[index].img = base64;
+      hasUnsavedChanges = true;
+      updateUnsavedIndicator();
+      saveLocal();
+      renderAdminProducts();
+      renderCatalog();
+    }
+  } catch (err) {
+    showToast('Error al procesar la imagen', 'error');
+  }
+}
+
+function compressImage(file, maxWidth = 1200, quality = 0.8) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const ratio = Math.min(1, maxWidth / img.width);
+        const w = Math.round(img.width * ratio);
+        const h = Math.round(img.height * ratio);
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function saveProducts() {
+  const invalid = products.filter(p => !p.name || !p.name.trim());
+  if (invalid.length > 0) {
+    showToast(invalid.length + ' producto(s) sin nombre. Corregí antes de guardar.', 'error');
+    return;
+  }
+  saveLocal();
+  let created = 0, updated = 0, deleted = 0;
+  try {
+    const currentIds = new Set(products.map(p => p.id).filter(Boolean));
+    const originalIds = new Set(originalProducts.map(p => p.id).filter(Boolean));
+    for (const p of products) {
+      if (!p.id || !originalIds.has(p.id)) {
+        const res = await api('/products', { method: 'POST', body: JSON.stringify(p) });
+        const saved = await res.json();
+        if (saved.id) p.id = saved.id;
+        created++;
+      } else {
+        const orig = originalProducts.find(op => op.id === p.id);
+        if (orig && JSON.stringify(orig) !== JSON.stringify(p)) {
+          await api(`/products/${p.id}`, { method: 'PUT', body: JSON.stringify(p) });
+          updated++;
+        }
+      }
+    }
+    for (const p of originalProducts) {
+      if (p.id && !currentIds.has(p.id)) {
+        await api(`/products/${p.id}`, { method: 'DELETE' });
+        deleted++;
+      }
+    }
+    originalProducts = JSON.parse(JSON.stringify(products));
+  } catch(e) {
+    showError('Error al guardar en el servidor: ' + e.message);
+  }
+  hasUnsavedChanges = false;
+  updateUnsavedIndicator();
+  saveLocal();
+  const parts = [];
+  if (created) parts.push(created + ' creados');
+  if (updated) parts.push(updated + ' actualizados');
+  if (deleted) parts.push(deleted + ' eliminados');
+  const msg = parts.length ? '✓ ' + parts.join(', ') : '✓ Sin cambios pendientes';
+  showToast(msg);
+  const msgEl = document.getElementById('save-msg-prod');
+  if (msgEl) { msgEl.textContent = msg; msgEl.classList.add('show'); setTimeout(() => msgEl.classList.remove('show'), 3000); }
+  populateCategoryFilter();
+  renderCatalog();
+}
+
+async function openBulkUpload() {
+  document.getElementById('bulk-zone').style.display = 'flex';
+  document.getElementById('bulk-names').value = '';
+  document.getElementById('bulk-list').innerHTML = '';
+  document.getElementById('bulk-bar').style.width = '0%';
+}
+
+function closeBulkUpload() {
+  document.getElementById('bulk-zone').style.display = 'none';
+}
+
+async function handleBulkFiles(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  const list = document.getElementById('bulk-list');
+  const bar = document.getElementById('bulk-bar');
+  const namesText = document.getElementById('bulk-names').value.trim();
+  const namesArr = namesText ? namesText.split('\n').map(s => s.trim()).filter(Boolean) : [];
+  list.innerHTML = '';
+  files.forEach((f) => {
+    const item = document.createElement('div');
+    item.className = 'bulk-item';
+    item.textContent = f.name;
+    list.appendChild(item);
+  });
+  bar.style.width = '100%';
+  const processFile = async (file, idx) => {
+    try {
+      const base64 = await compressImage(file);
+      const name = namesArr[idx] || file.name.replace(/\.[^.]+$/, '').replace(/[_\-]+/g, ' ');
+      products.push({
+        id: Date.now() + idx,
+        name, tag: 'General', desc: 'Cargado por carga masiva', icon: '', img: base64
+      });
+    } catch (err) {
+      // silently skip failed image
+    }
+  };
+  await Promise.all(files.map((f, i) => processFile(f, i)));
+  populateCategoryFilter();
+  renderCatalog();
+  renderAdminProducts();
+  await Promise.allSettled(
+    products.slice(products.length - files.length).map(np =>
+      api('/products', { method: 'POST', body: JSON.stringify(np) })
+        .then(res => res.json())
+        .then(saved => { if (saved.id) np.id = saved.id; })
+        .catch(() => {})
+    )
+  );
+  saveLocal();
+  originalProducts = JSON.parse(JSON.stringify(products));
+  setTimeout(() => { bar.style.width = '0%'; }, 600);
+  input.value = '';
+}
+
+async function runProductsPostDeleteTest() {
+  const apiEl = document.getElementById('state-api');
+  const dbEl = document.getElementById('state-db');
+  const runEl = document.getElementById('state-run');
+
+  // Mantener compatibilidad: si no existe alguno, no romper el parser
+
+
+  const setRun = (msg) => { if (runEl) runEl.textContent = msg; };
+
+  try {
+    setRun('Ejecutando test POST/DELETE contra PostgreSQL...');
+
+    // 1) API + DB health
+    try {
+      const r1 = await fetch(`${API_BASE}/health`);
+      const ok1 = r1.ok;
+      if (apiEl) apiEl.textContent = ok1 ? `200 OK` : `HTTP ${r1.status}`;
+    } catch (e) {
+      if (apiEl) apiEl.textContent = `ERROR: ${e.message}`;
+    }
+
+    try {
+      const r2 = await fetch(`${API_BASE}/products-test/status`, {
+        headers: { 'x-mg-token': sessionStorage.getItem('mg_admin_token') || '' },
+      });
+      const j2 = await r2.json().catch(() => ({}));
+      if (dbEl) dbEl.textContent = r2.ok ? `200 OK (${j2?.db || 'db connected'})` : `HTTP ${r2.status}`;
+    } catch (e) {
+      if (dbEl) dbEl.textContent = `ERROR: ${e.message}`;
+    }
+
+    // 2) POST
+    const token = sessionStorage.getItem('mg_admin_token');
+    const producto = {
+      id: Date.now(),
+      name: `TEST-${Date.now()}`,
+      tag: 'TEST',
+      desc: 'Producto de prueba para validar persistencia en PostgreSQL',
+      img: ''
+    };
+
+    const postRes = await fetch(`${API_BASE}/products-test`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-mg-token': token || '',
+      },
+      body: JSON.stringify(producto)
+    });
+    const postData = await postRes.json().catch(() => ({}));
+    if (!postRes.ok) throw new Error(`POST fallo HTTP ${postRes.status}: ${JSON.stringify(postData)}`);
+
+    const insertedId = postData?.id;
+    if (!insertedId) throw new Error('POST OK pero no devolvió id');
+
+    // 3) DELETE
+    const delRes = await fetch(`${API_BASE}/products-test/${insertedId}`, {
+      method: 'DELETE',
+      headers: { 'x-mg-token': token || '' }
+    });
+    const delData = await delRes.json().catch(() => ({}));
+    if (!delRes.ok) throw new Error(`DELETE fallo HTTP ${delRes.status}: ${JSON.stringify(delData)}`);
+
+    // 4) Confirmación: GET debe dar 404
+    const getRes = await fetch(`${API_BASE}/products-test/${insertedId}`, {
+      method: 'GET',
+      headers: { 'x-mg-token': token || '' }
+    });
+    if (getRes.ok) {
+      throw new Error('Confirmación fallida: el producto todavía existe en DB');
+    }
+
+    setRun('✅ OK: POST insertó + DELETE borró en PostgreSQL');
+    return { ok: true, insertedId, delete: delData };
+  } catch (e) {
+    setRun(`❌ Falló: ${e.message}`);
+    return { ok: false, error: e.message };
+  }
+}
+
+function saveColors() {
+  const colors = {
+    '--yellow': document.getElementById('color-yellow').value,
+    '--black': document.getElementById('color-black').value,
+    '--steel': document.getElementById('color-steel').value,
+    '--cream': document.getElementById('color-cream').value,
+  };
+  const root = document.documentElement;
+  for (const [key, val] of Object.entries(colors)) root.style.setProperty(key, val);
+  localStorage.setItem('mg_colors', JSON.stringify(colors));
+  const msg = document.getElementById('save-msg-color');
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 2000);
+}
+
+function resetColors() {
+  const defaults = { '--yellow': '#F5C800', '--black': '#111111', '--steel': '#1a1a1a', '--cream': '#F5F0E8' };
+  const root = document.documentElement;
+  for (const [key, val] of Object.entries(defaults)) root.style.setProperty(key, val);
+  document.getElementById('color-yellow').value = defaults['--yellow'];
+  document.getElementById('color-black').value = defaults['--black'];
+  document.getElementById('color-steel').value = defaults['--steel'];
+  document.getElementById('color-cream').value = defaults['--cream'];
+  localStorage.removeItem('mg_colors');
+}
+
+function applyColor(key, value) {
+  document.documentElement.style.setProperty(key, value);
+}
+
+function updateUnsavedIndicator() {
+  const el = document.getElementById('unsaved-indicator');
+  if (el) el.style.display = hasUnsavedChanges ? 'inline' : 'none';
+}
+
+function syncLocalInfoToInputs() {
+  const cfg = (() => { try { return JSON.parse(localStorage.getItem('mg_config') || '{}'); } catch (e) { return {}; } })();
+  const map = { 'cfg-tel': 'tel', 'cfg-wa': 'wa', 'cfg-horario1': 'horario1', 'cfg-horario2': 'horario2', 'cfg-dir': 'dir', 'cfg-wamsg': 'wamsg', 'cfg-admin-user': 'adminUser', 'cfg-admin-pass': 'adminPass' };
+  for (const [id, key] of Object.entries(map)) {
+    const el = document.getElementById(id);
+    if (el && cfg[key]) el.value = cfg[key];
+  }
+}
+
+async function saveLocalInfo() {
+  const cfg = {
+    tel: document.getElementById('cfg-tel')?.value || '',
+    wa: document.getElementById('cfg-wa')?.value || '',
+    horario1: document.getElementById('cfg-horario1')?.value || '',
+    horario2: document.getElementById('cfg-horario2')?.value || '',
+    dir: document.getElementById('cfg-dir')?.value || '',
+    wamsg: document.getElementById('cfg-wamsg')?.value || ''
+  };
+  localStorage.setItem('mg_config', JSON.stringify(cfg));
+  try {
+    await api('/guardar-config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cfg)
+    });
+  } catch (e) {
+    showToast('No se pudo guardar la config en el servidor', 'error');
+  }
+  const msg = document.getElementById('save-msg-local');
+  if (msg) { msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2000); }
+}
+
+const VENTAJAS_CONFIG = [
+  { key: 'rapida', icon: '⚡', defaultTitulo: 'Atención Rápida', defaultDesc: 'Atendemos más rápido que la competencia. Tu tiempo en el campo vale.' },
+  { key: 'cta', icon: '🤝', defaultTitulo: 'Cuenta Corriente', defaultDesc: 'Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.' },
+  { key: 'precios', icon: '💰', defaultTitulo: 'Mejores Precios', defaultDesc: 'Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.' },
+  { key: 'stock', icon: '📦', defaultTitulo: 'Stock Permanente', defaultDesc: 'Amplia disponibilidad de productos para que no pares tu trabajo.' },
+  { key: 'exp', icon: '🏆', defaultTitulo: '43 Años de Experiencia', defaultDesc: 'Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.' },
+  { key: 'agro', icon: '🌿', defaultTitulo: 'Especialistas en el Agro', defaultDesc: 'Asesoramiento técnico para agroganaderos, molineros y alambradores.' },
+];
+
+const SITE_TEXTS_FALLBACKS = {
+  'hero_linea_1': 'SIEMPRE JUNTO',
+  'hero_linea_2': 'AL CAMPO.',
+  'hero_desc': 'Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería. Atención personalizada, precios competitivos y cuenta corriente para nuestros clientes.',
+  'hero_numero': '43',
+  'hero_etiqueta': 'AÑOS EN EL MERCADO',
+  'vent_eyebrow': 'POR QUÉ ELEGIRNOS',
+  'vent_titulo_1': 'VENTAJAS',
+  'vent_titulo_2': 'METAGRO',
+  'vent_card_1_titulo': 'ATENCIÓN RÁPIDA',
+  'vent_card_1_desc': 'Atendemos más rápido que la competencia. Tu tiempo en el campo vale.',
+  'vent_card_2_titulo': 'CUENTA CORRIENTE',
+  'vent_card_2_desc': 'Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.',
+  'vent_card_3_titulo': 'MEJORES PRECIOS',
+  'vent_card_3_desc': 'Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.',
+  'vent_card_4_titulo': 'STOCK PERMANENTE',
+  'vent_card_4_desc': 'Amplia disponibilidad de productos para que no pares tu trabajo.',
+  'vent_card_5_titulo': '43 AÑOS DE EXPERIENCIA',
+  'vent_card_5_desc': 'Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.',
+  'vent_card_6_titulo': 'ESPECIALISTAS EN EL AGRO',
+  'vent_card_6_desc': 'Asesoramiento técnico para agroganaderos, molineros y alambradores.',
+  'cont_eyebrow': 'CONTACTO',
+  'cont_titulo_1': '¿NECESITÁS UN PRODUCTO?',
+  'cont_titulo_2': 'CONSULTANOS.',
+  'cont_desc': 'Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rápido por WhatsApp o por teléfono.',
+  'footer_tagline': 'Siempre junto al campo · Desde 1983'
+};
+
+function getSiteTexts() {
+  try { return JSON.parse(localStorage.getItem('mg_site_texts') || '{}'); } catch(e) { return {}; }
+}
+
+async function loadSiteTextsIntoTab() {
+  try {
+    const texts = getSiteTexts();
+    const get = (key) => texts[key] || SITE_TEXTS_FALLBACKS[key] || '';
+
+    // Cargar campos del Hero
+    const heroLinea1El = document.getElementById('txt-hero-linea-1');
+    const heroLinea2El = document.getElementById('txt-hero-linea-2');
+    const heroDescEl = document.getElementById('txt-hero-desc');
+    const heroNumeroEl = document.getElementById('txt-hero-numero');
+    const heroEtiquetaEl = document.getElementById('txt-hero-etiqueta');
+
+    if (heroLinea1El) heroLinea1El.value = get('hero_linea_1');
+    if (heroLinea2El) heroLinea2El.value = get('hero_linea_2');
+    if (heroDescEl) heroDescEl.value = get('hero_desc');
+    if (heroNumeroEl) heroNumeroEl.value = get('hero_numero');
+    if (heroEtiquetaEl) heroEtiquetaEl.value = get('hero_etiqueta');
+
+    // Cargar tarjetas de ventajas
+    const grid = document.getElementById('leyendas-ventajas-grid');
+    let ventajasCards = [];
+    for (let i = 1; i <= 6; i++) {
+      const titulo = get(`vent_card_${i}_titulo`);
+      const desc = get(`vent_card_${i}_desc`);
+      if (titulo) {
+        ventajasCards.push({
+          icon: VENTAJAS_CONFIG[i-1]?.icon || '📦',
+          titulo: titulo,
+          descripcion: desc
+        });
+      }
+    }
+
+    if (grid) {
+      grid.innerHTML = ventajasCards.map((card, idx) => `
+        <div class="ventaja-card" data-index="${idx}">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+            <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${idx + 1}</span>
+            <button onclick="removeVentajaCard(${idx})" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">⚠️ Eliminar</button>
+          </div>
+          <label class="admin-label">Ícono (emoji)</label>
+          <input class="admin-input ventaja-icon" data-index="${idx}" value="${escapeHtml(card.icon || '')}" placeholder="⚡" />
+          <label class="admin-label">Título</label>
+          <input class="admin-input ventaja-titulo" data-index="${idx}" value="${escapeHtml(card.titulo || '')}" placeholder="Atención Rápida" />
+          <label class="admin-label">Descripción</label>
+          <textarea class="admin-textarea ventaja-desc" data-index="${idx}" rows="2">${escapeHtml(card.descripcion || '')}</textarea>
+        </div>
+      `).join('');
+    }
+  } catch (e) {
+    showToast('Error al cargar los textos', 'error');
+    const grid = document.getElementById('leyendas-ventajas-grid');
+    if (grid) grid.style.background = '#c0392b';
+    console.error('[Leyendas] Error cargando textos:', e);
+  }
+}
+
+function addVentajaCard() {
+  const grid = document.getElementById('leyendas-ventajas-grid');
+  if (!grid) return;
+  const cards = grid.querySelectorAll('.ventaja-card');
+  const newIndex = cards.length;
+  const html = `
+    <div class="ventaja-card" data-index="${newIndex}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${newIndex + 1}</span>
+        <button onclick="removeVentajaCard(${newIndex})" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">⚠️ Eliminar</button>
+      </div>
+      <label class="admin-label">Ícono (emoji)</label>
+      <input class="admin-input ventaja-icon" data-index="${newIndex}" value="" placeholder="⚡" />
+      <label class="admin-label">Título</label>
+      <input class="admin-input ventaja-titulo" data-index="${newIndex}" value="" placeholder="Nuevo beneficio" />
+      <label class="admin-label">Descripción</label>
+      <textarea class="admin-textarea ventaja-desc" data-index="${newIndex}" rows="2"></textarea>
+    </div>
+  `;
+  grid.insertAdjacentHTML('beforeend', html);
+}
+
+function removeVentajaCard(index) {
+  const card = document.querySelector(`.ventaja-card[data-index="${index}"]`);
+  if (card) card.remove();
+}
+
+function saveSiteTexts() {
+  const texts = getSiteTexts();
+
+  // Guardar campos del Hero desde el formulario
+  const heroLinea1 = document.getElementById('txt-hero-linea-1');
+  const heroLinea2 = document.getElementById('txt-hero-linea-2');
+  const heroDesc = document.getElementById('txt-hero-desc');
+  const heroNumero = document.getElementById('txt-hero-numero');
+  const heroEtiqueta = document.getElementById('txt-hero-etiqueta');
+
+  if (heroLinea1) texts['hero_linea_1'] = heroLinea1.value;
+  if (heroLinea2) texts['hero_linea_2'] = heroLinea2.value;
+  if (heroDesc) texts['hero_desc'] = heroDesc.value;
+  if (heroNumero) texts['hero_numero'] = heroNumero.value;
+  if (heroEtiqueta) texts['hero_etiqueta'] = heroEtiqueta.value;
+
+  // Guardar tarjetas de ventajas desde el grid
+  const grid = document.getElementById('leyendas-ventajas-grid');
+  if (grid) {
+    const cards = grid.querySelectorAll('.ventaja-card');
+    const ventajasCards = Array.from(cards).map((card, i) => ({
+      icon: card.querySelector('.ventaja-icon')?.value || '',
+      titulo: card.querySelector('.ventaja-titulo')?.value || '',
+      descripcion: card.querySelector('.ventaja-desc')?.value || ''
+    })).filter(c => c.titulo.trim());
+    ventajasCards.forEach((card, i) => {
+      texts[`vent_card_${i + 1}_titulo`] = card.titulo;
+      texts[`vent_card_${i + 1}_desc`] = card.descripcion;
+    });
+    // Limpiar tarjetas eliminadas
+    for (let i = ventajasCards.length + 1; i <= 6; i++) {
+      delete texts[`vent_card_${i}_titulo`];
+      delete texts[`vent_card_${i}_desc`];
+    }
+  }
+
+  const prevTexts = getSiteTexts();
+  localStorage.setItem('mg_site_texts', JSON.stringify(texts));
+  addHistoryEntry(prevTexts, texts);
+  fetchAndApplyTexts();
+  const msg = document.getElementById('save-msg-texts');
+  if (msg) { msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2500); }
+  showToast('✓ Todos los textos guardados');
+}
+
+function getSiteTextsHistory() {
+  try { return JSON.parse(localStorage.getItem('mg_site_texts_history') || '[]'); } catch(e) { return []; }
+}
+
+function addHistoryEntry(prev, next) {
+  const history = getSiteTextsHistory();
+  const changes = [];
+  const keys = new Set([...Object.keys(prev || {}), ...Object.keys(next || {})]);
+  keys.forEach(key => {
+    const oldVal = (prev && prev[key]) || '';
+    const newVal = (next && next[key]) || '';
+    if (oldVal !== newVal) {
+      changes.push({ key, oldVal, newVal });
+    }
+  });
+  if (changes.length === 0) return;
+  history.unshift({
+    date: new Date().toISOString(),
+    changes
+  });
+  if (history.length > 50) history.length = 50;
+  localStorage.setItem('mg_site_texts_history', JSON.stringify(history));
+  loadHistory();
+}
+
+function loadHistory() {
+  const container = document.getElementById('leyendas-history');
+  if (!container) return;
+  const history = getSiteTextsHistory();
+  if (!history.length) {
+    container.innerHTML = '<p style="color:#666;font-size:.85rem;">Sin cambios registrados</p>';
+    return;
+  }
+  container.innerHTML = history.map(entry => {
+    const d = new Date(entry.date);
+    const dateStr = d.toLocaleDateString('es-AR') + ' ' + d.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
+    const changesHtml = entry.changes.map(c => {
+      const label = c.key.replace(/_/g, ' ').toUpperCase();
+      return `<div style="margin-bottom:0.4rem;padding:0.4rem;background:#111;border-left:2px solid var(--yellow);font-size:.82rem;">
+        <strong style="color:var(--yellow);">${escapeHtml(label)}</strong><br/>
+        <span style="color:#888;">Antes:</span> ${escapeHtml(c.oldVal || '(vacío)')}<br/>
+        <span style="color:#4caf50;">Ahora:</span> ${escapeHtml(c.newVal || '(vacío)')}
+      </div>`;
+    }).join('');
+    return `<div style="margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid #222;">
+      <div style="color:#aaa;font-size:.75rem;margin-bottom:0.4rem;">📅 ${dateStr}</div>
+      ${changesHtml}
+    </div>`;
+  }).join('');
+}
+
+
+function fetchAndApplyTexts() {
+  const texts = getSiteTexts();
+  const get = (key) => texts[key] || SITE_TEXTS_FALLBACKS[key] || '';
+
+  // Hero
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    const linea1 = get('hero_linea_1');
+    const linea2 = get('hero_linea_2');
+    heroTitle.innerHTML = `${escapeHtml(linea1)}<br/>${escapeHtml(linea2)}`;
+  }
+  const heroDesc = document.querySelector('.hero-desc');
+  if (heroDesc) heroDesc.textContent = get('hero_desc');
+  const heroEyebrow = document.querySelector('.hero-eyebrow');
+  if (heroEyebrow) heroEyebrow.textContent = get('hero_eyebrow');
+  const heroBtns = document.querySelectorAll('.hero-actions a');
+  if (heroBtns[0]) heroBtns[0].textContent = get('hero_btn1') || 'Ver Productos';
+  if (heroBtns[1]) heroBtns[1].textContent = get('hero_btn2') || '📞 Contactarnos';
+  const statNum = document.querySelector('.stat-number');
+  if (statNum) statNum.textContent = get('hero_numero');
+  const statLabel = document.querySelector('.stat-label');
+  if (statLabel) statLabel.textContent = get('hero_etiqueta');
+
+  // Ventajas
+  const ventEyebrow = document.querySelector('#ventajas .section-label');
+  if (ventEyebrow) ventEyebrow.textContent = get('vent_eyebrow');
+  const ventTitulo = document.querySelector('#ventajas .section-title');
+  if (ventTitulo) {
+    const t1 = get('vent_titulo_1');
+    const t2 = get('vent_titulo_2');
+    ventTitulo.innerHTML = `${escapeHtml(t1)} <span>${escapeHtml(t2)}</span>`;
+  }
+
+  const ventItems = document.querySelectorAll('.vent-item');
+  ventItems.forEach((item, i) => {
+    const cardIdx = i + 1;
+    const titleEl = item.querySelector('.vent-title');
+    const descEl = item.querySelector('.vent-desc');
+    const iconEl = item.querySelector('.vent-icon');
+    if (titleEl) titleEl.textContent = get(`vent_card_${cardIdx}_titulo`);
+    if (descEl) descEl.textContent = get(`vent_card_${cardIdx}_desc`);
+    if (iconEl && VENTAJAS_CONFIG[i]) iconEl.textContent = VENTAJAS_CONFIG[i].icon || '';
+  });
+
+  // Contacto
+  const contEyebrow = document.querySelector('#contacto .section-label');
+  if (contEyebrow) contEyebrow.textContent = get('cont_eyebrow');
+  const contTitle = document.querySelector('#contacto .section-title');
+  if (contTitle) {
+    const ct1 = get('cont_titulo_1');
+    const ct2 = get('cont_titulo_2');
+    contTitle.innerHTML = `${escapeHtml(ct1)}<br/>${escapeHtml(ct2)}`;
+  }
+  const contDesc = document.querySelector('.cta-desc');
+  if (contDesc) contDesc.textContent = get('cont_desc');
+
+  // Footer
+  const tagline = document.querySelector('.footer-tagline');
+  if (tagline) tagline.textContent = get('footer_tagline');
+}
+
+function doLogout() {
+  if (hasUnsavedChanges && !confirm('Tenés cambios sin guardar. ¿Estás seguro que querés salir?')) return;
+  hasUnsavedChanges = false;
+  updateUnsavedIndicator();
+  sessionStorage.removeItem('mg_admin_token');
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+function openProductModal(p) {
+  document.getElementById('modalName').textContent = p.name || '';
+  document.getElementById('modalDesc').textContent = p.desc || '';
+  document.getElementById('modalTag').textContent = p.tag || 'Producto';
+  const imgWrap = document.getElementById('modalImage');
+  if (p.img) {
+    const iconSafe = escapeHtml(p.icon || '📦');
+    imgWrap.innerHTML = `<img src="${encodeImgPath(p.img)}" alt="${escapeHtml(p.name || '')}" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\\'font-size:4rem\\'>${iconSafe}</span>')" />`;
+  } else {
+    imgWrap.innerHTML = `<span style="font-size:4rem">${escapeHtml(p.icon || '📦')}</span>`;
+  }
+  const waNum = (() => { try { return JSON.parse(localStorage.getItem('mg_config') || '{}').wa || '5403444466919'; } catch(e) { return '5403444466919'; } })();
+  const waText = encodeURIComponent(`Hola Metagro! Quiero consultar por: ${p.name || 'producto'}. ¿Tienen stock y precio?`);
+  document.getElementById('modalWa').href = `https://wa.me/${waNum}?text=${waText}`;
+  document.getElementById('productModal').classList.add('open');
+}
+
+function closeProductModal() {
+  document.getElementById('productModal').classList.remove('open');
+}
+
+function openAdminLogin() {
+  document.getElementById('adminOverlay').classList.add('open');
+  document.getElementById('adminUser').focus();
+}
+
+function closeAdminLogin() {
+  document.getElementById('adminOverlay').classList.remove('open');
+}
+
+async function doLogin() {
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value;
+  const errEl = document.getElementById('loginError');
+  if (!u || !p) { errEl.style.display = 'block'; errEl.textContent = 'Ingresá usuario y contraseña.'; return; }
+  try {
+    const res = await api('/admin/login', {
+      method: 'POST',
+      body: JSON.stringify({ username: u, password: p })
+    });
+    const data = await res.json();
+    if (data.token) {
+      sessionStorage.setItem('mg_admin_token', data.token);
+      document.getElementById('adminOverlay').classList.remove('open');
+      document.getElementById('adminPanel').classList.add('open');
+      await fetchProducts();
+      originalProducts = JSON.parse(JSON.stringify(products || []));
+      renderAdminProducts();
+      syncLocalInfoToInputs();
+  applyLocalConfig();
+      errEl.style.display = 'none';
+    } else {
+      errEl.textContent = data.error || 'Usuario o contraseña incorrectos.';
+      errEl.style.display = 'block';
+    }
+  } catch (e) {
+    errEl.textContent = 'Error de conexión con el servidor.';
+    errEl.style.display = 'block';
+  }
+}
+
+document.querySelectorAll('#navLinks a').forEach(a => {
+  a.addEventListener('click', () => {
+    const menu = document.getElementById('navLinks');
+    if (menu.classList.contains('open')) toggleMenu();
+  });
+});
+
+document.getElementById('cat-grid').addEventListener('click', e => {
+  const card = e.target.closest('.cat-card');
+  if (!card) return;
+  const idx = parseInt(card.getAttribute('data-index'), 10);
+  if (!isNaN(idx) && products[idx]) openProductModal(products[idx]);
+});
+
+function init() {
+  const hostname = window.location.hostname;
+  if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+    const panel = document.getElementById('admin-test-panel');
+    if (panel) panel.style.display = 'none';
+  }
+  let defaults = [];
+  try {
+    defaults = window.DEFAULT_PRODUCTS || [];
+    if (!Array.isArray(defaults)) defaults = [];
+  } catch (e) { defaults = []; }
+  products = [...defaults];
+  try {
+    const raw = localStorage.getItem('mg_products');
+    if (raw) {
+      const local = JSON.parse(raw);
+      if (Array.isArray(local)) {
+        const remoteById = new Map(products.map(p => [String(p.id), p]));
+        const merged = [...products];
+        for (const p of local) {
+          const idx = merged.findIndex(m => String(m.id) === String(p.id));
+          if (idx >= 0) merged[idx] = { ...merged[idx], ...p };
+          else merged.push(p);
+        }
+        products = merged;
+      }
+    }
+  } catch (e) { products = [...defaults]; }
+  if (!products.length) products = [...defaults];
+  saveLocal();
+  try {
+    const current = JSON.parse(localStorage.getItem('mg_site_texts') || '{}');
+    const merged = { ...SITE_TEXTS_FALLBACKS };
+    for (const [key, value] of Object.entries(current)) {
+      if (value && value.trim()) merged[key] = value;
+    }
+    localStorage.setItem('mg_site_texts', JSON.stringify(merged));
+  } catch (e) {
+    localStorage.setItem('mg_site_texts', JSON.stringify(SITE_TEXTS_FALLBACKS));
+  }
+  populateCategoryFilter();
+  renderCatalog();
+  const searchEl = document.getElementById('cat-search');
+  const filterEl = document.getElementById('cat-filter');
+  const clearBtn = document.getElementById('cat-clear');
+  if (searchEl) searchEl.addEventListener('input', () => renderCatalog());
+  if (filterEl) filterEl.addEventListener('change', () => renderCatalog());
+  if (clearBtn) clearBtn.addEventListener('click', () => {
+    if (searchEl) searchEl.value = '';
+    if (filterEl) filterEl.value = '__all__';
+    renderCatalog();
+  });
+  const btt = document.getElementById('backToTop');
+  if (btt) {
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', () => {
+      btt.classList.toggle('show', window.scrollY > 400);
+    });
+  }
+   if (typeof useApi !== 'undefined' && useApi) fetchProducts();
+  syncLocalInfoToInputs();
+  fetchAndApplyTexts();
+  loadHistory();
+}
+
+function initMap() {
+  if (typeof L !== 'undefined' && document.getElementById('leaflet-map')) {
+    try {
+      setTimeout(() => {
+        const mapEl = document.getElementById('leaflet-map');
+        if (!mapEl || !mapEl.offsetWidth) return;
+        const map = L.map('leaflet-map', { zoomControl: true, scrollWheelZoom: false }).setView([-33.1308927, -59.3156888], 16);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors',
+          maxZoom: 19
+        }).addTo(map);
+        L.marker([-33.1308927, -59.3156888])
+          .addTo(map)
+          .bindPopup('<b>Metagro SRL</b><br/>Gualeguay, Entre Ríos')
+          .openPopup();
+        setTimeout(() => map.invalidateSize(), 300);
+      }, 300);
+    } catch (e) { /* map init failed */ }
+  }
+}
+
+function applyLocalConfig() {
+  const cfg = (() => { try { return JSON.parse(localStorage.getItem('mg_config') || '{}'); } catch(e) { return {}; } })();
+  const waBase = 'https://wa.me/' + (cfg.wa || '5403444466919') + '?text=' + encodeURIComponent(cfg.wamsg || 'Hola Metagro!');
+  document.querySelectorAll('[data-wa-href]').forEach(el => { el.href = waBase; });
+  document.querySelectorAll('[data-tel-href]').forEach(el => {
+    el.href = 'tel:+' + (cfg.tel || '5403444466919').replace(/\D/g,'');
+    if (el.childNodes.length === 1 && el.firstChild.nodeType === 3) {
+      el.textContent = cfg.tel || '03444 - 466919';
+    }
+  });
+  const dirEl = document.querySelector('[data-dir-text]');
+  if (dirEl && cfg.dir) dirEl.textContent = cfg.dir;
+  const horEl = document.querySelector('[data-horario-text]');
+  if (horEl && cfg.horario1 && cfg.horario2) {
+    horEl.innerHTML = cfg.horario1 + '<br/>' + cfg.horario2;
+  }
+}
+
+async function syncFromDB() {
+  const btn = document.getElementById('btn-sync-db');
+  if (btn) btn.textContent = 'Sincronizando...';
+  localStorage.removeItem('mg_products');
+  useApi = true;
+  await fetchProducts();
+  originalProducts = JSON.parse(JSON.stringify(products));
+  renderAdminProducts();
+  const countEl = document.getElementById('prod-count-bar');
+  if (countEl) countEl.textContent = products.length + ' productos cargados';
+  if (btn) btn.textContent = 'Sincronizar DB';
+  showToast('✓ ' + products.length + ' productos cargados desde la DB');
+}
+
+async function syncToDB() {
+  try {
+    await api('/sync-to-db', { method: 'POST' });
+    showToast('✓ Productos migrados a la base de datos');
+  } catch (e) {
+    showToast('Error al migrar: ' + (e.message || 'desconocido'), 'error');
+  }
+}
+
+function switchAdminTab(event, tabId) {
+  document.querySelectorAll('.admin-tab-content').forEach(content => content.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', () => { init(); initMap(); });
+</script>
+  <script src="js/app.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1/dist/script.js"></script>
+</body>
+</html>

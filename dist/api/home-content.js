@@ -1,16 +1,14 @@
 import pool from './lib/pg.js';
 
 const ALLOWED_ORIGINS = process.env.NODE_ENV === 'production'
-  ? ['https://metagro-srl.vercel.app', 'https://metagro.com', 'https://www.metagro.com', 'https://metagro.com.ar', 'https://www.metagro.com.ar']
+  ? ['https://metagro-srl.vercel.app', 'https://metagro.com', 'https://www.metagro.com']
   : ['http://localhost:4000', 'http://127.0.0.1:4000'];
 
-function setCors(req, res) {
-  const origin = req.headers.origin;
-  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
-  res.setHeader('Access-Control-Allow-Origin', allowed);
+function setCors(res) {
+  const origin = ALLOWED_ORIGINS[0];
+  res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-mg-token');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
 }
 
 function isAuth(req) {
@@ -139,7 +137,7 @@ async function restore(req, res) {
 }
 
 export default async function handler(req, res) {
-  setCors(req, res);
+  setCors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);

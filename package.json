@@ -9,8 +9,8 @@
     "build": "echo ''",
     "deploy": "vercel --prod",
     "deploy:preview": "vercel",
-    "test": "node scripts/test-api.cjs",
-    "bulk": "node scripts/bulk-upload.mjs",
+    "test": "node tools/test-api.cjs",
+    "bulk": "node tools/bulk-upload.mjs",
     "lint": "echo 'Sin linter configurado' && exit 0"
   },
   "dependencies": {
