@@ -1,13 +1,10 @@
 {
   "version": 2,
   "framework": null,
-  "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "**/*.{png,jpg,jpeg,svg,ico,webp}", "use": "@vercel/static" },
-    { "src": "api/index.js", "use": "@vercel/node" }
-  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/styles/(.*)", "destination": "/styles/$1" },
+    { "source": "/js/(.*)", "destination": "/js/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
