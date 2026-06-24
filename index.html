@@ -119,12 +119,28 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
       <!-- BLOQUE 2: Configuración de la Sección Ventajas -->
       <div style="margin-bottom:2rem;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">⚡ Tarjetas de Ventajas</div>
-        <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá, eliminá o agregá tarjetas de la sección "Ventajas Metagro".</p>
 
-        <div id="leyendas-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+        <form onsubmit="event.preventDefault(); saveSiteTexts();" style="display:flex; flex-direction:column; gap:1.2rem;">
+          <div class="config-grid">
+            <div class="config-field" style="grid-column:1/-1">
+              <label class="admin-label">Eyebrow (ej: "POR QUÉ ELEGIRNOS")</label>
+              <input class="admin-input" id="txt-vent-eyebrow" placeholder="POR QUÉ ELEGIRNOS" />
+            </div>
+            <div class="config-field" style="grid-column:1/-1">
+              <label class="admin-label">Título Principal (ej: "VENTAJAS METAGRO")</label>
+              <input class="admin-input" id="txt-vent-titulo-1" placeholder="VENTAJAS" />
+            </div>
+            <div class="config-field" style="grid-column:1/-1">
+              <label class="admin-label">Subtítulo (ej: "METAGRO")</label>
+              <input class="admin-input" id="txt-vent-titulo-2" placeholder="METAGRO" />
+            </div>
+          </div>
 
-        <button class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
-        <button class="btn-save" onclick="saveSiteTexts()" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
+          <div id="leyendas-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+
+          <button type="button" class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
+          <button type="submit" class="btn-save">💾 Guardar Ventajas</button>
+        </form>
       </div>
 
       <!-- BLOQUE 3: Historial de Cambios -->

@@ -690,6 +690,14 @@ async function loadSiteTextsIntoTab() {
     if (heroNumeroEl) heroNumeroEl.value = get('hero_numero');
     if (heroEtiquetaEl) heroEtiquetaEl.value = get('hero_etiqueta');
 
+    const ventEyebrowEl = document.getElementById('txt-vent-eyebrow');
+    const ventTitulo1El = document.getElementById('txt-vent-titulo-1');
+    const ventTitulo2El = document.getElementById('txt-vent-titulo-2');
+
+    if (ventEyebrowEl) ventEyebrowEl.value = get('vent_eyebrow');
+    if (ventTitulo1El) ventTitulo1El.value = get('vent_titulo_1');
+    if (ventTitulo2El) ventTitulo2El.value = get('vent_titulo_2');
+
     const grid = document.getElementById('leyendas-ventajas-grid');
     let ventajasCards = [];
     for (let i = 1; i <= 6; i++) {
@@ -769,6 +777,14 @@ function saveSiteTexts() {
   if (heroDesc) texts['hero_desc'] = heroDesc.value;
   if (heroNumero) texts['hero_numero'] = heroNumero.value;
   if (heroEtiqueta) texts['hero_etiqueta'] = heroEtiqueta.value;
+
+  const ventEyebrow = document.getElementById('txt-vent-eyebrow');
+  const ventTitulo1 = document.getElementById('txt-vent-titulo-1');
+  const ventTitulo2 = document.getElementById('txt-vent-titulo-2');
+
+  if (ventEyebrow) texts['vent_eyebrow'] = ventEyebrow.value;
+  if (ventTitulo1) texts['vent_titulo_1'] = ventTitulo1.value;
+  if (ventTitulo2) texts['vent_titulo_2'] = ventTitulo2.value;
 
   const grid = document.getElementById('leyendas-ventajas-grid');
   if (grid) {
