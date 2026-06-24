@@ -55,50 +55,100 @@ body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
 /* ── NAV ── */
-nav {
+.navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: var(--black); border-bottom: 2px solid var(--yellow);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 2rem; height: 62px;
+  background: #0b0b0b;
+  border-bottom: 2px solid var(--yellow);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 30px;
+  height: 62px;
 }
-.nav-logo-img {
-  position: absolute;
-  left: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
+
+.navbar-logo {
+  display: flex; align-items: center;
+  font-weight: bold;
+  color: var(--yellow);
+  font-size: 1.2rem;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.navbar-logo img {
   height: 44px;
   width: 44px;
   object-fit: contain;
   border-radius: 4px;
   flex-shrink: 0;
 }
-.nav-logo-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-left: 54px;
+
+.navbar-logo .logo-text {
+  margin-left: 0.65rem;
 }
-.nav-logo {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 1.6rem;
-  letter-spacing: 0.04em;
-  color: var(--yellow);
+
+.navbar-menu {
+  display: flex;
+  gap: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu-link {
+  color: #ffffff;
   text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.menu-link:hover { color: var(--yellow); }
+.menu-link:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+.navbar-actions {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 10px;
 }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cream); text-decoration: none; transition: color .2s; }
-.nav-links a:hover { color: var(--yellow); }
-.nav-links a:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
-.nav-cta { background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.45rem 1.2rem; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: background .2s; }
-.nav-cta:hover { background: var(--yellow-dark); }
-.nav-cta:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
-.nav-admin-btn { background: transparent; color: var(--cream); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.9rem; border: 1px solid #444; border-radius: var(--radius); cursor: pointer; transition: all .2s; }
-.nav-admin-btn:hover { border-color: var(--yellow); color: var(--yellow); }
-.nav-admin-btn:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+.btn-whatsapp {
+  background-color: var(--yellow);
+  color: #000000;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.btn-whatsapp:hover { background-color: var(--yellow-dark); }
+.btn-whatsapp:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+
+.btn-admin {
+  background-color: transparent;
+  color: #ffffff;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  border: 1px solid #444444;
+  border-radius: 4px;
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-admin:hover { background-color: #ffffff; color: #000000; }
+.btn-admin:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
 .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
 .hamburger span { display: block; width: 24px; height: 2px; background: var(--cream); transition: all .2s; }
 .hamburger:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
@@ -233,8 +283,16 @@ section { padding: 5rem 2rem; }
 }
 .cat-clear:hover { background: var(--yellow-dark); }
 
-/* [REPARADO] .nav-logo ya definido arriba como amarillo completo, se elimina gradiente que lo partía */
-
+.api-status-bar {
+  display: none;
+  background: #c0392b;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+.api-status-bar.show { display: block; }
 
 @media (max-width: 768px) {
   .cat-tools {
@@ -288,7 +346,7 @@ section { padding: 5rem 2rem; }
   overflow: hidden; display: flex; flex-direction: column;
   position: relative; z-index: 1;
 }
-#leaflet-map { width: 100%; height: 300px; position: relative; z-index: 1; }
+#leaflet-map { width: 100%; height: 300px; position: relative; z-index: 1; border: 2px solid var(--yellow); border-radius: 10px; overflow: hidden; }
 .leaflet-container { z-index: 1 !important; }
 .leaflet-pane { z-index: 2 !important; }
 .map-open-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.75rem 1rem; text-decoration: none; transition: background .2s; }
@@ -322,12 +380,11 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 .footer-bottom { max-width: 1200px; margin: 2rem auto 0; padding-top: 1.2rem; border-top: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
 .footer-copy { font-size: 0.78rem; color: #444; }
 .footer-copy strong { color: var(--yellow); }
+.footer-actions { display: flex; align-items: center; gap: 2.5rem; }
+.wa-float-footer { display: inline-flex; align-items: center; gap: 0.3rem; background: #25D366; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.8rem; border-radius: var(--radius); text-decoration: none; transition: all .2s; letter-spacing: 0.04em; }
+.wa-float-footer:hover { background: #1ebc57; transform: translateY(-1px); }
 .admin-trigger { background: none; border: none; color: #2a2a2a; font-size: 0.7rem; cursor: pointer; padding: 0.2rem 0.5rem; transition: color .2s; }
 .admin-trigger:hover { color: #555; }
-
-/* ── FLOATING WA ── */
-.wa-float { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200; background: #25D366; color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,.4); transition: transform .2s; }
-.wa-float:hover { transform: scale(1.1); }
 
 /* ── ADMIN ── */
 .admin-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; }
@@ -414,9 +471,9 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .nav-links, .nav-cta, .nav-admin-btn { display: none; }
+  .navbar-menu, .navbar-actions { display: none; }
   .hamburger { display: flex; }
-  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 62px; left: 0; right: 0; background: var(--black); border-bottom: 2px solid var(--yellow); padding: 1rem 2rem; gap: 1.2rem; }
+  .navbar-menu.open { display: flex; flex-direction: column; position: absolute; top: 62px; left: 0; right: 0; background: #0b0b0b; border-bottom: 2px solid var(--yellow); padding: 1rem 30px; gap: 1.2rem; }
   .hero::before { display: none; }
   .hero-content { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
   .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
@@ -424,6 +481,7 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
   .info-grid { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-actions { justify-content: center; }
   .color-grid, .config-grid { grid-template-columns: 1fr; }
   .admin-prod-grid { grid-template-columns: 1fr; }
   .photo-strip { height: 160px; }
@@ -473,23 +531,31 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 <div class="app-toast-container" id="app-toast-container" aria-live="polite"></div>
 
 <!-- NAV -->
-<nav>
-  <img src="logo/Logo.jpg" alt="Metagro SRL" class="nav-logo-img" />
-  <div class="nav-logo-wrap">
-    <a class="nav-logo" href="#" onclick="return false;" aria-label="MetagroSRL">MetagroSRL</a>
+<header class="navbar">
+  <div class="navbar-logo">
+    <img src="logo/Logo.jpg" alt="Metagro SRL" class="logo-img" />
+    <span class="logo-text">MetagroSRL</span>
   </div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#productos">Productos</a></li>
-    <li><a href="#ventajas">Nosotros</a></li>
-    <li><a href="#info">Local</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-  <a href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="nav-cta">💬 WhatsApp</a>
-  <button class="nav-admin-btn" onclick="openAdminLogin()">⚙ Admin</button>
+
+  <nav class="navbar-menu" id="navLinks">
+    <a href="#productos" class="menu-link">PRODUCTOS</a>
+    <a href="#ventajas" class="menu-link">NOSOTROS</a>
+    <a href="#info" class="menu-link">LOCAL</a>
+    <a href="#contacto" class="menu-link">CONTACTO</a>
+  </nav>
+
+  <div class="navbar-actions">
+    <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-whatsapp">
+      <span class="icon">💬</span> WHATSAPP
+    </a>
+    <button class="btn-admin" onclick="openAdminLogin()">
+      <span class="icon">⚙</span> ADMIN
+    </button>
+  </div>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menú">
     <span></span><span></span><span></span>
   </div>
-</nav>
+</header>
 
 <!-- FRANJA DE FOTOS -->
 <div class="photo-strip">
@@ -504,19 +570,67 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
   <div class="photo-strip-img">
     <img src="image/imagen 3.jpeg" alt="Metagro" />
     <div class="photo-strip-overlay"><span>Gualeguay · Entre Ríos</span></div>
-  </div>
-</div>
+      </div>
+    </div>
+    <div class="admin-tab-content" id="tab-leyendas">
+      <p style="color:#888;font-size:.9rem;margin-bottom:1.5rem;">
+        Editá los textos e íconos de la página principal. Los cambios se aplican al guardar.
+      </p>
 
-<!-- BANNER DE ESPECIALIDADES -->
-<div class="brand-banner">
-  <span>Insumos Agrícolas</span><div class="brand-banner-dot"></div>
-  <span>Alambrados</span><div class="brand-banner-dot"></div>
-  <span>Molinos de Viento</span><div class="brand-banner-dot"></div>
-  <span>Aguadas</span><div class="brand-banner-dot"></div>
-  <span>Ferretería</span><div class="brand-banner-dot"></div>
-  <span>Bulonería</span><div class="brand-banner-dot"></div>
-  <span>03444 – 466919</span>
-</div>
+      <!-- BLOQUE 1: Configuración del Banner Principal -->
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">🏠 Banner Principal (Hero)</div>
+        <form onsubmit="event.preventDefault(); saveSiteTexts();">
+          <div class="config-grid">
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 1 del Título (Ej: "SIEMPRE JUNTO")</label>
+            <input class="admin-input" id="txt-hero-linea-1" placeholder="SIEMPRE JUNTO" />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 2 del Título (Ej: "AL CAMPO.")</label>
+            <input class="admin-input" id="txt-hero-linea-2" placeholder="AL CAMPO." />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Bajada de Texto / Subtítulo</label>
+            <textarea class="admin-textarea" id="txt-hero-desc" rows="3" placeholder="Insumos para la agroganadería..."></textarea>
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Número del Stat (ej: 43)</label>
+            <input class="admin-input" id="txt-hero-numero" placeholder="43" />
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Texto del Stat (ej: Años en el mercado)</label>
+            <input class="admin-input" id="txt-hero-etiqueta" placeholder="Años en el mercado" />
+          </div>
+          </div>
+          <button type="submit" class="btn-save" style="margin-top:1rem;">💾 Guardar Banner Principal</button>
+        </form>
+      </div>
+
+      <!-- BLOQUE 2: Configuración de la Sección Ventajas -->
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">⚡ Tarjetas de Ventajas</div>
+        <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá, eliminá o agregá tarjetas de la sección "Ventajas Metagro".</p>
+
+        <div id="leyendas-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+
+        <button class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
+        <button class="btn-save" onclick="saveSiteTexts()" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
+      </div>
+
+      <!-- BLOQUE 3: Historial de Cambios -->
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">📋 Historial de Cambios</div>
+        <div id="leyendas-history" style="max-height:300px;overflow-y:auto;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:1rem;">
+          <p style="color:#666;font-size:.85rem;">Sin cambios registrados</p>
+        </div>
+      </div>
+
+      <div class="admin-save-bar">
+        <span class="save-msg" id="save-msg-texts">✓ Cambios guardados</span>
+      </div>
+    </div>
+  </div>
 
 <!-- HERO -->
 <section class="hero">
@@ -550,7 +664,7 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
       </select>
       <button id="cat-clear" class="cat-clear" type="button">Limpiar</button>
     </div>
-
+    <div id="api-status-bar" class="api-status-bar">Sin conexión con el servidor. Mostrando datos guardados localmente.</div>
     <div class="cat-grid" id="cat-grid"></div>
   </div>
 </section>
@@ -580,9 +694,9 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
     <div class="divider"></div>
     <div class="info-grid">
       <div class="info-block">
-        <div class="info-item"><div class="info-icon">📍</div><div><div class="info-text-label">Dirección</div><div class="info-text-value">Gualeguay, Entre Ríos<br/>Argentina · CP 2840</div></div></div>
-        <div class="info-item"><div class="info-icon">📞</div><div><div class="info-text-label">Teléfono</div><div class="info-text-value"><a href="tel:+5403444466919">03444 – 466919</a></div></div></div>
-        <div class="info-item"><div class="info-icon">💬</div><div><div class="info-text-label">WhatsApp</div><div class="info-text-value"><a href="https://wa.me/5403444466919" target="_blank">Escribinos directo por WhatsApp</a></div></div></div>
+        <div class="info-item"><div class="info-icon">📍</div><div><div class="info-text-label">Dirección</div><div class="info-text-value" data-dir-text>Gualeguay, Entre Ríos<br/>Argentina · CP 2840</div></div></div>
+        <div class="info-item"><div class="info-icon">📞</div><div><div class="info-text-label">Teléfono</div><div class="info-text-value"><a data-tel-href href="tel:+5403444466919">03444 – 466919</a></div></div></div>
+        <div class="info-item"><div class="info-icon">💬</div><div><div class="info-text-label">WhatsApp</div><div class="info-text-value"><a data-wa-href href="https://wa.me/5403444466919" target="_blank">Escribinos directo por WhatsApp</a></div></div></div>
         <div class="info-item"><div class="info-icon">🕐</div><div><div class="info-text-label">Horario de atención</div><div class="info-text-value">Lunes a Viernes: 8:00 – 12:00 / 15:00 – 19:00<br/>Sábados: 8:00 – 12:00</div></div></div>
         <div class="info-item"><div class="info-icon">📅</div><div><div class="info-text-label">En el mercado desde</div><div class="info-text-value">1983 · 43 años de trayectoria</div></div></div>
       </div>
@@ -605,49 +719,12 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
       <div class="divider"></div>
       <p class="cta-desc">Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rápido por WhatsApp o por teléfono.</p>
       <div class="cta-btns">
-        <a href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-wa">💬 WhatsApp</a>
-        <a href="tel:+5403444466919" class="btn-tel">📞 03444 – 466919</a>
+        <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-wa">💬 WhatsApp</a>
+        <a data-tel-href href="tel:+5403444466919" class="btn-tel">📞 03444 – 466919</a>
       </div>
     </div>
   </div>
 </section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="logo/Logo.jpg" alt="Metagro SRL" class="footer-logo-img" />
-        <div class="footer-tagline">Siempre junto al campo · Desde 1983</div>
-      </div>
-      <div>
-        <div class="footer-col-title">Productos</div>
-      <ul class="footer-links">
-        <li><a href="#productos">Insumos Agrícolas</a></li>
-        <li><a href="#productos">Alambrados</a></li>
-        <li><a href="#productos">Molinos de Viento</a></li>
-        <li><a href="#productos">Aguadas y Bebederos</a></li>
-        <li><a href="#productos">Ferretería y Bulonería</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Contacto</div>
-      <ul class="footer-links">
-        <li><a href="tel:+5403444466919">📞 03444 – 466919</a></li>
-        <li><a href="https://wa.me/5403444466919" target="_blank">💬 WhatsApp</a></li>
-        <li><a href="#info">📍 Gualeguay, Entre Ríos</a></li>
-        <li><a href="#info">🕐 Lun–Vie 8–12 / 15–19</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© <span id="footer-year"></span> <strong>Metagro SRL</strong> · Todos los derechos reservados</div>
-    <button class="admin-trigger" onclick="openAdminLogin()">⚙ Admin</button>
-  </div>
-</footer>
-
-<!-- Floating WhatsApp -->
-<a href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="wa-float" aria-label="Consultar por WhatsApp">💬</a>
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba" title="Volver arriba">↑</button>
 
 <!-- ADMIN LOGIN -->
 <div class="admin-overlay" id="adminOverlay">
@@ -665,50 +742,34 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 <!-- ADMIN PANEL -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-topbar">
-    <div class="admin-topbar-title">Panel <span>Admin</span> · Metagro SRL <span id="unsaved-indicator" style="color:#c0392b;font-size:0.8rem;margin-left:0.8rem;display:none;">● Cambios sin guardar</span></div>
-    <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
+    <div class="admin-topbar-title">PANEL <span>METAGRO</span></div>
+    <button class="btn-logout" onclick="doLogout()">CERRAR SESIÓN</button>
   </div>
+
   <div class="admin-body">
     <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchTab('tab-productos',this)">📦 Productos</button>
-      <button class="admin-tab" onclick="switchTab('tab-colores',this)">🎨 Colores</button>
-      <button class="admin-tab" onclick="switchTab('tab-local',this)">📍 Info Local</button>
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-productos')">📦 Productos</button>
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-colores')">🎨 Colores</button>
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-info')">📍 Info Local</button>
+      <button class="admin-tab active" onclick="switchAdminTab(event, 'tab-leyendas')">📝 Leyendas</button>
     </div>
-    <div class="admin-tab-content active" id="tab-productos">
+
+    <div id="tab-productos" class="admin-tab-content">
       <div class="admin-prod-toolbar">
         <button class="btn-add" onclick="addProduct()">➕ Nuevo Producto</button>
         <button class="btn-add" onclick="openBulkUpload()">📁 Carga Masiva</button>
+        <button class="btn-add" id="btn-sync-db" onclick="syncFromDB()">🔄 Sincronizar DB</button>
+        <button class="btn-add" onclick="syncToDB()" style="background:#1a5f2a;border-color:#27ae60;">📤 Migrar Todo a DB</button>
       </div>
-
-      <!-- PANEL DE CONTROL DE ESTADO (API + DB) -->
-      <div style="background:var(--black);border:1px solid #222;border-radius:var(--radius);padding:1.1rem 1.2rem;margin:0 0 1.2rem 0;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);letter-spacing:0.12em;font-size:.9rem;margin-bottom:.7rem;">🧪 Panel de Control de Estado</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;align-items:start;">
-          <div style="background:var(--steel2);border:1px solid #333;border-radius:var(--radius);padding:.9rem;">
-            <div style="color:#aaa;font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-family:'Barlow Condensed',sans-serif;">API (GET /api/health)</div>
-            <div id="state-api" style="margin-top:.35rem;font-family:monospace;color:var(--cream);font-size:.95rem;">—</div>
-          </div>
-          <div style="background:var(--steel2);border:1px solid #333;border-radius:var(--radius);padding:.9rem;">
-            <div style="color:#aaa;font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-family:'Barlow Condensed',sans-serif;">DB (GET /api/products-test/status)</div>
-            <div id="state-db" style="margin-top:.35rem;font-family:monospace;color:var(--cream);font-size:.95rem;">—</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;align-items:center;">
-          <button class="btn-save" style="padding:.6rem 1.2rem;" onclick="runProductsPostDeleteTest()">▶ Probar POST + DELETE (DB)</button>
-          <div id="state-run" style="color:#aaa;font-size:.9rem;">Esperando...</div>
-        </div>
-        <div style="margin-top:.7rem;color:#888;font-size:.82rem;line-height:1.4;">
-          Este test inserta y borra un producto en PostgreSQL para confirmar que el flujo completo funciona.
-        </div>
-      </div>
-
+      <div id="prod-count-bar" style="color:#888;font-size:.82rem;margin-bottom:.8rem;"></div>
       <div class="admin-prod-grid" id="admin-prod-grid"></div>
       <div class="admin-save-bar">
         <button class="btn-save" onclick="saveProducts()">💾 Guardar Cambios</button>
         <span class="save-msg" id="save-msg-prod">✓ Cambios guardados</span>
       </div>
     </div>
-    <div class="admin-tab-content" id="tab-colores">
+
+    <div id="tab-colores" class="admin-tab-content">
       <p style="color:#888;font-size:.9rem;margin-bottom:1.5rem;">Modificá los colores principales del sitio. Los cambios se aplican en tiempo real.</p>
       <div class="color-grid">
         <div class="color-field"><input type="color" id="color-yellow" value="#F5C800" oninput="applyColor('--yellow',this.value);document.getElementById('hex-yellow').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Color Principal</div><div class="color-field-hex" id="hex-yellow">#F5C800</div></div></div>
@@ -722,7 +783,8 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
         <span class="save-msg" id="save-msg-color">✓ Colores guardados</span>
       </div>
     </div>
-    <div class="admin-tab-content" id="tab-local">
+
+    <div id="tab-info" class="admin-tab-content">
       <div class="config-grid">
         <div class="config-field"><label class="admin-label">Teléfono</label><input class="admin-input" id="cfg-tel" value="03444 – 466919" /></div>
         <div class="config-field"><label class="admin-label">Número WhatsApp (con código de país)</label><input class="admin-input" id="cfg-wa" value="5403444466919" /></div>
@@ -731,11 +793,66 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
         <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Dirección</label><input class="admin-input" id="cfg-dir" value="Gualeguay, Entre Ríos · Argentina · CP 2840" /></div>
         <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Mensaje pre-cargado en WhatsApp</label><input class="admin-input" id="cfg-wamsg" value="Hola Metagro! Quiero consultar sobre sus productos." /></div>
         <div class="config-field"><label class="admin-label">Usuario Admin</label><input class="admin-input" id="cfg-admin-user" value="metagro" /></div>
-        <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Contraseña Admin</label><input class="admin-input" id="cfg-admin-pass" type="password" value="montealegre22" /></div>
+        <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Contraseña Admin</label><input class="admin-input" id="cfg-admin-pass" type="password" /></div>
       </div>
       <div class="admin-save-bar">
         <button class="btn-save" onclick="saveLocalInfo()">💾 Guardar Info</button>
         <span class="save-msg" id="save-msg-local">✓ Información guardada</span>
+      </div>
+    </div>
+
+    <div id="tab-leyendas" class="admin-tab-content active">
+      <div style="background:#1a3a1a;border:2px solid #27ae60;padding:2rem;margin-bottom:2rem;border-radius:8px;">
+        <h2 style="color:#27ae60;margin-bottom:1rem;">✅ PANEL LEYENDAS CARGADO</h2>
+        <p style="color:#ccc;">Si ves esto, el panel se renderiza correctamente.</p>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">🏠 Banner Principal (Hero)</div>
+        <form onsubmit="event.preventDefault(); saveSiteTexts();">
+          <div class="config-grid">
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 1 del Título (Ej: "SIEMPRE JUNTO")</label>
+            <input class="admin-input" id="txt-hero-linea-1" placeholder="SIEMPRE JUNTO" />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 2 del Título (Ej: "AL CAMPO.")</label>
+            <input class="admin-input" id="txt-hero-linea-2" placeholder="AL CAMPO." />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Bajada de Texto / Subtítulo</label>
+            <textarea class="admin-textarea" id="txt-hero-desc" rows="3" placeholder="Insumos para la agroganadería..."></textarea>
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Número del Stat (ej: 43)</label>
+            <input class="admin-input" id="txt-hero-numero" placeholder="43" />
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Texto del Stat (ej: Años en el mercado)</label>
+            <input class="admin-input" id="txt-hero-etiqueta" placeholder="Años en el mercado" />
+          </div>
+          </div>
+          <button type="submit" class="btn-save" style="margin-top:1rem;">💾 Guardar Banner Principal</button>
+        </form>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">⚡ Tarjetas de Ventajas</div>
+        <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá, eliminá o agregá tarjetas de la sección "Ventajas Metagro".</p>
+        <div id="leyendas-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+        <button class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
+        <button class="btn-save" onclick="saveSiteTexts()" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
+      </div>
+
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">📋 Historial de Cambios</div>
+        <div id="leyendas-history" style="max-height:300px;overflow-y:auto;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:1rem;">
+          <p style="color:#666;font-size:.85rem;">Sin cambios registrados</p>
+        </div>
+      </div>
+
+      <div class="admin-save-bar">
+        <span class="save-msg" id="save-msg-texts">✓ Cambios guardados</span>
       </div>
     </div>
   </div>
@@ -759,8 +876,9 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
   </div>
 </div>
 
+
 <!-- PRODUCT DETAIL MODAL -->
-  <div class="product-modal" id="productModal" onclick="if(event.target===this)closeProductModal()">
+<div class="product-modal" id="productModal" onclick="if(event.target===this)closeProductModal()">
   <div class="product-modal-content">
     <button class="product-modal-close" onclick="closeProductModal()">✕</button>
     <div class="product-modal-body">
@@ -783,265 +901,1525 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 window.DEFAULT_PRODUCTS = [
   {
     "id": 1,
-    "name": "08 10 Estiradora",
-
-    "tag": "Maquinaria",
-    "desc": "Equipo para estirado y mantenimiento de alambrados.",
-    "icon": "🎭",
-    "img": "productos/08-10-estiradora.jpg"
+    "name": "A - Rosca Hembra 2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/A - Rosca Hembra 2.jpg",
+    "imagen_url": "productos/A - Rosca Hembra 2.jpg",
+    "images": [
+      "productos/A - Rosca Hembra 2.jpg"
+    ]
   },
   {
     "id": 2,
-    "name": "Aislador W",
-    "tag": "Aisladores",
-    "desc": "Marca: Rolin",
-    "icon": "⚡",
-    "img": "productos/Aislador W.jpg"
+    "name": "Acople Rapido a palanca aluminio",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Acople Rapido a palanca aluminio.jpg",
+    "imagen_url": "productos/Acople Rapido a palanca aluminio.jpg",
+    "images": [
+      "productos/Acople Rapido a palanca aluminio.jpg"
+    ]
   },
   {
     "id": 3,
-    "name": "Arreadores",
-    "tag": "Arreadores",
-    "desc": "Modelos de arreadores para diferentes tipos de alambrado.",
-    "icon": "🐣",
-    "img": "productos/arreador b.jpeg",
-    "variants": [
-      { "name": "Arreador B", "img": "productos/arreador b.jpeg" },
-      { "name": "Arreador con Pilas", "img": "productos/Arreador con pilas.jpeg" },
-      { "name": "Arreador Corto y Largo", "img": "productos/Arreador corto y largo.jpeg" },
-      { "name": "Arreador Mango", "img": "productos/Arreador mango.jpg" },
-      { "name": "Arreador Puas", "img": "productos/Arreador puas.jpg" },
-      { "name": "Arreador Tapa Roscada", "img": "productos/Arreador Tapa Roscada b.jpg" },
-      { "name": "Arreador", "img": "productos/Arreador.jpg" },
-      { "name": "Arredor Tapa Roscada", "img": "productos/Arredor Tapa roscada.jpg" }
+    "name": "Acople rapido con palanca plastico - copia",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Acople rapido con palanca plastico - copia.jpg",
+    "imagen_url": "productos/Acople rapido con palanca plastico - copia.jpg",
+    "images": [
+      "productos/Acople rapido con palanca plastico - copia.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Adaptador BIN",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Adaptador BIN.jpeg",
+    "imagen_url": "productos/Adaptador BIN.jpeg",
+    "images": [
+      "productos/Adaptador BIN.jpeg"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Aislador W",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Aislador W.jpg",
+    "imagen_url": "productos/Aislador W.jpg",
+    "images": [
+      "productos/Aislador W.jpg"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Arandela Grower",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arandela Grower.jpeg",
+    "imagen_url": "productos/Arandela Grower.jpeg",
+    "images": [
+      "productos/Arandela Grower.jpeg"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Arandela plana Zincada",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arandela plana Zincada.jpg",
+    "imagen_url": "productos/Arandela plana Zincada.jpg",
+    "images": [
+      "productos/Arandela plana Zincada.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Arreador b",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador b.jpeg",
+    "imagen_url": "productos/Arreador b.jpeg",
+    "images": [
+      "productos/Arreador b.jpeg"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Arreador con pilas",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador con pilas.jpeg",
+    "imagen_url": "productos/Arreador con pilas.jpeg",
+    "images": [
+      "productos/Arreador con pilas.jpeg"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Arreador corto y largo",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador corto y largo.jpeg",
+    "imagen_url": "productos/Arreador corto y largo.jpeg",
+    "images": [
+      "productos/Arreador corto y largo.jpeg"
     ]
   },
   {
     "id": 11,
-    "name": "Bebedero Cemento",
-    "tag": "Bebederos",
-    "desc": "Bebedero de cemento para ganado, resistente y durable.",
-    "icon": "💧",
-    "img": "productos/bebederos cemento.JPG"
+    "name": "Arreador mango",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador mango.jpg",
+    "imagen_url": "productos/Arreador mango.jpg",
+    "images": [
+      "productos/Arreador mango.jpg"
+    ]
   },
   {
     "id": 12,
-    "name": "Bobinas Electropiolín",
-    "tag": "Bobinas",
-    "desc": "Electropiolín Rolin · Disponible en 250, 500, 750 y 1000 mts. Standard y Reforzada.",
-    "icon": "🔄",
-    "img": "productos/bobina 1000.jpg",
-    "variants": [
-      { "name": "Bobina 250 mts", "img": "productos/bobina 250.jpg" },
-      { "name": "Bobina 500 mts", "img": "productos/bobina 500.jpg" },
-      { "name": "Bobina 750 mts", "img": "productos/bobina 750.jpg" },
-      { "name": "Bobina 1000 mts", "img": "productos/bobina 1000.jpg" }
+    "name": "Arreador puas",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador puas.jpg",
+    "imagen_url": "productos/Arreador puas.jpg",
+    "images": [
+      "productos/Arreador puas.jpg"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Arreador Tapa Roscada b",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador Tapa Roscada b.jpg",
+    "imagen_url": "productos/Arreador Tapa Roscada b.jpg",
+    "images": [
+      "productos/Arreador Tapa Roscada b.jpg"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Arreador",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arreador.jpg",
+    "imagen_url": "productos/Arreador.jpg",
+    "images": [
+      "productos/Arreador.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Arredor Tapa roscada",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Arredor Tapa roscada.jpg",
+    "imagen_url": "productos/Arredor Tapa roscada.jpg",
+    "images": [
+      "productos/Arredor Tapa roscada.jpg"
     ]
   },
   {
     "id": 16,
-    "name": "Cable Subterráneo Rolin 1.8mm",
-    "tag": "Cables",
-    "desc": "Cable subterráneo de 1.8 mm para instalaciones eléctricas rurales.",
-    "icon": "🔌",
-    "img": "productos/Cable subterraneo Rolin 1.8mm.jpg"
+    "name": "Autoperforante Madera",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Autoperforante Madera.jpg",
+    "imagen_url": "productos/Autoperforante Madera.jpg",
+    "images": [
+      "productos/Autoperforante Madera.jpg"
+    ]
   },
   {
     "id": 17,
-    "name": "Campanitas",
-    "tag": "Campanitas",
-    "desc": "Campanitas para alambados, con y sin trabas.",
-    "icon": "🔔",
-    "img": "productos/Campanita.jpg",
-    "variants": [
-      { "name": "Campanita", "img": "productos/Campanita.jpg" },
-      { "name": "Campanita con Trabas", "img": "productos/Campanita con Trabas.jpg" }
+    "name": "Autoperforante Metal",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Autoperforante Metal.jpeg",
+    "imagen_url": "productos/Autoperforante Metal.jpeg",
+    "images": [
+      "productos/Autoperforante Metal.jpeg"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "B - Rosca Macho a Palanca 3",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/B - Rosca Macho a Palanca 3.jpg",
+    "imagen_url": "productos/B - Rosca Macho a Palanca 3.jpg",
+    "images": [
+      "productos/B - Rosca Macho a Palanca 3.jpg"
     ]
   },
   {
     "id": 19,
-    "name": "Carreteles",
-    "tag": "Carreteles",
-    "desc": "Carreteles con hilo y estructuras vacías para alambrado.",
-    "icon": "🎥",
-    "img": "productos/Carretel con Hilo 500 Mts.jpg",
-    "variants": [
-      { "name": "Carretel con Hilo 500 mts", "img": "productos/Carretel con Hilo 500 Mts.jpg" },
-      { "name": "Carretel con Hilo 750 mts", "img": "productos/Carretel con Hilo 750 Mts.jpg" },
-      { "name": "Carretel Vacío Estructura Metal", "img": "productos/Carretel Vacio - Estructura Metal.jpg" },
-      { "name": "Carretel Vacío Estructura Plástica", "img": "productos/Carretel Vacio - Estructura Plastica.jpeg" },
-      { "name": "Trípode para Carretel", "img": "productos/Tripode para carretel.jpeg" },
-      { "name": "Trípode para Carretel 2", "img": "productos/Tripode para carretel 2.jpeg" },
-      { "name": "Trípode para Carretel 3", "img": "productos/Tripode para carretel 3.jpeg" }
+    "name": "bebederos cemento",
+    "tag": "Bebederos",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bebederos cemento.JPG",
+    "imagen_url": "productos/bebederos cemento.JPG",
+    "images": [
+      "productos/bebederos cemento.JPG"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Blanca 1",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Blanca 1.jpg",
+    "imagen_url": "productos/Blanca 1.jpg",
+    "images": [
+      "productos/Blanca 1.jpg"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Blanca 2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Blanca 2.jpg",
+    "imagen_url": "productos/Blanca 2.jpg",
+    "images": [
+      "productos/Blanca 2.jpg"
     ]
   },
   {
     "id": 22,
-    "name": "Medidores de Batería",
-    "tag": "General",
-    "desc": "Medidores de batería para control eléctrico en instalaciones rurales.",
-    "icon": "📦",
+    "name": "bobina 1000",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 1000.jpg",
+    "imagen_url": "productos/bobina 1000.jpg",
+    "images": [
+      "productos/bobina 1000.jpg"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "bobina 250",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 250.jpg",
+    "imagen_url": "productos/bobina 250.jpg",
+    "images": [
+      "productos/bobina 250.jpg"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "bobina 500",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 500.jpg",
+    "imagen_url": "productos/bobina 500.jpg",
+    "images": [
+      "productos/bobina 500.jpg"
+    ]
+  },
+  {
     "id": 25,
-    "name": "Manijas Aisladas",
-    "tag": "Aisladores",
-    "desc": "Manijas aisladas con resorte y reforzadas para instalaciones eléctricas.",
-    "icon": "⚡",
-    "img": "productos/Manija Aislada Reforzada.jpg",
-    "variants": [
-      { "name": "Manija Aislada con Resorte", "img": "productos/Manija Aislada con resorte.jpg" },
-      { "name": "Manija Aislada Reforzada", "img": "productos/Manija Aislada Reforzada.jpg" },
-      { "name": "Manija Puntera", "img": "productos/Manija Puntera.jpg" }
+    "name": "bobina 750",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/bobina 750.jpg",
+    "imagen_url": "productos/bobina 750.jpg",
+    "images": [
+      "productos/bobina 750.jpg"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Buje reduccion",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Buje reduccion.jpg",
+    "imagen_url": "productos/Buje reduccion.jpg",
+    "images": [
+      "productos/Buje reduccion.jpg"
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Bulon Cabeza Hexagonal Dorado",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Hexagonal Dorado.jpg",
+    "imagen_url": "productos/Bulon Cabeza Hexagonal Dorado.jpg",
+    "images": [
+      "productos/Bulon Cabeza Hexagonal Dorado.jpg"
     ]
   },
   {
     "id": 28,
-    "name": "Medidores de Batería",
-    "tag": "General",
-    "desc": "Medidores de batería para control eléctrico en instalaciones rurales.",
-    "icon": "📦",
-    "img": "productos/Medidor de bateria.jpg",
-    "variants": [
-      { "name": "Medidor de Batería", "img": "productos/Medidor de bateria.jpg" },
-      { "name": "Medidor de Batería 1", "img": "productos/Medidor de bateria 1.jpg" }
+    "name": "Bulon Cabeza Hexagonal",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Hexagonal.jpg",
+    "imagen_url": "productos/Bulon Cabeza Hexagonal.jpg",
+    "images": [
+      "productos/Bulon Cabeza Hexagonal.jpg"
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Bulon Cabeza Redonda",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Bulon Cabeza Redonda.jpeg",
+    "imagen_url": "productos/Bulon Cabeza Redonda.jpeg",
+    "images": [
+      "productos/Bulon Cabeza Redonda.jpeg"
     ]
   },
   {
     "id": 30,
-    "name": "Pluviómetros",
-    "tag": "Pluviometros",
-    "desc": "Pluviómetros chico y grande para medición de lluvia.",
-    "icon": "🌧️",
-    "img": "productos/pluviometro grande.jpg",
-    "variants": [
-      { "name": "Pluviómetro Chico", "img": "productos/pluviometro chicho.jpg" },
-      { "name": "Pluviómetro Grande", "img": "productos/pluviometro grande.jpg" }
+    "name": "C - Espiga a Palanca 3",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/C - Espiga a Palanca 3.jpg",
+    "imagen_url": "productos/C - Espiga a Palanca 3.jpg",
+    "images": [
+      "productos/C - Espiga a Palanca 3.jpg"
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Cable Dogo",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable Dogo.jpg",
+    "imagen_url": "productos/Cable Dogo.jpg",
+    "images": [
+      "productos/Cable Dogo.jpg"
     ]
   },
   {
     "id": 32,
-    "name": "Postes de Quebracho",
-    "tag": "Postes",
-    "desc": "Postes de quebracho natural y colorado para alambados y tranqueras.",
-    "icon": "🌳",
-    "img": "productos/Postes Quebracho.JPG",
-    "variants": [
-      { "name": "Poste Quebracho", "img": "productos/Postes Quebracho.JPG" },
-      { "name": "Poste Quebracho 2", "img": "productos/Poste Quebracho 2.JPG" },
-      { "name": "Postes Quebracho 3", "img": "productos/Postes Quebracho 3.JPG" },
-      { "name": "Pôste Quebracho", "img": "productos/Pôste quebracho.JPG" },
-      { "name": "Postes de Quebracho Colorado", "img": "productos/postes de quebracho colorado.JPG" }
+    "name": "Cable subterraneo Rolin 1.8mm",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable subterraneo Rolin 1.8mm.jpg",
+    "imagen_url": "productos/Cable subterraneo Rolin 1.8mm.jpg",
+    "images": [
+      "productos/Cable subterraneo Rolin 1.8mm.jpg"
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Cable",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cable.jpeg",
+    "imagen_url": "productos/Cable.jpeg",
+    "images": [
+      "productos/Cable.jpeg"
+    ]
+  },
+  {
+    "id": 34,
+    "name": "CAdena Balde 2",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena Balde 2.jpg",
+    "imagen_url": "productos/CAdena Balde 2.jpg",
+    "images": [
+      "productos/CAdena Balde 2.jpg"
+    ]
+  },
+  {
+    "id": 35,
+    "name": "CAdena Balde",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena Balde.jpg",
+    "imagen_url": "productos/CAdena Balde.jpg",
+    "images": [
+      "productos/CAdena Balde.jpg"
+    ]
+  },
+  {
+    "id": 36,
+    "name": "CAdena",
+    "tag": "Cadenas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/CAdena.jpg",
+    "imagen_url": "productos/CAdena.jpg",
+    "images": [
+      "productos/CAdena.jpg"
     ]
   },
   {
     "id": 37,
-    "name": "Alambre Reforzado",
-    "tag": "General",
-    "desc": "Alambre de acero reforzado para alambados de gran extensión.",
-    "icon": "📦",
-    "img": "productos/reforzada 500.jpg",
-    "variants": [
-      { "name": "Alambre Reforzado 500", "img": "productos/reforzada 500.jpg" },
-      { "name": "Alambre Reforzado 750", "img": "productos/reforzada 750.jpg" }
+    "name": "Campanita con Trabas",
+    "tag": "Campanitas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Campanita con Trabas.jpg",
+    "imagen_url": "productos/Campanita con Trabas.jpg",
+    "images": [
+      "productos/Campanita con Trabas.jpg"
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Campanita",
+    "tag": "Campanitas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Campanita.jpg",
+    "imagen_url": "productos/Campanita.jpg",
+    "images": [
+      "productos/Campanita.jpg"
     ]
   },
   {
     "id": 39,
-    "name": "Regulables",
-    "tag": "Regulables",
-    "desc": "Tensores regulables para alambados.",
-    "icon": "🔧",
-    "img": "productos/Regulable Ajustable.jpeg",
-    "variants": [
-      { "name": "Regulable Ajustable", "img": "productos/Regulable Ajustable.jpeg" },
-      { "name": "Regulable con Gancho y Mariposa", "img": "productos/Regulable con Gancho y Mariposa.jpeg" }
+    "name": "Carretel con Hilo 500 Mts",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel con Hilo 500 Mts.jpg",
+    "imagen_url": "productos/Carretel con Hilo 500 Mts.jpg",
+    "images": [
+      "productos/Carretel con Hilo 500 Mts.jpg"
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Carretel con Hilo 750 Mts",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel con Hilo 750 Mts.jpg",
+    "imagen_url": "productos/Carretel con Hilo 750 Mts.jpg",
+    "images": [
+      "productos/Carretel con Hilo 750 Mts.jpg"
     ]
   },
   {
     "id": 41,
-    "name": "Roldana Plástico",
-    "tag": "Roldanas",
-    "desc": "Roldana de plástico para carreteles y herramientas.",
-    "icon": "⚙️",
-    "img": "productos/Roldana Plastico.jpg"
+    "name": "Carretel Vacio - Estructura Metal",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel Vacio - Estructura Metal.jpg",
+    "imagen_url": "productos/Carretel Vacio - Estructura Metal.jpg",
+    "images": [
+      "productos/Carretel Vacio - Estructura Metal.jpg"
+    ]
   },
   {
     "id": 42,
-    "name": "Separador Corto",
-    "tag": "Separadores",
-    "desc": "Separador corto para alambrados y postes.",
-    "icon": "🔒",
-    "img": "productos/Separador Corto.jpg"
+    "name": "Carretel Vacio - Estructura Plastica",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Carretel Vacio - Estructura Plastica.jpeg",
+    "imagen_url": "productos/Carretel Vacio - Estructura Plastica.jpeg",
+    "images": [
+      "productos/Carretel Vacio - Estructura Plastica.jpeg"
+    ]
   },
   {
     "id": 43,
-    "name": "Terminales",
-    "tag": "Terminales",
-    "desc": "Terminales eléctricos livianos y reforzados para conexiones.",
-    "icon": "🔌",
-    "img": "productos/Terminal Liviano.jpg",
-    "variants": [
-      { "name": "Terminal Liviano", "img": "productos/Terminal Liviano.jpg" },
-      { "name": "Terminal Reforzado", "img": "productos/Terminal Reforzado.jpg" }
+    "name": "Caños Galvanizados",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Caños Galvanizados.jpg",
+    "imagen_url": "productos/Caños Galvanizados.jpg",
+    "images": [
+      "productos/Caños Galvanizados.jpg"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Cupla",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Cupla.jpg",
+    "imagen_url": "productos/Cupla.jpg",
+    "images": [
+      "productos/Cupla.jpg"
     ]
   },
   {
     "id": 45,
-    "name": "Torniquetes",
-    "tag": "Torniquetes",
-    "desc": "Torniquetes Nº 8 y Nº 9, en negro y zincado. Para alambados de más de 50 mts.",
-    "icon": "🔗",
-    "img": "productos/Torniquete Nº8 Negro.jpg",
-    "variants": [
-      { "name": "Torniquete Nº8 Negro", "img": "productos/Torniquete Nº8 Negro.jpg" },
-      { "name": "Torniquete Nº8 Zincado", "img": "productos/Torniquete Nº8 Zincado.jpg" },
-      { "name": "Torniquete Nº9 Negro", "img": "productos/Torniquete Nº9 Negro.jpeg" },
-      { "name": "Torniquete Nº9 Tv Zincado", "img": "productos/Torniquete Nº9Tv Zincado.jpeg" }
+    "name": "D - Rosca Hembra Palanca",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/D - Rosca Hembra Palanca.jpg",
+    "imagen_url": "productos/D - Rosca Hembra Palanca.jpg",
+    "images": [
+      "productos/D - Rosca Hembra Palanca.jpg"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "E - Espiga  2",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/E - Espiga  2.jpg",
+    "imagen_url": "productos/E - Espiga  2.jpg",
+    "images": [
+      "productos/E - Espiga  2.jpg"
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Entre rosca",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Entre rosca.jpg",
+    "imagen_url": "productos/Entre rosca.jpg",
+    "images": [
+      "productos/Entre rosca.jpg"
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Esclusa 2 Pulgadas",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esclusa 2 Pulgadas.jpeg",
+    "imagen_url": "productos/Esclusa 2 Pulgadas.jpeg",
+    "images": [
+      "productos/Esclusa 2 Pulgadas.jpeg"
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Esclusa 3 Pulgadas",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esclusa 3 Pulgadas.jpeg",
+    "imagen_url": "productos/Esclusa 3 Pulgadas.jpeg",
+    "images": [
+      "productos/Esclusa 3 Pulgadas.jpeg"
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Esferica Mariposa",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Esferica Mariposa.jpg",
+    "imagen_url": "productos/Esferica Mariposa.jpg",
+    "images": [
+      "productos/Esferica Mariposa.jpg"
+    ]
+  },
+  {
+    "id": 51,
+    "name": "Eslabon abierto",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Eslabon abierto.jpg",
+    "imagen_url": "productos/Eslabon abierto.jpg",
+    "images": [
+      "productos/Eslabon abierto.jpg"
     ]
   },
   {
     "id": 52,
-    "name": "Varillas",
-    "tag": "Varillas",
-    "desc": "Varillas con rulos y varilla plástica para alambados.",
-    "icon": "🌵",
-    "img": "productos/Varilla Con 1 Rulo.jpg",
-    "variants": [
-      { "name": "Varilla Con 1 Rulo", "img": "productos/Varilla Con 1 Rulo.jpg" },
-      { "name": "Varilla con 2 Rulos", "img": "productos/Varilla con 2 Rulos.jpg" },
-      { "name": "Varilla Plástica", "img": "productos/Varilla Plastica.jpg" }
+    "name": "Gancho - Ojo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Gancho - Ojo.jpg",
+    "imagen_url": "productos/Gancho - Ojo.jpg",
+    "images": [
+      "productos/Gancho - Ojo.jpg"
+    ]
+  },
+  {
+    "id": 53,
+    "name": "GAncho J Estira Tejido",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/GAncho J Estira Tejido.jpg",
+    "imagen_url": "productos/GAncho J Estira Tejido.jpg",
+    "images": [
+      "productos/GAncho J Estira Tejido.jpg"
+    ]
+  },
+  {
+    "id": 54,
+    "name": "Grillete corazon 1",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Grillete corazon 1.jpg",
+    "imagen_url": "productos/Grillete corazon 1.jpg",
+    "images": [
+      "productos/Grillete corazon 1.jpg"
     ]
   },
   {
     "id": 55,
-    "name": "Velas Eléctricas",
-    "tag": "Instalacion Electrica",
-    "desc": "Velas de encendido para instalación eléctrica rural.",
-    "icon": "💡",
-    "img": "productos/Velas Electrico 1.jpg",
-    "variants": [
-      { "name": "Vela Eléctrico 1", "img": "productos/Velas Electrico 1.jpg" },
-      { "name": "Vela Eléctrico 2", "img": "productos/Velas Eletrico 2.jpg" }
+    "name": "Grillete Recto",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Grillete Recto.jpg",
+    "imagen_url": "productos/Grillete Recto.jpg",
+    "images": [
+      "productos/Grillete Recto.jpg"
+    ]
+  },
+  {
+    "id": 56,
+    "name": "Guardacabo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Guardacabo.jpg",
+    "imagen_url": "productos/Guardacabo.jpg",
+    "images": [
+      "productos/Guardacabo.jpg"
     ]
   },
   {
     "id": 57,
-    "name": "Voltímetros",
-    "tag": "Instalacion Electrica",
-    "desc": "Voltímetros para control de instalaciones eléctricas en campo.",
-    "icon": "💡",
-    "img": "productos/Voltimetro.jpg",
-    "variants": [
-      { "name": "Voltímetro", "img": "productos/Voltimetro.jpg" },
-      { "name": "Voltímetro 1", "img": "productos/Voltimetro 1.jpg" }
+    "name": "Llave ESferica 2",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica 2.jpg",
+    "imagen_url": "productos/Llave ESferica 2.jpg",
+    "images": [
+      "productos/Llave ESferica 2.jpg"
     ]
+  },
+  {
+    "id": 58,
+    "name": "Llave ESferica Plastica 2",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 2.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 2.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 2.jpg"
+    ]
+  },
+  {
+    "id": 59,
+    "name": "Llave ESferica Plastica 3",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 3.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 3.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 3.jpg"
+    ]
+  },
+  {
+    "id": 60,
+    "name": "Llave ESferica Plastica 4",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica 4.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica 4.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica 4.jpg"
+    ]
+  },
+  {
+    "id": 61,
+    "name": "Llave ESferica Plastica Duke",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica Duke.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica Duke.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica Duke.jpg"
+    ]
+  },
+  {
+    "id": 62,
+    "name": "Llave ESferica Plastica",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave ESferica Plastica.jpg",
+    "imagen_url": "productos/Llave ESferica Plastica.jpg",
+    "images": [
+      "productos/Llave ESferica Plastica.jpg"
+    ]
+  },
+  {
+    "id": 63,
+    "name": "Llave Esferica",
+    "tag": "Llaves",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Llave Esferica.jpg",
+    "imagen_url": "productos/Llave Esferica.jpg",
+    "images": [
+      "productos/Llave Esferica.jpg"
+    ]
+  },
+  {
+    "id": 64,
+    "name": "Manija Aislada con resorte",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Aislada con resorte.jpg",
+    "imagen_url": "productos/Manija Aislada con resorte.jpg",
+    "images": [
+      "productos/Manija Aislada con resorte.jpg"
+    ]
+  },
+  {
+    "id": 65,
+    "name": "Manija Aislada Reforzada",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Aislada Reforzada.jpg",
+    "imagen_url": "productos/Manija Aislada Reforzada.jpg",
+    "images": [
+      "productos/Manija Aislada Reforzada.jpg"
+    ]
+  },
+  {
+    "id": 66,
+    "name": "Manija Puntera",
+    "tag": "Aisladores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Manija Puntera.jpg",
+    "imagen_url": "productos/Manija Puntera.jpg",
+    "images": [
+      "productos/Manija Puntera.jpg"
+    ]
+  },
+  {
+    "id": 67,
+    "name": "Medidor de bateria 1",
+    "tag": "Medidores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Medidor de bateria 1.jpg",
+    "imagen_url": "productos/Medidor de bateria 1.jpg",
+    "images": [
+      "productos/Medidor de bateria 1.jpg"
+    ]
+  },
+  {
+    "id": 68,
+    "name": "Medidor de bateria",
+    "tag": "Medidores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Medidor de bateria.jpg",
+    "imagen_url": "productos/Medidor de bateria.jpg",
+    "images": [
+      "productos/Medidor de bateria.jpg"
+    ]
+  },
+  {
+    "id": 69,
+    "name": "Modelo A - Rosca Hembra",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo A - Rosca Hembra.jpg",
+    "imagen_url": "productos/Modelo A - Rosca Hembra.jpg",
+    "images": [
+      "productos/Modelo A - Rosca Hembra.jpg"
+    ]
+  },
+  {
+    "id": 70,
+    "name": "Modelo C - Espiga",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo C - Espiga.jpg",
+    "imagen_url": "productos/Modelo C - Espiga.jpg",
+    "images": [
+      "productos/Modelo C - Espiga.jpg"
+    ]
+  },
+  {
+    "id": 71,
+    "name": "Modelo D - Rosca  Hembra",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo D - Rosca  Hembra.jpg",
+    "imagen_url": "productos/Modelo D - Rosca  Hembra.jpg",
+    "images": [
+      "productos/Modelo D - Rosca  Hembra.jpg"
+    ]
+  },
+  {
+    "id": 72,
+    "name": "Modelo E - Eespiga",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Modelo E - Eespiga.jpg",
+    "imagen_url": "productos/Modelo E - Eespiga.jpg",
+    "images": [
+      "productos/Modelo E - Eespiga.jpg"
+    ]
+  },
+  {
+    "id": 73,
+    "name": "Niple Galvanizados 2",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Niple Galvanizados 2.jpg",
+    "imagen_url": "productos/Niple Galvanizados 2.jpg",
+    "images": [
+      "productos/Niple Galvanizados 2.jpg"
+    ]
+  },
+  {
+    "id": 74,
+    "name": "Niple Galvanizados",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Niple Galvanizados.jpg",
+    "imagen_url": "productos/Niple Galvanizados.jpg",
+    "images": [
+      "productos/Niple Galvanizados.jpg"
+    ]
+  },
+  {
+    "id": 75,
+    "name": "Plastica",
+    "tag": "General",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Plastica.jpg",
+    "imagen_url": "productos/Plastica.jpg",
+    "images": [
+      "productos/Plastica.jpg"
+    ]
+  },
+  {
+    "id": 76,
+    "name": "pluviometro chicho",
+    "tag": "Pluviometros",
+    "desc": "",
+    "icon": "",
+    "img": "productos/pluviometro chicho.jpg",
+    "imagen_url": "productos/pluviometro chicho.jpg",
+    "images": [
+      "productos/pluviometro chicho.jpg"
+    ]
+  },
+  {
+    "id": 77,
+    "name": "pluviometro grande",
+    "tag": "Pluviometros",
+    "desc": "",
+    "icon": "",
+    "img": "productos/pluviometro grande.jpg",
+    "imagen_url": "productos/pluviometro grande.jpg",
+    "images": [
+      "productos/pluviometro grande.jpg"
+    ]
+  },
+  {
+    "id": 78,
+    "name": "Poste Quebracho 2",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Poste Quebracho 2.JPG",
+    "imagen_url": "productos/Poste Quebracho 2.JPG",
+    "images": [
+      "productos/Poste Quebracho 2.JPG"
+    ]
+  },
+  {
+    "id": 79,
+    "name": "Poste Quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Poste Quebracho.JPG",
+    "imagen_url": "productos/Poste Quebracho.JPG",
+    "images": [
+      "productos/Poste Quebracho.JPG"
+    ]
+  },
+  {
+    "id": 80,
+    "name": "postes de quebracho colorado",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/postes de quebracho colorado.JPG",
+    "imagen_url": "productos/postes de quebracho colorado.JPG",
+    "images": [
+      "productos/postes de quebracho colorado.JPG"
+    ]
+  },
+  {
+    "id": 81,
+    "name": "Postes Quebracho 3",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Postes Quebracho 3.JPG",
+    "imagen_url": "productos/Postes Quebracho 3.JPG",
+    "images": [
+      "productos/Postes Quebracho 3.JPG"
+    ]
+  },
+  {
+    "id": 82,
+    "name": "Postes Quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Postes Quebracho.JPG",
+    "imagen_url": "productos/Postes Quebracho.JPG",
+    "images": [
+      "productos/Postes Quebracho.JPG"
+    ]
+  },
+  {
+    "id": 83,
+    "name": "Prensa Cable",
+    "tag": "Cables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Prensa Cable.jpg",
+    "imagen_url": "productos/Prensa Cable.jpg",
+    "images": [
+      "productos/Prensa Cable.jpg"
+    ]
+  },
+  {
+    "id": 84,
+    "name": "Pôste quebracho",
+    "tag": "Postes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Pôste quebracho.JPG",
+    "imagen_url": "productos/Pôste quebracho.JPG",
+    "images": [
+      "productos/Pôste quebracho.JPG"
+    ]
+  },
+  {
+    "id": 85,
+    "name": "reforzada 500",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/reforzada 500.jpg",
+    "imagen_url": "productos/reforzada 500.jpg",
+    "images": [
+      "productos/reforzada 500.jpg"
+    ]
+  },
+  {
+    "id": 86,
+    "name": "reforzada 750",
+    "tag": "Bobinas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/reforzada 750.jpg",
+    "imagen_url": "productos/reforzada 750.jpg",
+    "images": [
+      "productos/reforzada 750.jpg"
+    ]
+  },
+  {
+    "id": 87,
+    "name": "Regulable Ajustable",
+    "tag": "Regulables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Regulable Ajustable.jpeg",
+    "imagen_url": "productos/Regulable Ajustable.jpeg",
+    "images": [
+      "productos/Regulable Ajustable.jpeg"
+    ]
+  },
+  {
+    "id": 88,
+    "name": "Regulable con Gancho y Mariposa",
+    "tag": "Regulables",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Regulable con Gancho y Mariposa.jpeg",
+    "imagen_url": "productos/Regulable con Gancho y Mariposa.jpeg",
+    "images": [
+      "productos/Regulable con Gancho y Mariposa.jpeg"
+    ]
+  },
+  {
+    "id": 89,
+    "name": "Roldana Plastico",
+    "tag": "Roldanas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Roldana Plastico.jpg",
+    "imagen_url": "productos/Roldana Plastico.jpg",
+    "images": [
+      "productos/Roldana Plastico.jpg"
+    ]
+  },
+  {
+    "id": 90,
+    "name": "Separador Corto",
+    "tag": "Separadores",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Separador Corto.jpg",
+    "imagen_url": "productos/Separador Corto.jpg",
+    "images": [
+      "productos/Separador Corto.jpg"
+    ]
+  },
+  {
+    "id": 91,
+    "name": "Tapon Goma 2",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma 2.jpg",
+    "imagen_url": "productos/Tapon Goma 2.jpg",
+    "images": [
+      "productos/Tapon Goma 2.jpg"
+    ]
+  },
+  {
+    "id": 92,
+    "name": "Tapon Goma 3",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma 3.jpg",
+    "imagen_url": "productos/Tapon Goma 3.jpg",
+    "images": [
+      "productos/Tapon Goma 3.jpg"
+    ]
+  },
+  {
+    "id": 93,
+    "name": "Tapon Goma",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tapon Goma.jpg",
+    "imagen_url": "productos/Tapon Goma.jpg",
+    "images": [
+      "productos/Tapon Goma.jpg"
+    ]
+  },
+  {
+    "id": 94,
+    "name": "Tarugo fischer 10 hueco solo",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tarugo fischer 10 hueco solo.jpg",
+    "imagen_url": "productos/Tarugo fischer 10 hueco solo.jpg",
+    "images": [
+      "productos/Tarugo fischer 10 hueco solo.jpg"
+    ]
+  },
+  {
+    "id": 95,
+    "name": "tarugo fischer con balde",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/tarugo fischer con balde.jpg",
+    "imagen_url": "productos/tarugo fischer con balde.jpg",
+    "images": [
+      "productos/tarugo fischer con balde.jpg"
+    ]
+  },
+  {
+    "id": 96,
+    "name": "tarugo fischer Nº6 x 30 caja",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/tarugo fischer Nº6 x 30 caja.jpg",
+    "imagen_url": "productos/tarugo fischer Nº6 x 30 caja.jpg",
+    "images": [
+      "productos/tarugo fischer Nº6 x 30 caja.jpg"
+    ]
+  },
+  {
+    "id": 97,
+    "name": "Terminal Liviano",
+    "tag": "Terminales",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Terminal Liviano.jpg",
+    "imagen_url": "productos/Terminal Liviano.jpg",
+    "images": [
+      "productos/Terminal Liviano.jpg"
+    ]
+  },
+  {
+    "id": 98,
+    "name": "Terminal Reforzado",
+    "tag": "Terminales",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Terminal Reforzado.jpg",
+    "imagen_url": "productos/Terminal Reforzado.jpg",
+    "images": [
+      "productos/Terminal Reforzado.jpg"
+    ]
+  },
+  {
+    "id": 99,
+    "name": "todos los acoples y adaptadores",
+    "tag": "Accesorios",
+    "desc": "",
+    "icon": "",
+    "img": "productos/todos los acoples y adaptadores.jpg",
+    "imagen_url": "productos/todos los acoples y adaptadores.jpg",
+    "images": [
+      "productos/todos los acoples y adaptadores.jpg"
+    ]
+  },
+  {
+    "id": 100,
+    "name": "Tornillos tirafondo",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tornillos tirafondo.jpg",
+    "imagen_url": "productos/Tornillos tirafondo.jpg",
+    "images": [
+      "productos/Tornillos tirafondo.jpg"
+    ]
+  },
+  {
+    "id": 101,
+    "name": "Torniquete Nº8 Negro",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº8 Negro.jpg",
+    "imagen_url": "productos/Torniquete Nº8 Negro.jpg",
+    "images": [
+      "productos/Torniquete Nº8 Negro.jpg"
+    ]
+  },
+  {
+    "id": 102,
+    "name": "Torniquete Nº8 Zincado",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº8 Zincado.jpg",
+    "imagen_url": "productos/Torniquete Nº8 Zincado.jpg",
+    "images": [
+      "productos/Torniquete Nº8 Zincado.jpg"
+    ]
+  },
+  {
+    "id": 103,
+    "name": "Torniquete Nº9 Negro",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº9 Negro.jpeg",
+    "imagen_url": "productos/Torniquete Nº9 Negro.jpeg",
+    "images": [
+      "productos/Torniquete Nº9 Negro.jpeg"
+    ]
+  },
+  {
+    "id": 104,
+    "name": "Torniquete Nº9Tv Zincado",
+    "tag": "Torniquetes",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Torniquete Nº9Tv Zincado.jpeg",
+    "imagen_url": "productos/Torniquete Nº9Tv Zincado.jpeg",
+    "images": [
+      "productos/Torniquete Nº9Tv Zincado.jpeg"
+    ]
+  },
+  {
+    "id": 105,
+    "name": "Tripode para carretel 2",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel 2.jpeg",
+    "imagen_url": "productos/Tripode para carretel 2.jpeg",
+    "images": [
+      "productos/Tripode para carretel 2.jpeg"
+    ]
+  },
+  {
+    "id": 106,
+    "name": "Tripode para carretel 3",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel 3.jpeg",
+    "imagen_url": "productos/Tripode para carretel 3.jpeg",
+    "images": [
+      "productos/Tripode para carretel 3.jpeg"
+    ]
+  },
+  {
+    "id": 107,
+    "name": "Tripode para carretel",
+    "tag": "Carreteles",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tripode para carretel.jpeg",
+    "imagen_url": "productos/Tripode para carretel.jpeg",
+    "images": [
+      "productos/Tripode para carretel.jpeg"
+    ]
+  },
+  {
+    "id": 108,
+    "name": "Tuerca Zincada",
+    "tag": "Bulonería",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Tuerca Zincada.jpg",
+    "imagen_url": "productos/Tuerca Zincada.jpg",
+    "images": [
+      "productos/Tuerca Zincada.jpg"
+    ]
+  },
+  {
+    "id": 109,
+    "name": "Valvula Flotante 2",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Flotante 2.jpg",
+    "imagen_url": "productos/Valvula Flotante 2.jpg",
+    "images": [
+      "productos/Valvula Flotante 2.jpg"
+    ]
+  },
+  {
+    "id": 110,
+    "name": "Valvula flotante Plastica",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula flotante Plastica.jpg",
+    "imagen_url": "productos/Valvula flotante Plastica.jpg",
+    "images": [
+      "productos/Valvula flotante Plastica.jpg"
+    ]
+  },
+  {
+    "id": 111,
+    "name": "Valvula Flotante",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Flotante.jpg",
+    "imagen_url": "productos/Valvula Flotante.jpg",
+    "images": [
+      "productos/Valvula Flotante.jpg"
+    ]
+  },
+  {
+    "id": 112,
+    "name": "Valvula Foglia",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Foglia.png",
+    "imagen_url": "productos/Valvula Foglia.png",
+    "images": [
+      "productos/Valvula Foglia.png"
+    ]
+  },
+  {
+    "id": 113,
+    "name": "Valvula Fundicion completa",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Fundicion completa.jpg",
+    "imagen_url": "productos/Valvula Fundicion completa.jpg",
+    "images": [
+      "productos/Valvula Fundicion completa.jpg"
+    ]
+  },
+  {
+    "id": 114,
+    "name": "Valvula Fundicion",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Fundicion.jpg",
+    "imagen_url": "productos/Valvula Fundicion.jpg",
+    "images": [
+      "productos/Valvula Fundicion.jpg"
+    ]
+  },
+  {
+    "id": 115,
+    "name": "Valvula Hansen",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Hansen.jpg",
+    "imagen_url": "productos/Valvula Hansen.jpg",
+    "images": [
+      "productos/Valvula Hansen.jpg"
+    ]
+  },
+  {
+    "id": 116,
+    "name": "Valvula Hierro Verde sola a",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Valvula Hierro Verde sola a.png",
+    "imagen_url": "productos/Valvula Hierro Verde sola a.png",
+    "images": [
+      "productos/Valvula Hierro Verde sola a.png"
+    ]
+  },
+  {
+    "id": 117,
+    "name": "valvula Plastica completa roja",
+    "tag": "Válvulas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/valvula Plastica completa roja.jpg",
+    "imagen_url": "productos/valvula Plastica completa roja.jpg",
+    "images": [
+      "productos/valvula Plastica completa roja.jpg"
+    ]
+  },
+  {
+    "id": 118,
+    "name": "Varilla Con 1 Rulo",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Con 1 Rulo.jpg",
+    "imagen_url": "productos/Varilla Con 1 Rulo.jpg",
+    "images": [
+      "productos/Varilla Con 1 Rulo.jpg"
+    ]
+  },
+  {
+    "id": 119,
+    "name": "Varilla con 2 Rulos",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla con 2 Rulos.jpg",
+    "imagen_url": "productos/Varilla con 2 Rulos.jpg",
+    "images": [
+      "productos/Varilla con 2 Rulos.jpg"
+    ]
+  },
+  {
+    "id": 120,
+    "name": "Varilla Galvanizada",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Galvanizada.JPG",
+    "imagen_url": "productos/Varilla Galvanizada.JPG",
+    "images": [
+      "productos/Varilla Galvanizada.JPG"
+    ]
+  },
+  {
+    "id": 121,
+    "name": "Varilla Plastica",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Plastica.jpg",
+    "imagen_url": "productos/Varilla Plastica.jpg",
+    "images": [
+      "productos/Varilla Plastica.jpg"
+    ]
+  },
+  {
+    "id": 122,
+    "name": "Varilla Roscada",
+    "tag": "Varillas",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Varilla Roscada.jpg",
+    "imagen_url": "productos/Varilla Roscada.jpg",
+    "images": [
+      "productos/Varilla Roscada.jpg"
+    ]
+  },
+  {
+    "id": 123,
+    "name": "Velas Electrico 1",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Velas Electrico 1.jpg",
+    "imagen_url": "productos/Velas Electrico 1.jpg",
+    "images": [
+      "productos/Velas Electrico 1.jpg"
+    ]
+  },
+  {
+    "id": 124,
+    "name": "Velas Eletrico 2",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Velas Eletrico 2.jpg",
+    "imagen_url": "productos/Velas Eletrico 2.jpg",
+    "images": [
+      "productos/Velas Eletrico 2.jpg"
+    ]
+  },
+  {
+    "id": 125,
+    "name": "Voltimetro 1",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Voltimetro 1.jpg",
+    "imagen_url": "productos/Voltimetro 1.jpg",
+    "images": [
+      "productos/Voltimetro 1.jpg"
+    ]
+  },
+  {
+    "id": 126,
+    "name": "Voltimetro",
+    "tag": "Instalacion Electrica",
+    "desc": "",
+    "icon": "",
+    "img": "productos/Voltimetro.jpg",
+    "imagen_url": "productos/Voltimetro.jpg",
+    "images": [
+      "productos/Voltimetro.jpg"
+    ]
+  }
 ];
 </script>
+
 <script>
 // Usar la misma URL del dominio en producción (Vercel) para que /api/* apunte al backend desplegado aquí.
 const API_BASE =
   window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:4000/api'
-    : `${window.location.origin}/api`;
+    : (window.METAGRO_API_BASE || `${window.location.origin}/api`);
 
 
 let products = [];
@@ -1110,6 +2488,26 @@ function renderSkeletons(count = 6) {
   `).join('');
 }
 
+function normalizeProducts(arr) {
+  if (!Array.isArray(arr)) return [];
+  return arr.map(p => {
+    const imgMain = p.img || p.imagen_url || p.imagen || '';
+    const imgs = Array.isArray(p.images) && p.images.length
+      ? p.images
+      : (imgMain ? [imgMain] : []);
+    return {
+      id:         p.id ?? null,
+      name:       p.name || p.nombre || '',
+      tag:        p.tag || p.categoria || p.category || 'General',
+      desc:       p.desc || p.descripcion || p.description || '',
+      icon:       p.icon || '',
+      img:        imgMain,
+      imagen_url: p.imagen_url || imgMain,
+      images:     imgs
+    };
+  }).filter(p => p.id != null);
+}
+
 async function fetchProducts() {
   if (!useApi) return;
   renderSkeletons();
@@ -1117,14 +2515,11 @@ async function fetchProducts() {
     const res = await api('/products');
     const data = await res.json();
     if (Array.isArray(data) && data.length > 0) {
-      products = data.map(p => ({
-        ...p,
-        images: Array.isArray(p.images) ? p.images : (p.img ? [p.img] : [])
-      })).filter(p => p && p.id != null);
+      products = normalizeProducts(data);
       localStorage.setItem('mg_products', JSON.stringify(products));
     } else if (!data || !data.length) {
       const saved = localStorage.getItem('mg_products');
-      if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
+      if (saved) { try { products = JSON.parse(saved); } catch (e) { /* localStorage corrupto, ignorar */ } }
       if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
     }
   } catch (e) {
@@ -1133,6 +2528,8 @@ async function fetchProducts() {
     if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
     if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
     showError('No se pudo cargar el catálogo. Se mostrarán los productos guardados.');
+    const bar = document.getElementById('api-status-bar');
+    if (bar) bar.classList.add('show');
   } finally {
     populateCategoryFilter();
     renderCatalog();
@@ -1179,7 +2576,13 @@ function getSelectedProducts() {
 }
 
 function renderCatalog() {
-  const grid = document.getElementById('cat-grid');
+    const totalEl = document.getElementById('prod-total-display');
+  if (totalEl && products.length) {
+    totalEl.style.display = 'block';
+    const items = getSelectedProducts();
+    totalEl.textContent = items.length + ' de ' + products.length + ' productos';
+  }
+const grid = document.getElementById('cat-grid');
   if (!grid) return;
   const items = getSelectedProducts();
   if (!items.length) {
@@ -1221,14 +2624,10 @@ function toggleMenu() {
   menu.classList.toggle('open');
 }
 
-function switchTab(tabId, btn) {
-  document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  btn.classList.add('active');
-}
 
 function renderAdminProducts() {
+  const countEl = document.getElementById('prod-count-bar');
+  if (countEl) countEl.textContent = products.length + ' productos cargados';
   const grid = document.getElementById('admin-prod-grid');
   if (!grid) return;
   grid.innerHTML = products.map((p, i) => `
@@ -1266,17 +2665,23 @@ function updateAdminProduct(index, field, value) {
 
 async function deleteProduct(index) {
   if (!confirm('¿Borrar este producto?')) return;
-
   const p = products[index];
   if (!p) return;
-
+  if (p.id && originalProducts.find(op => op.id === p.id)) {
+    try {
+      await api(`/products/${p.id}`, { method: 'DELETE' });
+    } catch(e) {
+      showToast('No se pudo eliminar del servidor. Se eliminó localmente.', 'error');
+    }
+  }
+  originalProducts = originalProducts.filter(op => op.id !== p.id);
   products.splice(index, 1);
-  hasUnsavedChanges = true;
-  updateUnsavedIndicator();
+  hasUnsavedChanges = false;
   saveLocal();
   populateCategoryFilter();
   renderAdminProducts();
   renderCatalog();
+  showToast('Producto eliminado');
 }
 
 
@@ -1333,36 +2738,51 @@ function compressImage(file, maxWidth = 1200, quality = 0.8) {
 }
 
 async function saveProducts() {
+  const invalid = products.filter(p => !p.name || !p.name.trim());
+  if (invalid.length > 0) {
+    showToast(invalid.length + ' producto(s) sin nombre. Corregí antes de guardar.', 'error');
+    return;
+  }
   saveLocal();
+  let created = 0, updated = 0, deleted = 0;
   try {
-    if (originalProducts.length) {
-      const currentIds = new Set(products.map(p => p.id).filter(Boolean));
-      const originalIds = new Set(originalProducts.map(p => p.id).filter(Boolean));
-      for (const p of products) {
-        if (p.id && !originalIds.has(p.id)) {
-          await api('/products', { method: 'POST', body: JSON.stringify(p) });
-        } else if (p.id && originalIds.has(p.id)) {
-          const orig = originalProducts.find(op => op.id === p.id);
-          if (orig && JSON.stringify(orig) !== JSON.stringify(p)) {
-            await api(`/products/${p.id}`, { method: 'PUT', body: JSON.stringify(p) });
-          }
+    const currentIds = new Set(products.map(p => p.id).filter(Boolean));
+    const originalIds = new Set(originalProducts.map(p => p.id).filter(Boolean));
+    for (const p of products) {
+      if (!p.id || !originalIds.has(p.id)) {
+        const res = await api('/products', { method: 'POST', body: JSON.stringify(p) });
+        const saved = await res.json();
+        if (saved.id) p.id = saved.id;
+        created++;
+      } else {
+        const orig = originalProducts.find(op => op.id === p.id);
+        if (orig && JSON.stringify(orig) !== JSON.stringify(p)) {
+          await api(`/products/${p.id}`, { method: 'PUT', body: JSON.stringify(p) });
+          updated++;
         }
       }
-      for (const p of originalProducts) {
-        if (p.id && !currentIds.has(p.id)) {
-          await api(`/products/${p.id}`, { method: 'DELETE' });
-        }
-      }
-      originalProducts = JSON.parse(JSON.stringify(products || []));
     }
-  } catch (e) {
-    showError('No se pudieron guardar los cambios en el servidor.');
+    for (const p of originalProducts) {
+      if (p.id && !currentIds.has(p.id)) {
+        await api(`/products/${p.id}`, { method: 'DELETE' });
+        deleted++;
+      }
+    }
+    originalProducts = JSON.parse(JSON.stringify(products));
+  } catch(e) {
+    showError('Error al guardar en el servidor: ' + e.message);
   }
   hasUnsavedChanges = false;
   updateUnsavedIndicator();
-  const msg = document.getElementById('save-msg-prod');
-  msg.classList.add('show');
-  setTimeout(() => msg.classList.remove('show'), 2000);
+  saveLocal();
+  const parts = [];
+  if (created) parts.push(created + ' creados');
+  if (updated) parts.push(updated + ' actualizados');
+  if (deleted) parts.push(deleted + ' eliminados');
+  const msg = parts.length ? '✓ ' + parts.join(', ') : '✓ Sin cambios pendientes';
+  showToast(msg);
+  const msgEl = document.getElementById('save-msg-prod');
+  if (msgEl) { msgEl.textContent = msg; msgEl.classList.add('show'); setTimeout(() => msgEl.classList.remove('show'), 3000); }
   populateCategoryFilter();
   renderCatalog();
 }
@@ -1378,8 +2798,9 @@ function closeBulkUpload() {
   document.getElementById('bulk-zone').style.display = 'none';
 }
 
-function handleBulkFiles(input) {
+async function handleBulkFiles(input) {
   const files = Array.from(input.files);
+  if (!files.length) return;
   const list = document.getElementById('bulk-list');
   const bar = document.getElementById('bulk-bar');
   const namesText = document.getElementById('bulk-names').value.trim();
@@ -1392,32 +2813,33 @@ function handleBulkFiles(input) {
     list.appendChild(item);
   });
   bar.style.width = '100%';
-  let processed = 0;
   const processFile = async (file, idx) => {
     try {
       const base64 = await compressImage(file);
       const name = namesArr[idx] || file.name.replace(/\.[^.]+$/, '').replace(/[_\-]+/g, ' ');
       products.push({
         id: Date.now() + idx,
-        name,
-        tag: 'General',
-        desc: 'Cargado por carga masiva',
-        icon: '📦',
-        img: base64
+        name, tag: 'General', desc: 'Cargado por carga masiva', icon: '', img: base64
       });
     } catch (err) {
-      console.error('Error comprimiendo imagen:', err);
-    }
-    processed++;
-    if (processed === files.length) {
-      saveLocal();
-      populateCategoryFilter();
-      renderCatalog();
-      renderAdminProducts();
-      setTimeout(() => { bar.style.width = '0%'; }, 600);
+      // silently skip failed image
     }
   };
-  files.forEach((file, idx) => processFile(file, idx));
+  await Promise.all(files.map((f, i) => processFile(f, i)));
+  populateCategoryFilter();
+  renderCatalog();
+  renderAdminProducts();
+  await Promise.allSettled(
+    products.slice(products.length - files.length).map(np =>
+      api('/products', { method: 'POST', body: JSON.stringify(np) })
+        .then(res => res.json())
+        .then(saved => { if (saved.id) np.id = saved.id; })
+        .catch(() => {})
+    )
+  );
+  saveLocal();
+  originalProducts = JSON.parse(JSON.stringify(products));
+  setTimeout(() => { bar.style.width = '0%'; }, 600);
   input.value = '';
 }
 
@@ -1546,20 +2968,310 @@ function syncLocalInfoToInputs() {
   }
 }
 
-function saveLocalInfo() {
+async function saveLocalInfo() {
   const cfg = {
     tel: document.getElementById('cfg-tel')?.value || '',
     wa: document.getElementById('cfg-wa')?.value || '',
     horario1: document.getElementById('cfg-horario1')?.value || '',
     horario2: document.getElementById('cfg-horario2')?.value || '',
     dir: document.getElementById('cfg-dir')?.value || '',
-    wamsg: document.getElementById('cfg-wamsg')?.value || '',
-    adminUser: document.getElementById('cfg-admin-user')?.value || '',
-    adminPass: document.getElementById('cfg-admin-pass')?.value || ''
+    wamsg: document.getElementById('cfg-wamsg')?.value || ''
   };
   localStorage.setItem('mg_config', JSON.stringify(cfg));
+  try {
+    await api('/guardar-config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cfg)
+    });
+  } catch (e) {
+    showToast('No se pudo guardar la config en el servidor', 'error');
+  }
   const msg = document.getElementById('save-msg-local');
   if (msg) { msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2000); }
+}
+
+const VENTAJAS_CONFIG = [
+  { key: 'rapida', icon: '⚡', defaultTitulo: 'Atención Rápida', defaultDesc: 'Atendemos más rápido que la competencia. Tu tiempo en el campo vale.' },
+  { key: 'cta', icon: '🤝', defaultTitulo: 'Cuenta Corriente', defaultDesc: 'Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.' },
+  { key: 'precios', icon: '💰', defaultTitulo: 'Mejores Precios', defaultDesc: 'Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.' },
+  { key: 'stock', icon: '📦', defaultTitulo: 'Stock Permanente', defaultDesc: 'Amplia disponibilidad de productos para que no pares tu trabajo.' },
+  { key: 'exp', icon: '🏆', defaultTitulo: '43 Años de Experiencia', defaultDesc: 'Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.' },
+  { key: 'agro', icon: '🌿', defaultTitulo: 'Especialistas en el Agro', defaultDesc: 'Asesoramiento técnico para agroganaderos, molineros y alambradores.' },
+];
+
+const SITE_TEXTS_FALLBACKS = {
+  'hero_linea_1': 'SIEMPRE JUNTO',
+  'hero_linea_2': 'AL CAMPO.',
+  'hero_desc': 'Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería. Atención personalizada, precios competitivos y cuenta corriente para nuestros clientes.',
+  'hero_numero': '43',
+  'hero_etiqueta': 'AÑOS EN EL MERCADO',
+  'vent_eyebrow': 'POR QUÉ ELEGIRNOS',
+  'vent_titulo_1': 'VENTAJAS',
+  'vent_titulo_2': 'METAGRO',
+  'vent_card_1_titulo': 'ATENCIÓN RÁPIDA',
+  'vent_card_1_desc': 'Atendemos más rápido que la competencia. Tu tiempo en el campo vale.',
+  'vent_card_2_titulo': 'CUENTA CORRIENTE',
+  'vent_card_2_desc': 'Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.',
+  'vent_card_3_titulo': 'MEJORES PRECIOS',
+  'vent_card_3_desc': 'Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.',
+  'vent_card_4_titulo': 'STOCK PERMANENTE',
+  'vent_card_4_desc': 'Amplia disponibilidad de productos para que no pares tu trabajo.',
+  'vent_card_5_titulo': '43 AÑOS DE EXPERIENCIA',
+  'vent_card_5_desc': 'Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.',
+  'vent_card_6_titulo': 'ESPECIALISTAS EN EL AGRO',
+  'vent_card_6_desc': 'Asesoramiento técnico para agroganaderos, molineros y alambradores.',
+  'cont_eyebrow': 'CONTACTO',
+  'cont_titulo_1': '¿NECESITÁS UN PRODUCTO?',
+  'cont_titulo_2': 'CONSULTANOS.',
+  'cont_desc': 'Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rápido por WhatsApp o por teléfono.',
+  'footer_tagline': 'Siempre junto al campo · Desde 1983'
+};
+
+function getSiteTexts() {
+  try { return JSON.parse(localStorage.getItem('mg_site_texts') || '{}'); } catch(e) { return {}; }
+}
+
+async function loadSiteTextsIntoTab() {
+  try {
+    const texts = getSiteTexts();
+    const get = (key) => texts[key] || SITE_TEXTS_FALLBACKS[key] || '';
+
+    // Cargar campos del Hero
+    const heroLinea1El = document.getElementById('txt-hero-linea-1');
+    const heroLinea2El = document.getElementById('txt-hero-linea-2');
+    const heroDescEl = document.getElementById('txt-hero-desc');
+    const heroNumeroEl = document.getElementById('txt-hero-numero');
+    const heroEtiquetaEl = document.getElementById('txt-hero-etiqueta');
+
+    if (heroLinea1El) heroLinea1El.value = get('hero_linea_1');
+    if (heroLinea2El) heroLinea2El.value = get('hero_linea_2');
+    if (heroDescEl) heroDescEl.value = get('hero_desc');
+    if (heroNumeroEl) heroNumeroEl.value = get('hero_numero');
+    if (heroEtiquetaEl) heroEtiquetaEl.value = get('hero_etiqueta');
+
+    // Cargar tarjetas de ventajas
+    const grid = document.getElementById('leyendas-ventajas-grid');
+    let ventajasCards = [];
+    for (let i = 1; i <= 6; i++) {
+      const titulo = get(`vent_card_${i}_titulo`);
+      const desc = get(`vent_card_${i}_desc`);
+      if (titulo) {
+        ventajasCards.push({
+          icon: VENTAJAS_CONFIG[i-1]?.icon || '📦',
+          titulo: titulo,
+          descripcion: desc
+        });
+      }
+    }
+
+    if (grid) {
+      grid.innerHTML = ventajasCards.map((card, idx) => `
+        <div class="ventaja-card" data-index="${idx}">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+            <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${idx + 1}</span>
+            <button onclick="removeVentajaCard(${idx})" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">⚠️ Eliminar</button>
+          </div>
+          <label class="admin-label">Ícono (emoji)</label>
+          <input class="admin-input ventaja-icon" data-index="${idx}" value="${escapeHtml(card.icon || '')}" placeholder="⚡" />
+          <label class="admin-label">Título</label>
+          <input class="admin-input ventaja-titulo" data-index="${idx}" value="${escapeHtml(card.titulo || '')}" placeholder="Atención Rápida" />
+          <label class="admin-label">Descripción</label>
+          <textarea class="admin-textarea ventaja-desc" data-index="${idx}" rows="2">${escapeHtml(card.descripcion || '')}</textarea>
+        </div>
+      `).join('');
+    }
+  } catch (e) {
+    showToast('Error al cargar los textos', 'error');
+    const grid = document.getElementById('leyendas-ventajas-grid');
+    if (grid) grid.style.background = '#c0392b';
+    console.error('[Leyendas] Error cargando textos:', e);
+  }
+}
+
+function addVentajaCard() {
+  const grid = document.getElementById('leyendas-ventajas-grid');
+  if (!grid) return;
+  const cards = grid.querySelectorAll('.ventaja-card');
+  const newIndex = cards.length;
+  const html = `
+    <div class="ventaja-card" data-index="${newIndex}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${newIndex + 1}</span>
+        <button onclick="removeVentajaCard(${newIndex})" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">⚠️ Eliminar</button>
+      </div>
+      <label class="admin-label">Ícono (emoji)</label>
+      <input class="admin-input ventaja-icon" data-index="${newIndex}" value="" placeholder="⚡" />
+      <label class="admin-label">Título</label>
+      <input class="admin-input ventaja-titulo" data-index="${newIndex}" value="" placeholder="Nuevo beneficio" />
+      <label class="admin-label">Descripción</label>
+      <textarea class="admin-textarea ventaja-desc" data-index="${newIndex}" rows="2"></textarea>
+    </div>
+  `;
+  grid.insertAdjacentHTML('beforeend', html);
+}
+
+function removeVentajaCard(index) {
+  const card = document.querySelector(`.ventaja-card[data-index="${index}"]`);
+  if (card) card.remove();
+}
+
+function saveSiteTexts() {
+  const texts = getSiteTexts();
+
+  // Guardar campos del Hero desde el formulario
+  const heroLinea1 = document.getElementById('txt-hero-linea-1');
+  const heroLinea2 = document.getElementById('txt-hero-linea-2');
+  const heroDesc = document.getElementById('txt-hero-desc');
+  const heroNumero = document.getElementById('txt-hero-numero');
+  const heroEtiqueta = document.getElementById('txt-hero-etiqueta');
+
+  if (heroLinea1) texts['hero_linea_1'] = heroLinea1.value;
+  if (heroLinea2) texts['hero_linea_2'] = heroLinea2.value;
+  if (heroDesc) texts['hero_desc'] = heroDesc.value;
+  if (heroNumero) texts['hero_numero'] = heroNumero.value;
+  if (heroEtiqueta) texts['hero_etiqueta'] = heroEtiqueta.value;
+
+  // Guardar tarjetas de ventajas desde el grid
+  const grid = document.getElementById('leyendas-ventajas-grid');
+  if (grid) {
+    const cards = grid.querySelectorAll('.ventaja-card');
+    const ventajasCards = Array.from(cards).map((card, i) => ({
+      icon: card.querySelector('.ventaja-icon')?.value || '',
+      titulo: card.querySelector('.ventaja-titulo')?.value || '',
+      descripcion: card.querySelector('.ventaja-desc')?.value || ''
+    })).filter(c => c.titulo.trim());
+    ventajasCards.forEach((card, i) => {
+      texts[`vent_card_${i + 1}_titulo`] = card.titulo;
+      texts[`vent_card_${i + 1}_desc`] = card.descripcion;
+    });
+    // Limpiar tarjetas eliminadas
+    for (let i = ventajasCards.length + 1; i <= 6; i++) {
+      delete texts[`vent_card_${i}_titulo`];
+      delete texts[`vent_card_${i}_desc`];
+    }
+  }
+
+  const prevTexts = getSiteTexts();
+  localStorage.setItem('mg_site_texts', JSON.stringify(texts));
+  addHistoryEntry(prevTexts, texts);
+  fetchAndApplyTexts();
+  const msg = document.getElementById('save-msg-texts');
+  if (msg) { msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2500); }
+  showToast('✓ Todos los textos guardados');
+}
+
+function getSiteTextsHistory() {
+  try { return JSON.parse(localStorage.getItem('mg_site_texts_history') || '[]'); } catch(e) { return []; }
+}
+
+function addHistoryEntry(prev, next) {
+  const history = getSiteTextsHistory();
+  const changes = [];
+  const keys = new Set([...Object.keys(prev || {}), ...Object.keys(next || {})]);
+  keys.forEach(key => {
+    const oldVal = (prev && prev[key]) || '';
+    const newVal = (next && next[key]) || '';
+    if (oldVal !== newVal) {
+      changes.push({ key, oldVal, newVal });
+    }
+  });
+  if (changes.length === 0) return;
+  history.unshift({
+    date: new Date().toISOString(),
+    changes
+  });
+  if (history.length > 50) history.length = 50;
+  localStorage.setItem('mg_site_texts_history', JSON.stringify(history));
+  loadHistory();
+}
+
+function loadHistory() {
+  const container = document.getElementById('leyendas-history');
+  if (!container) return;
+  const history = getSiteTextsHistory();
+  if (!history.length) {
+    container.innerHTML = '<p style="color:#666;font-size:.85rem;">Sin cambios registrados</p>';
+    return;
+  }
+  container.innerHTML = history.map(entry => {
+    const d = new Date(entry.date);
+    const dateStr = d.toLocaleDateString('es-AR') + ' ' + d.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
+    const changesHtml = entry.changes.map(c => {
+      const label = c.key.replace(/_/g, ' ').toUpperCase();
+      return `<div style="margin-bottom:0.4rem;padding:0.4rem;background:#111;border-left:2px solid var(--yellow);font-size:.82rem;">
+        <strong style="color:var(--yellow);">${escapeHtml(label)}</strong><br/>
+        <span style="color:#888;">Antes:</span> ${escapeHtml(c.oldVal || '(vacío)')}<br/>
+        <span style="color:#4caf50;">Ahora:</span> ${escapeHtml(c.newVal || '(vacío)')}
+      </div>`;
+    }).join('');
+    return `<div style="margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid #222;">
+      <div style="color:#aaa;font-size:.75rem;margin-bottom:0.4rem;">📅 ${dateStr}</div>
+      ${changesHtml}
+    </div>`;
+  }).join('');
+}
+
+
+function fetchAndApplyTexts() {
+  const texts = getSiteTexts();
+  const get = (key) => texts[key] || SITE_TEXTS_FALLBACKS[key] || '';
+
+  // Hero
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    const linea1 = get('hero_linea_1');
+    const linea2 = get('hero_linea_2');
+    heroTitle.innerHTML = `${escapeHtml(linea1)}<br/>${escapeHtml(linea2)}`;
+  }
+  const heroDesc = document.querySelector('.hero-desc');
+  if (heroDesc) heroDesc.textContent = get('hero_desc');
+  const heroEyebrow = document.querySelector('.hero-eyebrow');
+  if (heroEyebrow) heroEyebrow.textContent = get('hero_eyebrow');
+  const heroBtns = document.querySelectorAll('.hero-actions a');
+  if (heroBtns[0]) heroBtns[0].textContent = get('hero_btn1') || 'Ver Productos';
+  if (heroBtns[1]) heroBtns[1].textContent = get('hero_btn2') || '📞 Contactarnos';
+  const statNum = document.querySelector('.stat-number');
+  if (statNum) statNum.textContent = get('hero_numero');
+  const statLabel = document.querySelector('.stat-label');
+  if (statLabel) statLabel.textContent = get('hero_etiqueta');
+
+  // Ventajas
+  const ventEyebrow = document.querySelector('#ventajas .section-label');
+  if (ventEyebrow) ventEyebrow.textContent = get('vent_eyebrow');
+  const ventTitulo = document.querySelector('#ventajas .section-title');
+  if (ventTitulo) {
+    const t1 = get('vent_titulo_1');
+    const t2 = get('vent_titulo_2');
+    ventTitulo.innerHTML = `${escapeHtml(t1)} <span>${escapeHtml(t2)}</span>`;
+  }
+
+  const ventItems = document.querySelectorAll('.vent-item');
+  ventItems.forEach((item, i) => {
+    const cardIdx = i + 1;
+    const titleEl = item.querySelector('.vent-title');
+    const descEl = item.querySelector('.vent-desc');
+    const iconEl = item.querySelector('.vent-icon');
+    if (titleEl) titleEl.textContent = get(`vent_card_${cardIdx}_titulo`);
+    if (descEl) descEl.textContent = get(`vent_card_${cardIdx}_desc`);
+    if (iconEl && VENTAJAS_CONFIG[i]) iconEl.textContent = VENTAJAS_CONFIG[i].icon || '';
+  });
+
+  // Contacto
+  const contEyebrow = document.querySelector('#contacto .section-label');
+  if (contEyebrow) contEyebrow.textContent = get('cont_eyebrow');
+  const contTitle = document.querySelector('#contacto .section-title');
+  if (contTitle) {
+    const ct1 = get('cont_titulo_1');
+    const ct2 = get('cont_titulo_2');
+    contTitle.innerHTML = `${escapeHtml(ct1)}<br/>${escapeHtml(ct2)}`;
+  }
+  const contDesc = document.querySelector('.cta-desc');
+  if (contDesc) contDesc.textContent = get('cont_desc');
+
+  // Footer
+  const tagline = document.querySelector('.footer-tagline');
+  if (tagline) tagline.textContent = get('footer_tagline');
 }
 
 function doLogout() {
@@ -1581,7 +3293,7 @@ function openProductModal(p) {
   } else {
     imgWrap.innerHTML = `<span style="font-size:4rem">${escapeHtml(p.icon || '📦')}</span>`;
   }
-  const waNum = '5403444466919';
+  const waNum = (() => { try { return JSON.parse(localStorage.getItem('mg_config') || '{}').wa || '5403444466919'; } catch(e) { return '5403444466919'; } })();
   const waText = encodeURIComponent(`Hola Metagro! Quiero consultar por: ${p.name || 'producto'}. ¿Tienen stock y precio?`);
   document.getElementById('modalWa').href = `https://wa.me/${waNum}?text=${waText}`;
   document.getElementById('productModal').classList.add('open');
@@ -1619,6 +3331,7 @@ async function doLogin() {
       originalProducts = JSON.parse(JSON.stringify(products || []));
       renderAdminProducts();
       syncLocalInfoToInputs();
+  applyLocalConfig();
       errEl.style.display = 'none';
     } else {
       errEl.textContent = data.error || 'Usuario o contraseña incorrectos.';
@@ -1645,6 +3358,11 @@ document.getElementById('cat-grid').addEventListener('click', e => {
 });
 
 function init() {
+  const hostname = window.location.hostname;
+  if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+    const panel = document.getElementById('admin-test-panel');
+    if (panel) panel.style.display = 'none';
+  }
   let defaults = [];
   try {
     defaults = window.DEFAULT_PRODUCTS || [];
@@ -1669,6 +3387,16 @@ function init() {
   } catch (e) { products = [...defaults]; }
   if (!products.length) products = [...defaults];
   saveLocal();
+  try {
+    const current = JSON.parse(localStorage.getItem('mg_site_texts') || '{}');
+    const merged = { ...SITE_TEXTS_FALLBACKS };
+    for (const [key, value] of Object.entries(current)) {
+      if (value && value.trim()) merged[key] = value;
+    }
+    localStorage.setItem('mg_site_texts', JSON.stringify(merged));
+  } catch (e) {
+    localStorage.setItem('mg_site_texts', JSON.stringify(SITE_TEXTS_FALLBACKS));
+  }
   populateCategoryFilter();
   renderCatalog();
   const searchEl = document.getElementById('cat-search');
@@ -1688,8 +3416,10 @@ function init() {
       btt.classList.toggle('show', window.scrollY > 400);
     });
   }
-  if (typeof useApi !== 'undefined' && useApi) fetchProducts();
+   if (typeof useApi !== 'undefined' && useApi) fetchProducts();
   syncLocalInfoToInputs();
+  fetchAndApplyTexts();
+  loadHistory();
 }
 
 function initMap() {
@@ -1713,33 +3443,55 @@ function initMap() {
   }
 }
 
-function initMap() {
-  if (typeof L !== 'undefined' && document.getElementById('leaflet-map')) {
-    try {
-      setTimeout(() => {
-        const mapEl = document.getElementById('leaflet-map');
-        if (!mapEl || !mapEl.offsetWidth) return;
-        const map = L.map('leaflet-map', { zoomControl: true, scrollWheelZoom: false }).setView([-33.1308927, -59.3156888], 16);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors',
-          maxZoom: 19
-        }).addTo(map);
-        L.marker([-33.1308927, -59.3156888])
-          .addTo(map)
-          .bindPopup('<b>Metagro SRL</b><br/>Gualeguay, Entre Ríos')
-          .openPopup();
-        setTimeout(() => map.invalidateSize(), 300);
-      }, 300);
-    } catch (e) { /* map init failed */ }
+function applyLocalConfig() {
+  const cfg = (() => { try { return JSON.parse(localStorage.getItem('mg_config') || '{}'); } catch(e) { return {}; } })();
+  const waBase = 'https://wa.me/' + (cfg.wa || '5403444466919') + '?text=' + encodeURIComponent(cfg.wamsg || 'Hola Metagro!');
+  document.querySelectorAll('[data-wa-href]').forEach(el => { el.href = waBase; });
+  document.querySelectorAll('[data-tel-href]').forEach(el => {
+    el.href = 'tel:+' + (cfg.tel || '5403444466919').replace(/\D/g,'');
+    if (el.childNodes.length === 1 && el.firstChild.nodeType === 3) {
+      el.textContent = cfg.tel || '03444 - 466919';
+    }
+  });
+  const dirEl = document.querySelector('[data-dir-text]');
+  if (dirEl && cfg.dir) dirEl.textContent = cfg.dir;
+  const horEl = document.querySelector('[data-horario-text]');
+  if (horEl && cfg.horario1 && cfg.horario2) {
+    horEl.innerHTML = cfg.horario1 + '<br/>' + cfg.horario2;
   }
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => { init(); initMap(); });
-} else {
-  init();
-  initMap();
+async function syncFromDB() {
+  const btn = document.getElementById('btn-sync-db');
+  if (btn) btn.textContent = 'Sincronizando...';
+  localStorage.removeItem('mg_products');
+  useApi = true;
+  await fetchProducts();
+  originalProducts = JSON.parse(JSON.stringify(products));
+  renderAdminProducts();
+  const countEl = document.getElementById('prod-count-bar');
+  if (countEl) countEl.textContent = products.length + ' productos cargados';
+  if (btn) btn.textContent = 'Sincronizar DB';
+  showToast('✓ ' + products.length + ' productos cargados desde la DB');
 }
+
+async function syncToDB() {
+  try {
+    await api('/sync-to-db', { method: 'POST' });
+    showToast('✓ Productos migrados a la base de datos');
+  } catch (e) {
+    showToast('Error al migrar: ' + (e.message || 'desconocido'), 'error');
+  }
+}
+
+function switchAdminTab(event, tabId) {
+  document.querySelectorAll('.admin-tab-content').forEach(content => content.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', () => { init(); initMap(); });
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1/dist/script.js"></script>
 </body>

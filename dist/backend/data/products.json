@@ -1,0 +1,525 @@
+[
+  {
+    "id": 2,
+    "name": "Aislador W",
+    "tag": "Aisladores",
+    "desc": "Marca: Rolin",
+    "icon": "⚡",
+    "img": "productos/Aislador W.jpg",
+    "imagen_url": "productos/Aislador W.jpg",
+    "images": [
+      "productos/Aislador W.jpg"
+    ],
+    "variants": []
+  },
+  {
+    "id": 3,
+    "name": "Arreadores",
+    "tag": "Arreadores",
+    "desc": "Modelos de arreadores para diferentes tipos de alambrado.",
+    "icon": "🐣",
+    "img": "productos/Arreador b.jpeg",
+    "imagen_url": "productos/Arreador b.jpeg",
+    "images": [
+      "productos/Arreador b.jpeg",
+      "productos/Arreador con pilas.jpeg",
+      "productos/Arreador corto y largo.jpeg",
+      "productos/Arreador mango.jpg",
+      "productos/Arreador puas.jpg",
+      "productos/Arreador Tapa Roscada b.jpg",
+      "productos/Arreador.jpg",
+      "productos/Arredor Tapa roscada.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Arreador B",
+        "img": "productos/Arreador b.jpeg"
+      },
+      {
+        "name": "Arreador con Pilas",
+        "img": "productos/Arreador con pilas.jpeg"
+      },
+      {
+        "name": "Arreador Corto y Largo",
+        "img": "productos/Arreador corto y largo.jpeg"
+      },
+      {
+        "name": "Arreador Mango",
+        "img": "productos/Arreador mango.jpg"
+      },
+      {
+        "name": "Arreador Puas",
+        "img": "productos/Arreador puas.jpg"
+      },
+      {
+        "name": "Arreador Tapa Roscada",
+        "img": "productos/Arreador Tapa Roscada b.jpg"
+      },
+      {
+        "name": "Arreador",
+        "img": "productos/Arreador.jpg"
+      },
+      {
+        "name": "Arredor Tapa Roscada",
+        "img": "productos/Arredor Tapa roscada.jpg"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Bebedero Cemento",
+    "tag": "Bebederos",
+    "desc": "Bebedero de cemento para ganado, resistente y durable.",
+    "icon": "💧",
+    "img": "productos/bebederos cemento.JPG",
+    "imagen_url": "productos/bebederos cemento.JPG",
+    "images": [
+      "productos/bebederos cemento.JPG"
+    ],
+    "variants": []
+  },
+  {
+    "id": 12,
+    "name": "Bobinas Electropiolín",
+    "tag": "Bobinas",
+    "desc": "Electropiolín Rolin · Disponible en 250, 500, 750 y 1000 mts. Standard y Reforzada.",
+    "icon": "🔄",
+    "img": "productos/bobina 1000.jpg",
+    "imagen_url": "productos/bobina 1000.jpg",
+    "images": [
+      "productos/bobina 1000.jpg",
+      "productos/bobina 250.jpg",
+      "productos/bobina 500.jpg",
+      "productos/bobina 750.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Bobina 250 mts",
+        "img": "productos/bobina 250.jpg"
+      },
+      {
+        "name": "Bobina 500 mts",
+        "img": "productos/bobina 500.jpg"
+      },
+      {
+        "name": "Bobina 750 mts",
+        "img": "productos/bobina 750.jpg"
+      },
+      {
+        "name": "Bobina 1000 mts",
+        "img": "productos/bobina 1000.jpg"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Cable Subterráneo Rolin 1.8mm",
+    "tag": "Cables",
+    "desc": "Cable subterráneo de 1.8 mm para instalaciones eléctricas rurales.",
+    "icon": "🔌",
+    "img": "productos/Cable subterraneo Rolin 1.8mm.jpg",
+    "imagen_url": "productos/Cable subterraneo Rolin 1.8mm.jpg",
+    "images": [
+      "productos/Cable subterraneo Rolin 1.8mm.jpg"
+    ],
+    "variants": []
+  },
+  {
+    "id": 17,
+    "name": "Campanitas",
+    "tag": "Campanitas",
+    "desc": "Campanitas para alambados, con y sin trabas.",
+    "icon": "🔔",
+    "img": "productos/Campanita.jpg",
+    "imagen_url": "productos/Campanita.jpg",
+    "images": [
+      "productos/Campanita.jpg",
+      "productos/Campanita con Trabas.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Campanita",
+        "img": "productos/Campanita.jpg"
+      },
+      {
+        "name": "Campanita con Trabas",
+        "img": "productos/Campanita con Trabas.jpg"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Carreteles",
+    "tag": "Carreteles",
+    "desc": "Carreteles con hilo eléctrico y estructuras metálicas y plásticas. Trípodes disponibles.",
+    "icon": "📦",
+    "img": "productos/Carretel con Hilo 500 Mts.jpg",
+    "imagen_url": "productos/Carretel con Hilo 500 Mts.jpg",
+    "images": [
+      "productos/Carretel con Hilo 500 Mts.jpg",
+      "productos/Carretel con Hilo 750 Mts.jpg",
+      "productos/Carretel Vacio - Estructura Metal.jpg",
+      "productos/Carretel Vacio - Estructura Plastica.jpeg",
+      "productos/Tripode para carretel.jpeg",
+      "productos/Tripode para carretel 2.jpeg",
+      "productos/Tripode para carretel 3.jpeg"
+    ],
+    "variants": [
+      {
+        "name": "Carretel con Hilo 500 mts",
+        "img": "productos/Carretel con Hilo 500 Mts.jpg"
+      },
+      {
+        "name": "Carretel con Hilo 750 mts",
+        "img": "productos/Carretel con Hilo 750 Mts.jpg"
+      },
+      {
+        "name": "Carretel Vacío Estructura Metal",
+        "img": "productos/Carretel Vacio - Estructura Metal.jpg"
+      },
+      {
+        "name": "Carretel Vacío Estructura Plástica",
+        "img": "productos/Carretel Vacio - Estructura Plastica.jpeg"
+      },
+      {
+        "name": "Trípode para Carretel",
+        "img": "productos/Tripode para carretel.jpeg"
+      },
+      {
+        "name": "Trípode para Carretel 2",
+        "img": "productos/Tripode para carretel 2.jpeg"
+      },
+      {
+        "name": "Trípode para Carretel 3",
+        "img": "productos/Tripode para carretel 3.jpeg"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Medidores de Batería",
+    "tag": "General",
+    "desc": "Medidores de batería para control eléctrico en instalaciones rurales.",
+    "icon": "📦",
+    "img": "productos/Medidor de bateria.jpg",
+    "imagen_url": "productos/Medidor de bateria.jpg",
+    "images": [
+      "productos/Medidor de bateria.jpg",
+      "productos/Medidor de bateria 1.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Medidor de Batería",
+        "img": "productos/Medidor de bateria.jpg"
+      },
+      {
+        "name": "Medidor de Batería 1",
+        "img": "productos/Medidor de bateria 1.jpg"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Manijas Aisladas",
+    "tag": "Aisladores",
+    "desc": "Manijas aisladas con resorte y reforzadas.",
+    "icon": "⚡",
+    "img": "productos/Manija Aislada Reforzada.jpg",
+    "imagen_url": "productos/Manija Aislada Reforzada.jpg",
+    "images": [
+      "productos/Manija Aislada Reforzada.jpg",
+      "productos/Manija Aislada con resorte.jpg",
+      "productos/Manija Puntera.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Manija Aislada con Resorte",
+        "img": "productos/Manija Aislada con resorte.jpg"
+      },
+      {
+        "name": "Manija Aislada Reforzada",
+        "img": "productos/Manija Aislada Reforzada.jpg"
+      },
+      {
+        "name": "Manija Puntera",
+        "img": "productos/Manija Puntera.jpg"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Medidores de Batería 1",
+    "tag": "General",
+    "desc": "Medidor de batería adicional.",
+    "icon": "📦",
+    "img": "productos/Medidor de bateria 1.jpg",
+    "imagen_url": "productos/Medidor de bateria 1.jpg",
+    "images": [
+      "productos/Medidor de bateria 1.jpg"
+    ],
+    "variants": []
+  },
+  {
+    "id": 30,
+    "name": "Pluviómetros",
+    "tag": "Pluviometros",
+    "desc": "Pluviómetros chico y grande para medición de lluvia.",
+    "icon": "🌧️",
+    "img": "productos/pluviometro grande.jpg",
+    "imagen_url": "productos/pluviometro grande.jpg",
+    "images": [
+      "productos/pluviometro grande.jpg",
+      "productos/pluviometro chicho.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Pluviómetro Chico",
+        "img": "productos/pluviometro chicho.jpg"
+      },
+      {
+        "name": "Pluviómetro Grande",
+        "img": "productos/pluviometro grande.jpg"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "name": "Postes de Quebracho",
+    "tag": "Postes",
+    "desc": "Postes de quebracho natural y colorado para alambados y tranqueras.",
+    "icon": "🌳",
+    "img": "productos/Postes Quebracho.JPG",
+    "imagen_url": "productos/Postes Quebracho.JPG",
+    "images": [
+      "productos/Postes Quebracho.JPG",
+      "productos/Poste Quebracho 2.JPG",
+      "productos/Postes Quebracho 3.JPG",
+      "productos/Pôste quebracho.JPG",
+      "productos/postes de quebracho colorado.JPG"
+    ],
+    "variants": [
+      {
+        "name": "Poste Quebracho",
+        "img": "productos/Postes Quebracho.JPG"
+      },
+      {
+        "name": "Poste Quebracho 2",
+        "img": "productos/Poste Quebracho 2.JPG"
+      },
+      {
+        "name": "Postes Quebracho 3",
+        "img": "productos/Postes Quebracho 3.JPG"
+      },
+      {
+        "name": "Pôste Quebracho",
+        "img": "productos/Pôste quebracho.JPG"
+      },
+      {
+        "name": "Postes de Quebracho Colorado",
+        "img": "productos/postes de quebracho colorado.JPG"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Alambre Reforzado",
+    "tag": "General",
+    "desc": "Alambre de acero reforzado para alambados de gran extensión.",
+    "icon": "📦",
+    "img": "productos/reforzada 500.jpg",
+    "imagen_url": "productos/reforzada 500.jpg",
+    "images": [
+      "productos/reforzada 500.jpg",
+      "productos/reforzada 750.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Alambre Reforzado 500",
+        "img": "productos/reforzada 500.jpg"
+      },
+      {
+        "name": "Alambre Reforzado 750",
+        "img": "productos/reforzada 750.jpg"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Regulables",
+    "tag": "Regulables",
+    "desc": "Tensores regulables para alambados.",
+    "icon": "🔧",
+    "img": "productos/Regulable Ajustable.jpeg",
+    "imagen_url": "productos/Regulable Ajustable.jpeg",
+    "images": [
+      "productos/Regulable Ajustable.jpeg",
+      "productos/Regulable con Gancho y Mariposa.jpeg"
+    ],
+    "variants": [
+      {
+        "name": "Regulable Ajustable",
+        "img": "productos/Regulable Ajustable.jpeg"
+      },
+      {
+        "name": "Regulable con Gancho y Mariposa",
+        "img": "productos/Regulable con Gancho y Mariposa.jpeg"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Roldana Plástico",
+    "tag": "Roldanas",
+    "desc": "Roldana de plástico para carreteles y herramientas.",
+    "icon": "⚙️",
+    "img": "productos/Roldana Plastico.jpg",
+    "imagen_url": "productos/Roldana Plastico.jpg",
+    "images": [
+      "productos/Roldana Plastico.jpg"
+    ],
+    "variants": []
+  },
+  {
+    "id": 42,
+    "name": "Separador Corto",
+    "tag": "Separadores",
+    "desc": "Separador corto para alambrados y postes.",
+    "icon": "🔒",
+    "img": "productos/Separador Corto.jpg",
+    "imagen_url": "productos/Separador Corto.jpg",
+    "images": [
+      "productos/Separador Corto.jpg"
+    ],
+    "variants": []
+  },
+  {
+    "id": 43,
+    "name": "Terminales",
+    "tag": "Terminales",
+    "desc": "Terminales eléctricos livianos y reforzados para conexiones.",
+    "icon": "🔌",
+    "img": "productos/Terminal Liviano.jpg",
+    "imagen_url": "productos/Terminal Liviano.jpg",
+    "images": [
+      "productos/Terminal Liviano.jpg",
+      "productos/Terminal Reforzado.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Terminal Liviano",
+        "img": "productos/Terminal Liviano.jpg"
+      },
+      {
+        "name": "Terminal Reforzado",
+        "img": "productos/Terminal Reforzado.jpg"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Torniquetes",
+    "tag": "Torniquetes",
+    "desc": "Torniquetes Nº 8 y Nº 9, en negro y zincado. Para alambados de más de 50 mts.",
+    "icon": "🔗",
+    "img": "productos/Torniquete Nº8 Negro.jpg",
+    "imagen_url": "productos/Torniquete Nº8 Negro.jpg",
+    "images": [
+      "productos/Torniquete Nº8 Negro.jpg",
+      "productos/Torniquete Nº8 Zincado.jpg",
+      "productos/Torniquete Nº9 Negro.jpeg",
+      "productos/Torniquete Nº9Tv Zincado.jpeg"
+    ],
+    "variants": [
+      {
+        "name": "Torniquete Nº8 Negro",
+        "img": "productos/Torniquete Nº8 Negro.jpg"
+      },
+      {
+        "name": "Torniquete Nº8 Zincado",
+        "img": "productos/Torniquete Nº8 Zincado.jpg"
+      },
+      {
+        "name": "Torniquete Nº9 Negro",
+        "img": "productos/Torniquete Nº9 Negro.jpeg"
+      },
+      {
+        "name": "Torniquete Nº9 Tv Zincado",
+        "img": "productos/Torniquete Nº9Tv Zincado.jpeg"
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "name": "Varillas",
+    "tag": "Varillas",
+    "desc": "Varillas con rulos y varilla plástica para alambados.",
+    "icon": "🌵",
+    "img": "productos/Varilla Con 1 Rulo.jpg",
+    "imagen_url": "productos/Varilla Con 1 Rulo.jpg",
+    "images": [
+      "productos/Varilla Con 1 Rulo.jpg",
+      "productos/Varilla con 2 Rulos.jpg",
+      "productos/Varilla Plastica.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Varilla Con 1 Rulo",
+        "img": "productos/Varilla Con 1 Rulo.jpg"
+      },
+      {
+        "name": "Varilla con 2 Rulos",
+        "img": "productos/Varilla con 2 Rulos.jpg"
+      },
+      {
+        "name": "Varilla Plástica",
+        "img": "productos/Varilla Plastica.jpg"
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "name": "Velas Eléctricas",
+    "tag": "Instalacion Electrica",
+    "desc": "Velas de encendido para instalación eléctrica rural.",
+    "icon": "💡",
+    "img": "productos/Velas Electrico 1.jpg",
+    "imagen_url": "productos/Velas Electrico 1.jpg",
+    "images": [
+      "productos/Velas Electrico 1.jpg",
+      "productos/Velas Eletrico 2.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Vela Eléctrico 1",
+        "img": "productos/Velas Electrico 1.jpg"
+      },
+      {
+        "name": "Vela Eléctrico 2",
+        "img": "productos/Velas Eletrico 2.jpg"
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "name": "Voltímetros",
+    "tag": "Instalacion Electrica",
+    "desc": "Voltímetros para control de instalaciones eléctricas en campo.",
+    "icon": "💡",
+    "img": "productos/Voltimetro.jpg",
+    "imagen_url": "productos/Voltimetro.jpg",
+    "images": [
+      "productos/Voltimetro.jpg",
+      "productos/Voltimetro 1.jpg"
+    ],
+    "variants": [
+      {
+        "name": "Voltímetro",
+        "img": "productos/Voltimetro.jpg"
+      },
+      {
+        "name": "Voltímetro 1",
+        "img": "productos/Voltimetro 1.jpg"
+      }
+    ]
+  }
+]

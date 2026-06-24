@@ -15,3 +15,9 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
+      - key: POSTGRES_URL
+        sync: false
+      - key: NODE_ENV
+        value: production
+      - key: MIGRATE_KEY
+        sync: false

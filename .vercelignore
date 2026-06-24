@@ -1,5 +1,6 @@
 RENDER-ENV-VARS.txt
-public/
+seed-db.mjs
+migrate-db.mjs
 backend/.env
 backend/data/
 backend/data/uploads/
