@@ -55,50 +55,100 @@ body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
 /* ── NAV ── */
-nav {
+.navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: var(--black); border-bottom: 2px solid var(--yellow);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 2rem; height: 62px;
+  background: #0b0b0b;
+  border-bottom: 2px solid var(--yellow);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 30px;
+  height: 62px;
 }
-.nav-logo-img {
-  position: absolute;
-  left: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
+
+.navbar-logo {
+  display: flex; align-items: center;
+  font-weight: bold;
+  color: var(--yellow);
+  font-size: 1.2rem;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.navbar-logo img {
   height: 44px;
   width: 44px;
   object-fit: contain;
   border-radius: 4px;
   flex-shrink: 0;
 }
-.nav-logo-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  margin-left: 54px;
+
+.navbar-logo .logo-text {
+  margin-left: 0.65rem;
 }
-.nav-logo {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 1.6rem;
-  letter-spacing: 0.04em;
-  color: var(--yellow);
+
+.navbar-menu {
+  display: flex;
+  gap: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu-link {
+  color: #ffffff;
   text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.menu-link:hover { color: var(--yellow); }
+.menu-link:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+.navbar-actions {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 10px;
 }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cream); text-decoration: none; transition: color .2s; }
-.nav-links a:hover { color: var(--yellow); }
-.nav-links a:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
-.nav-cta { background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.45rem 1.2rem; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: background .2s; }
-.nav-cta:hover { background: var(--yellow-dark); }
-.nav-cta:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
-.nav-admin-btn { background: transparent; color: var(--cream); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.9rem; border: 1px solid #444; border-radius: var(--radius); cursor: pointer; transition: all .2s; }
-.nav-admin-btn:hover { border-color: var(--yellow); color: var(--yellow); }
-.nav-admin-btn:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+.btn-whatsapp {
+  background-color: var(--yellow);
+  color: #000000;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.btn-whatsapp:hover { background-color: var(--yellow-dark); }
+.btn-whatsapp:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+
+.btn-admin {
+  background-color: transparent;
+  color: #ffffff;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  border: 1px solid #444444;
+  border-radius: 4px;
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-admin:hover { background-color: #ffffff; color: #000000; }
+.btn-admin:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
 .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
 .hamburger span { display: block; width: 24px; height: 2px; background: var(--cream); transition: all .2s; }
 .hamburger:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
@@ -233,8 +283,16 @@ section { padding: 5rem 2rem; }
 }
 .cat-clear:hover { background: var(--yellow-dark); }
 
-/* [REPARADO] .nav-logo ya definido arriba como amarillo completo, se elimina gradiente que lo partía */
-
+.api-status-bar {
+  display: none;
+  background: #c0392b;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+.api-status-bar.show { display: block; }
 
 @media (max-width: 768px) {
   .cat-tools {
@@ -242,34 +300,29 @@ section { padding: 5rem 2rem; }
   }
 }
 
-.cat-grid { display: flex; flex-direction: column; gap: 1rem; max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
-.cat-card { background: var(--black); border: 1px solid #2a2a2a; border-radius: var(--radius); overflow: hidden; transition: border-color .25s, transform .25s, box-shadow .25s; display: flex; flex-direction: row; }
-.cat-card:hover { border-color: var(--yellow); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(245,200,0,.12); }
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+.cat-card { background: var(--black); border: 1px solid #2a2a2a; border-radius: var(--radius); overflow: hidden; transition: border-color .25s, transform .25s, box-shadow .25s; display: flex; flex-direction: column; }
+.cat-card:hover { border-color: var(--yellow); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(245,200,0,.12); }
 .cat-card:focus-within { border-color: var(--yellow); }
-.cat-img-placeholder { width: 220px; height: 220px; background: #0d0d0d; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; overflow: hidden; flex-shrink: 0; }
-.cat-img-placeholder--noimg { height: 90px; font-size: 2.2rem; width: auto; }
+.cat-img-placeholder { width: 100%; height: 260px; background: #0d0d0d; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; overflow: hidden; flex-shrink: 0; }
+.cat-img-placeholder--noimg { height: 90px; font-size: 2.2rem; }
 .cat-icon-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-.cat-img-placeholder img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 1rem; background: #0a0a0a; }
+.cat-img-placeholder img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 1.2rem; background: #0a0a0a; }
 .cat-variants { display: flex; gap: 0; border-top: 1px solid #2a2a2a; overflow-x: auto; flex-shrink: 0; }
 .cat-variants img { width: 60px; height: 60px; object-fit: cover; border-right: 1px solid #2a2a2a; flex-shrink: 0; cursor: pointer; opacity: 0.8; transition: opacity .2s; }
 .cat-variants img:hover { opacity: 1; }
-.cat-body { padding: 1.2rem 1.4rem; flex: 1; }
+.cat-body { padding: 1.2rem 1.4rem; }
 .cat-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.25rem; text-transform: uppercase; color: var(--cream); margin-bottom: 0.4rem; }
 .cat-desc { font-size: 0.85rem; color: #888; line-height: 1.55; white-space: pre-line; }
 .cat-tag { display: inline-block; margin-top: 0.8rem; background: var(--yellow); color: var(--black); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 2px; }
 .cat-wa-btn {
-  display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.9rem;
+  display: flex; align-items: center; gap: 0.4rem; margin-top: 0.9rem;
   background: transparent; border: 1px solid #333; border-radius: var(--radius);
   color: #aaa; font-size: 0.8rem; padding: 0.4rem 0.8rem; cursor: pointer;
-  text-decoration: none; transition: all .2s;
+  text-decoration: none; transition: all .2s; width: fit-content;
 }
 .cat-wa-btn:hover { border-color: #25D366; color: #25D366; }
-.cat-empty { text-align: center; padding: 4rem 2rem; color: #666; font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.08em; }
-
-@media (max-width: 640px) {
-  .cat-card { flex-direction: column; }
-  .cat-img-placeholder { width: 100%; height: 260px; }
-}
+.cat-empty { grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: #666; font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.08em; }
 
 /* ── VENTAJAS ── */
 #ventajas { background: var(--black); }
@@ -327,7 +380,7 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 .footer-bottom { max-width: 1200px; margin: 2rem auto 0; padding-top: 1.2rem; border-top: 1px solid #1a1a1a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
 .footer-copy { font-size: 0.78rem; color: #444; }
 .footer-copy strong { color: var(--yellow); }
-.footer-actions { display: flex; align-items: center; gap: 0.6rem; }
+.footer-actions { display: flex; align-items: center; gap: 2.5rem; }
 .wa-float-footer { display: inline-flex; align-items: center; gap: 0.3rem; background: #25D366; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.8rem; border-radius: var(--radius); text-decoration: none; transition: all .2s; letter-spacing: 0.04em; }
 .wa-float-footer:hover { background: #1ebc57; transform: translateY(-1px); }
 .admin-trigger { background: none; border: none; color: #2a2a2a; font-size: 0.7rem; cursor: pointer; padding: 0.2rem 0.5rem; transition: color .2s; }
@@ -418,9 +471,9 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .nav-links, .nav-cta, .nav-admin-btn { display: none; }
+  .navbar-menu, .navbar-actions { display: none; }
   .hamburger { display: flex; }
-  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 62px; left: 0; right: 0; background: var(--black); border-bottom: 2px solid var(--yellow); padding: 1rem 2rem; gap: 1.2rem; }
+  .navbar-menu.open { display: flex; flex-direction: column; position: absolute; top: 62px; left: 0; right: 0; background: #0b0b0b; border-bottom: 2px solid var(--yellow); padding: 1rem 30px; gap: 1.2rem; }
   .hero::before { display: none; }
   .hero-content { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
   .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
@@ -478,23 +531,31 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 <div class="app-toast-container" id="app-toast-container" aria-live="polite"></div>
 
 <!-- NAV -->
-<nav>
-  <img src="logo/Logo.jpg" alt="Metagro SRL" class="nav-logo-img" />
-  <div class="nav-logo-wrap">
-    <a class="nav-logo" href="#" onclick="return false;" aria-label="MetagroSRL">MetagroSRL</a>
+<header class="navbar">
+  <div class="navbar-logo">
+    <img src="logo/Logo.jpg" alt="Metagro SRL" class="logo-img" />
+    <span class="logo-text">MetagroSRL</span>
   </div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#productos">Productos</a></li>
-    <li><a href="#ventajas">Nosotros</a></li>
-    <li><a href="#info">Local</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-  <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="nav-cta">💬 WhatsApp</a>
-  <button class="nav-admin-btn" onclick="openAdminLogin()">⚙ Admin</button>
+
+  <nav class="navbar-menu" id="navLinks">
+    <a href="#productos" class="menu-link">PRODUCTOS</a>
+    <a href="#ventajas" class="menu-link">NOSOTROS</a>
+    <a href="#info" class="menu-link">LOCAL</a>
+    <a href="#contacto" class="menu-link">CONTACTO</a>
+  </nav>
+
+  <div class="navbar-actions">
+    <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-whatsapp">
+      <span class="icon">💬</span> WHATSAPP
+    </a>
+    <button class="btn-admin" onclick="openAdminLogin()">
+      <span class="icon">⚙</span> ADMIN
+    </button>
+  </div>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menú">
     <span></span><span></span><span></span>
   </div>
-</nav>
+</header>
 
 <!-- FRANJA DE FOTOS -->
 <div class="photo-strip">
@@ -509,19 +570,59 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
   <div class="photo-strip-img">
     <img src="image/imagen 3.jpeg" alt="Metagro" />
     <div class="photo-strip-overlay"><span>Gualeguay · Entre Ríos</span></div>
-  </div>
-</div>
+      </div>
+    </div>
+    <div class="admin-tab-content" id="tab-leyendas">
+      <p style="color:#888;font-size:.9rem;margin-bottom:1.5rem;">
+        Editá los textos e íconos de la página principal. Los cambios se aplican al guardar.
+      </p>
 
-<!-- BANNER DE ESPECIALIDADES -->
-<div class="brand-banner">
-  <span>Insumos Agrícolas</span><div class="brand-banner-dot"></div>
-  <span>Alambrados</span><div class="brand-banner-dot"></div>
-  <span>Molinos de Viento</span><div class="brand-banner-dot"></div>
-  <span>Aguadas</span><div class="brand-banner-dot"></div>
-  <span>Ferretería</span><div class="brand-banner-dot"></div>
-  <span>Bulonería</span><div class="brand-banner-dot"></div>
-  <span>03444 – 466919</span>
-</div>
+      <!-- BLOQUE 1: Configuración del Banner Principal -->
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">🏠 Banner Principal (Hero)</div>
+        <form onsubmit="event.preventDefault(); saveSiteTexts();">
+          <div class="config-grid">
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 1 del Título (Ej: "SIEMPRE JUNTO")</label>
+            <input class="admin-input" id="txt-hero-linea-1" placeholder="SIEMPRE JUNTO" />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Línea 2 del Título (Ej: "AL CAMPO.")</label>
+            <input class="admin-input" id="txt-hero-linea-2" placeholder="AL CAMPO." />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Bajada de Texto / Subtítulo</label>
+            <textarea class="admin-textarea" id="txt-hero-desc" rows="3" placeholder="Insumos para la agroganadería, alambrados, molinos..."></textarea>
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Número del Stat (ej: 43)</label>
+            <input class="admin-input" id="txt-hero-numero" placeholder="43" />
+          </div>
+          <div class="config-field">
+            <label class="admin-label">Texto del Stat (ej: Años en el mercado)</label>
+            <input class="admin-input" id="txt-hero-etiqueta" placeholder="Años en el mercado" />
+          </div>
+          </div>
+          <button type="submit" class="btn-save" style="margin-top:1rem;">💾 Guardar Banner Principal</button>
+        </form>
+      </div>
+
+      <!-- BLOQUE 2: Configuración de la Grilla de Características -->
+      <div style="margin-bottom:2rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">⚡ Tarjetas de Beneficios / Características</div>
+        <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Modificá, eliminá o agregá tarjetas de la grilla principal.</p>
+
+        <div id="leyendas-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+
+        <button class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
+        <button class="btn-save" onclick="saveSiteTexts()" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
+      </div>
+
+      <div class="admin-save-bar">
+        <span class="save-msg" id="save-msg-texts">✓ Cambios guardados</span>
+      </div>
+    </div>
+  </div>
 
 <!-- HERO -->
 <section class="hero">
@@ -555,7 +656,7 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
       </select>
       <button id="cat-clear" class="cat-clear" type="button">Limpiar</button>
     </div>
-
+    <div id="api-status-bar" class="api-status-bar">Sin conexión con el servidor. Mostrando datos guardados localmente.</div>
     <div class="cat-grid" id="cat-grid"></div>
   </div>
 </section>
@@ -653,9 +754,6 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
   </div>
 </footer>
 
-<!-- Floating WhatsApp removido, ahora en footer -->
-<button class="back-to-top" id="backToTop" aria-label="Volver arriba" title="Volver arriba">↑</button>
-
 <!-- ADMIN LOGIN -->
 <div class="admin-overlay" id="adminOverlay">
   <div class="admin-login-box">
@@ -680,36 +778,15 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
       <button class="admin-tab active" onclick="switchTab('tab-productos',this)">📦 Productos</button>
       <button class="admin-tab" onclick="switchTab('tab-colores',this)">🎨 Colores</button>
       <button class="admin-tab" onclick="switchTab('tab-local',this)">📍 Info Local</button>
+      <button class="admin-tab" onclick="switchTab('tab-leyendas',this)">📝 Leyendas</button>
     </div>
     <div class="admin-tab-content active" id="tab-productos">
       <div class="admin-prod-toolbar">
         <button class="btn-add" onclick="addProduct()">➕ Nuevo Producto</button>
         <button class="btn-add" onclick="openBulkUpload()">📁 Carga Masiva</button>
+        <button class="btn-add" id="btn-sync-db" onclick="syncFromDB()">🔄 Sincronizar DB</button>
       </div>
-
       <div id="prod-count-bar" style="color:#888;font-size:.82rem;margin-bottom:.8rem;"></div>
-      <!-- PANEL DE CONTROL DE ESTADO (API + DB) -->
-      <div style="background:var(--black);border:1px solid #222;border-radius:var(--radius);padding:1.1rem 1.2rem;margin:0 0 1.2rem 0;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);letter-spacing:0.12em;font-size:.9rem;margin-bottom:.7rem;">🧪 Panel de Control de Estado</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;align-items:start;">
-          <div style="background:var(--steel2);border:1px solid #333;border-radius:var(--radius);padding:.9rem;">
-            <div style="color:#aaa;font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-family:'Barlow Condensed',sans-serif;">API (GET /api/health)</div>
-            <div id="state-api" style="margin-top:.35rem;font-family:monospace;color:var(--cream);font-size:.95rem;">—</div>
-          </div>
-          <div style="background:var(--steel2);border:1px solid #333;border-radius:var(--radius);padding:.9rem;">
-            <div style="color:#aaa;font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-family:'Barlow Condensed',sans-serif;">DB (GET /api/products-test/status)</div>
-            <div id="state-db" style="margin-top:.35rem;font-family:monospace;color:var(--cream);font-size:.95rem;">—</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;align-items:center;">
-          <button class="btn-save" style="padding:.6rem 1.2rem;" onclick="runProductsPostDeleteTest()">▶ Probar POST + DELETE (DB)</button>
-          <div id="state-run" style="color:#aaa;font-size:.9rem;">Esperando...</div>
-        </div>
-        <div style="margin-top:.7rem;color:#888;font-size:.82rem;line-height:1.4;">
-          Este test inserta y borra un producto en PostgreSQL para confirmar que el flujo completo funciona.
-        </div>
-      </div>
-
       <div class="admin-prod-grid" id="admin-prod-grid"></div>
       <div class="admin-save-bar">
         <button class="btn-save" onclick="saveProducts()">💾 Guardar Cambios</button>
@@ -2303,16 +2380,13 @@ window.DEFAULT_PRODUCTS = [
   }
 ];
 </script>
-;
-</script>
-;
-</script>
+
 <script>
 // Usar la misma URL del dominio en producción (Vercel) para que /api/* apunte al backend desplegado aquí.
 const API_BASE =
   window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:4000/api'
-    : `${window.location.origin}/api`;
+    : (window.METAGRO_API_BASE || `${window.location.origin}/api`);
 
 
 let products = [];
@@ -2421,6 +2495,8 @@ async function fetchProducts() {
     if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
     if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
     showError('No se pudo cargar el catálogo. Se mostrarán los productos guardados.');
+    const bar = document.getElementById('api-status-bar');
+    if (bar) bar.classList.add('show');
   } finally {
     populateCategoryFilter();
     renderCatalog();
@@ -2518,9 +2594,20 @@ function toggleMenu() {
 function switchTab(tabId, btn) {
   document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  btn.classList.add('active');
+
+  const target = document.getElementById(tabId);
+  if (target) target.classList.add('active');
+  if (btn) btn.classList.add('active');
+
+  if (tabId === 'tab-leyendas') {
+    requestAnimationFrame(() => {
+      if (typeof loadSiteTextsIntoTab === 'function') {
+        loadSiteTextsIntoTab();
+      }
+    });
+  }
 }
+
 
 function renderAdminProducts() {
   const countEl = document.getElementById('prod-count-bar');
@@ -2874,9 +2961,7 @@ async function saveLocalInfo() {
     horario1: document.getElementById('cfg-horario1')?.value || '',
     horario2: document.getElementById('cfg-horario2')?.value || '',
     dir: document.getElementById('cfg-dir')?.value || '',
-    wamsg: document.getElementById('cfg-wamsg')?.value || '',
-    adminUser: document.getElementById('cfg-admin-user')?.value || '',
-    adminPass: document.getElementById('cfg-admin-pass')?.value || ''
+    wamsg: document.getElementById('cfg-wamsg')?.value || ''
   };
   localStorage.setItem('mg_config', JSON.stringify(cfg));
   try {
@@ -2888,6 +2973,234 @@ async function saveLocalInfo() {
   } catch(e) {}
   const msg = document.getElementById('save-msg-local');
   if (msg) { msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2000); }
+}
+
+const VENTAJAS_CONFIG = [
+  { key: 'rapida', icon: '⚡', defaultTitulo: 'Atención Rápida', defaultDesc: 'Atendemos más rápido que la competencia. Tu tiempo en el campo vale.' },
+  { key: 'cta', icon: '🤝', defaultTitulo: 'Cuenta Corriente', defaultDesc: 'Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.' },
+  { key: 'precios', icon: '💰', defaultTitulo: 'Mejores Precios', defaultDesc: 'Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.' },
+  { key: 'stock', icon: '📦', defaultTitulo: 'Stock Permanente', defaultDesc: 'Amplia disponibilidad de productos para que no pares tu trabajo.' },
+  { key: 'exp', icon: '🏆', defaultTitulo: '43 Años de Experiencia', defaultDesc: 'Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.' },
+  { key: 'agro', icon: '🌿', defaultTitulo: 'Especialistas en el Agro', defaultDesc: 'Asesoramiento técnico para agroganaderos, molineros y alambradores.' },
+];
+
+const SITE_TEXTS_FALLBACKS = {
+  'hero_linea_1': 'SIEMPRE JUNTO',
+  'hero_linea_2': 'AL CAMPO.',
+  'hero_desc': 'Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería. Atención personalizada, precios competitivos y cuenta corriente para nuestros clientes.',
+  'hero_numero': '43',
+  'hero_etiqueta': 'Años en el mercado',
+  'vent_eyebrow': 'POR QUÉ ELEGIRNOS',
+  'vent_titulo_1': 'VENTAJAS',
+  'vent_titulo_2': 'METAGRO',
+  'vent_card_1_titulo': 'ATENCIÓN RÁPIDA',
+  'vent_card_1_desc': 'Atendemos más rápido que la competencia. Tu tiempo en el campo vale.',
+  'vent_card_2_titulo': 'CUENTA CORRIENTE',
+  'vent_card_2_desc': 'Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.',
+  'vent_card_3_titulo': 'MEJORES PRECIOS',
+  'vent_card_3_desc': 'Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.',
+  'vent_card_4_titulo': 'STOCK PERMANENTE',
+  'vent_card_4_desc': 'Amplia disponibilidad de productos para que no pares tu trabajo.',
+  'vent_card_5_titulo': '43 AÑOS DE EXPERIENCIA',
+  'vent_card_5_desc': 'Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.',
+  'vent_card_6_titulo': 'ESPECIALISTAS EN EL AGRO',
+  'vent_card_6_desc': 'Asesoramiento técnico para agroganaderos, molineros y alambradores.',
+  'cont_eyebrow': 'CONTACTO',
+  'cont_titulo_1': '¿NECESITÁS UN PRODUCTO?',
+  'cont_titulo_2': 'CONSULTANOS.',
+  'cont_desc': 'Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rápido por WhatsApp o por teléfono.',
+  'footer_tagline': 'Siempre junto al campo · Desde 1983'
+};
+
+function getSiteTexts() {
+  try { return JSON.parse(localStorage.getItem('mg_site_texts') || '{}'); } catch(e) { return {}; }
+}
+
+async function loadSiteTextsIntoTab() {
+  try {
+    const texts = getSiteTexts();
+    const get = (key) => texts[key] ?? SITE_TEXTS_FALLBACKS[key] ?? '';
+
+    // Cargar campos del Hero
+    const heroLinea1El = document.getElementById('txt-hero-linea-1');
+    const heroLinea2El = document.getElementById('txt-hero-linea-2');
+    const heroDescEl = document.getElementById('txt-hero-desc');
+    const heroNumeroEl = document.getElementById('txt-hero-numero');
+    const heroEtiquetaEl = document.getElementById('txt-hero-etiqueta');
+
+    if (heroLinea1El) heroLinea1El.value = get('hero_linea_1');
+    if (heroLinea2El) heroLinea2El.value = get('hero_linea_2');
+    if (heroDescEl) heroDescEl.value = get('hero_desc');
+    if (heroNumeroEl) heroNumeroEl.value = get('hero_numero');
+    if (heroEtiquetaEl) heroEtiquetaEl.value = get('hero_etiqueta');
+
+    // Cargar tarjetas de ventajas
+    const grid = document.getElementById('leyendas-ventajas-grid');
+    let ventajasCards = [];
+    for (let i = 1; i <= 6; i++) {
+      const titulo = get(`vent_card_${i}_titulo`);
+      const desc = get(`vent_card_${i}_desc`);
+      if (titulo) {
+        ventajasCards.push({
+          icon: VENTAJAS_CONFIG[i-1]?.icon || '📦',
+          titulo: titulo,
+          descripcion: desc
+        });
+      }
+    }
+
+    if (grid) {
+      grid.innerHTML = ventajasCards.map((card, idx) => `
+        <div class="ventaja-card" data-index="${idx}">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+            <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${idx + 1}</span>
+            <button onclick="removeVentajaCard(${idx})" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">⚠️ Eliminar</button>
+          </div>
+          <label class="admin-label">Ícono (emoji)</label>
+          <input class="admin-input ventaja-icon" data-index="${idx}" value="${escapeHtml(card.icon || '')}" placeholder="⚡" />
+          <label class="admin-label">Título</label>
+          <input class="admin-input ventaja-titulo" data-index="${idx}" value="${escapeHtml(card.titulo || '')}" placeholder="Atención Rápida" />
+          <label class="admin-label">Descripción</label>
+          <textarea class="admin-textarea ventaja-desc" data-index="${idx}" rows="2">${escapeHtml(card.descripcion || '')}</textarea>
+        </div>
+      `).join('');
+    }
+  } catch (e) {
+    console.error('[Leyendas] Error cargando textos:', e);
+    showToast('Error al cargar los textos', 'error');
+  }
+}
+
+function addVentajaCard() {
+  const grid = document.getElementById('leyendas-ventajas-grid');
+  if (!grid) return;
+  const cards = grid.querySelectorAll('.ventaja-card');
+  const newIndex = cards.length;
+  const html = `
+    <div class="ventaja-card" data-index="${newIndex}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+        <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${newIndex + 1}</span>
+        <button onclick="removeVentajaCard(${newIndex})" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">⚠️ Eliminar</button>
+      </div>
+      <label class="admin-label">Ícono (emoji)</label>
+      <input class="admin-input ventaja-icon" data-index="${newIndex}" value="" placeholder="⚡" />
+      <label class="admin-label">Título</label>
+      <input class="admin-input ventaja-titulo" data-index="${newIndex}" value="" placeholder="Nuevo beneficio" />
+      <label class="admin-label">Descripción</label>
+      <textarea class="admin-textarea ventaja-desc" data-index="${newIndex}" rows="2"></textarea>
+    </div>
+  `;
+  grid.insertAdjacentHTML('beforeend', html);
+}
+
+function removeVentajaCard(index) {
+  const card = document.querySelector(`.ventaja-card[data-index="${index}"]`);
+  if (card) card.remove();
+}
+
+function saveSiteTexts() {
+  const texts = getSiteTexts();
+
+  // Guardar campos del Hero desde el formulario
+  const heroLinea1 = document.getElementById('txt-hero-linea-1');
+  const heroLinea2 = document.getElementById('txt-hero-linea-2');
+  const heroDesc = document.getElementById('txt-hero-desc');
+  const heroNumero = document.getElementById('txt-hero-numero');
+  const heroEtiqueta = document.getElementById('txt-hero-etiqueta');
+
+  if (heroLinea1) texts['hero_linea_1'] = heroLinea1.value;
+  if (heroLinea2) texts['hero_linea_2'] = heroLinea2.value;
+  if (heroDesc) texts['hero_desc'] = heroDesc.value;
+  if (heroNumero) texts['hero_numero'] = heroNumero.value;
+  if (heroEtiqueta) texts['hero_etiqueta'] = heroEtiqueta.value;
+
+  // Guardar tarjetas de ventajas desde el grid
+  const grid = document.getElementById('leyendas-ventajas-grid');
+  if (grid) {
+    const cards = grid.querySelectorAll('.ventaja-card');
+    const ventajasCards = Array.from(cards).map((card, i) => ({
+      icon: card.querySelector('.ventaja-icon')?.value || '',
+      titulo: card.querySelector('.ventaja-titulo')?.value || '',
+      descripcion: card.querySelector('.ventaja-desc')?.value || ''
+    })).filter(c => c.titulo.trim());
+    ventajasCards.forEach((card, i) => {
+      texts[`vent_card_${i + 1}_titulo`] = card.titulo;
+      texts[`vent_card_${i + 1}_desc`] = card.descripcion;
+    });
+    // Limpiar tarjetas eliminadas
+    for (let i = ventajasCards.length + 1; i <= 6; i++) {
+      delete texts[`vent_card_${i}_titulo`];
+      delete texts[`vent_card_${i}_desc`];
+    }
+  }
+
+  localStorage.setItem('mg_site_texts', JSON.stringify(texts));
+  fetchAndApplyTexts();
+  const msg = document.getElementById('save-msg-texts');
+  if (msg) { msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2500); }
+  showToast('✓ Todos los textos guardados');
+}
+
+
+function fetchAndApplyTexts() {
+  const texts = getSiteTexts();
+  const get = (key) => texts[key] ?? SITE_TEXTS_FALLBACKS[key] ?? '';
+
+  // Hero
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    const linea1 = get('hero_linea_1');
+    const linea2 = get('hero_linea_2');
+    heroTitle.innerHTML = `${escapeHtml(linea1)}<br/>${escapeHtml(linea2)}`;
+  }
+  const heroDesc = document.querySelector('.hero-desc');
+  if (heroDesc) heroDesc.textContent = get('hero_desc');
+  const heroEyebrow = document.querySelector('.hero-eyebrow');
+  if (heroEyebrow) heroEyebrow.textContent = get('hero_eyebrow');
+  const heroBtns = document.querySelectorAll('.hero-actions a');
+  if (heroBtns[0]) heroBtns[0].textContent = get('hero_btn1') || 'Ver Productos';
+  if (heroBtns[1]) heroBtns[1].textContent = get('hero_btn2') || '📞 Contactarnos';
+  const statNum = document.querySelector('.stat-number');
+  if (statNum) statNum.textContent = get('hero_numero');
+  const statLabel = document.querySelector('.stat-label');
+  if (statLabel) statLabel.textContent = get('hero_etiqueta');
+
+  // Ventajas
+  const ventEyebrow = document.querySelector('#ventajas .section-label');
+  if (ventEyebrow) ventEyebrow.textContent = get('vent_eyebrow');
+  const ventTitulo = document.querySelector('#ventajas .section-title');
+  if (ventTitulo) {
+    const t1 = get('vent_titulo_1');
+    const t2 = get('vent_titulo_2');
+    ventTitulo.innerHTML = `${escapeHtml(t1)} <span>${escapeHtml(t2)}</span>`;
+  }
+
+  const ventItems = document.querySelectorAll('.vent-item');
+  ventItems.forEach((item, i) => {
+    const cardIdx = i + 1;
+    const titleEl = item.querySelector('.vent-title');
+    const descEl = item.querySelector('.vent-desc');
+    const iconEl = item.querySelector('.vent-icon');
+    if (titleEl) titleEl.textContent = get(`vent_card_${cardIdx}_titulo`);
+    if (descEl) descEl.textContent = get(`vent_card_${cardIdx}_desc`);
+    if (iconEl && VENTAJAS_CONFIG[i]) iconEl.textContent = VENTAJAS_CONFIG[i].icon || '';
+  });
+
+  // Contacto
+  const contEyebrow = document.querySelector('#contacto .section-label');
+  if (contEyebrow) contEyebrow.textContent = get('cont_eyebrow');
+  const contTitle = document.querySelector('#contacto .section-title');
+  if (contTitle) {
+    const ct1 = get('cont_titulo_1');
+    const ct2 = get('cont_titulo_2');
+    contTitle.innerHTML = `${escapeHtml(ct1)}<br/>${escapeHtml(ct2)}`;
+  }
+  const contDesc = document.querySelector('.cta-desc');
+  if (contDesc) contDesc.textContent = get('cont_desc');
+
+  // Footer
+  const tagline = document.querySelector('.footer-tagline');
+  if (tagline) tagline.textContent = get('footer_tagline');
 }
 
 function doLogout() {
@@ -2974,6 +3287,11 @@ document.getElementById('cat-grid').addEventListener('click', e => {
 });
 
 function init() {
+  const hostname = window.location.hostname;
+  if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+    const panel = document.getElementById('admin-test-panel');
+    if (panel) panel.style.display = 'none';
+  }
   let defaults = [];
   try {
     defaults = window.DEFAULT_PRODUCTS || [];
@@ -3017,8 +3335,9 @@ function init() {
       btt.classList.toggle('show', window.scrollY > 400);
     });
   }
-  if (typeof useApi !== 'undefined' && useApi) fetchProducts();
+   if (typeof useApi !== 'undefined' && useApi) fetchProducts();
   syncLocalInfoToInputs();
+  fetchAndApplyTexts();
 }
 
 function initMap() {
