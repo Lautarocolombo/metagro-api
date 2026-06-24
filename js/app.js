@@ -1133,9 +1133,10 @@ async function syncToDB() {
 
 function switchAdminTab(event, tabId) {
   document.querySelectorAll('.admin-tab-content').forEach(content => content.classList.remove('active'));
-  document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
+  const clickedTab = event.target.closest('.admin-tab') || event.currentTarget;
+  event.currentTarget.classList.remove('active');
+  clickedTab.classList.add('active');
   document.getElementById(tabId).classList.add('active');
-  event.currentTarget.classList.add('active');
 }
 
 document.addEventListener('DOMContentLoaded', () => { init(); initMap(); });
