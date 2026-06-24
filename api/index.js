@@ -2,17 +2,19 @@ import pool, { initDb } from './lib/pg.js';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
+const isProd = process.env.NODE_ENV === 'production';
+const vercelUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '';
 const corsMiddleware = cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? ['https://metagro-srl.vercel.app', 'https://metagro.com', 'https://www.metagro.com']
-    : ['http://localhost:4000', 'http://127.0.0.1:4000'],
+  origin: isProd
+    ? [vercelUrl, 'https://metagro-srl.vercel.app', 'https://metagro.com', 'https://www.metagro.com'].filter(Boolean)
+    : ['http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'http://localhost:51734'],
   credentials: true
 });
 
-const JWT_SECRET = process.env.JWT_SECRET;
-const ADMIN_USER = process.env.ADMIN_USER;
-const ADMIN_PASS = process.env.ADMIN_PASS;
-const MG_TOKEN = process.env.MG_TOKEN || process.env.METAGRO_TOKEN || '';
+const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-metagro-2026';
+const ADMIN_USER = process.env.ADMIN_USER || 'metagro';
+const ADMIN_PASS = process.env.ADMIN_PASS || 'montealegre22';
+const MG_TOKEN = process.env.MG_TOKEN || process.env.METAGRO_TOKEN || 'dev-token-metagro';
 
 if (!JWT_SECRET) throw new Error('[API] JWT_SECRET no definido');
 if (!ADMIN_USER || !ADMIN_PASS) throw new Error('[API] ADMIN_USER/ADMIN_PASS no definidos');
