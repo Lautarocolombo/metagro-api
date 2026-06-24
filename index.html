@@ -3068,6 +3068,9 @@ async function loadSiteTextsIntoTab() {
     }
   } catch (e) {
     showToast('Error al cargar los textos', 'error');
+    const grid = document.getElementById('leyendas-ventajas-grid');
+    if (grid) grid.style.background = '#c0392b';
+    console.error('[Leyendas] Error cargando textos:', e);
   }
 }
 
