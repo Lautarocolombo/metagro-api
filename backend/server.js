@@ -10,8 +10,8 @@ const jwt = require('jsonwebtoken')
 const app = express()
 
 const ALLOWED_ORIGINS = process.env.NODE_ENV === 'production'
-  ? ['https://metagro-srl.vercel.app']
-  : ['http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173'];
+  ? ['https://metagro-274ci0el7-damianrichard76-1354s-projects.vercel.app']
+  : ['http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'http://localhost:51734', 'http://localhost:52476'];
 
 const corsOptions = {
   origin: ALLOWED_ORIGINS,
@@ -407,15 +407,32 @@ app.post('/api/backup', auth, (req, res) => {
   res.json({ ok: true, count })
 })
 
-app.get('/api/health', async (req, res) => {
+app.post('/api/sync-to-db', auth, async (req, res) => {
   try {
     const { Pool } = require('pg');
     const pool = new Pool({ connectionString: process.env.POSTGRES_URL, ssl: { rejectUnauthorized: false } });
-    await pool.query('SELECT 1');
+    const products = readProducts();
+    let inserted = 0;
+    for (const p of products) {
+      const result = await pool.query(
+        `INSERT INTO productos_ganaderos (categoria, nombre, descripcion, especificaciones, imagen_url)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (id) DO UPDATE SET
+           categoria = EXCLUDED.categoria,
+           nombre = EXCLUDED.nombre,
+           descripcion = EXCLUDED.descripcion,
+           especificaciones = EXCLUDED.especificaciones,
+           imagen_url = EXCLUDED.imagen_url`,
+        [p.tag || p.categoria || 'General', p.name || '', p.desc || '', p.desc || '', p.img || p.imagen_url || '']
+      );
+      inserted++;
+    }
+    const countResult = await pool.query('SELECT count(*) as total FROM productos_ganaderos');
     await pool.end();
-    res.json({ ok: true, db: 'connected' });
+    res.json({ ok: true, inserted, total: parseInt(countResult.rows[0].total) });
   } catch (e) {
-    res.status(503).json({ ok: false, db: 'disconnected', error: e.message });
+    console.error('[sync-to-db] error:', e);
+    res.status(500).json({ error: 'Server error', detail: e.message });
   }
 });
 
