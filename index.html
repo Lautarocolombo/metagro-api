@@ -3318,11 +3318,15 @@ function init() {
   if (!products.length) products = [...defaults];
   saveLocal();
   try {
-    const rawTexts = localStorage.getItem('mg_site_texts');
-    if (!rawTexts || !JSON.parse(rawTexts)) {
-      localStorage.setItem('mg_site_texts', JSON.stringify(SITE_TEXTS_FALLBACKS));
+    const current = JSON.parse(localStorage.getItem('mg_site_texts') || '{}');
+    const merged = { ...SITE_TEXTS_FALLBACKS };
+    for (const [key, value] of Object.entries(current)) {
+      if (value && value.trim()) merged[key] = value;
     }
-  } catch (e) { localStorage.setItem('mg_site_texts', JSON.stringify(SITE_TEXTS_FALLBACKS)); }
+    localStorage.setItem('mg_site_texts', JSON.stringify(merged));
+  } catch (e) {
+    localStorage.setItem('mg_site_texts', JSON.stringify(SITE_TEXTS_FALLBACKS));
+  }
   populateCategoryFilter();
   renderCatalog();
   const searchEl = document.getElementById('cat-search');
