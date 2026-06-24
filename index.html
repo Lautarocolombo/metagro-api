@@ -3020,7 +3020,7 @@ function getSiteTexts() {
 async function loadSiteTextsIntoTab() {
   try {
     const texts = getSiteTexts();
-    const get = (key) => texts[key] ?? SITE_TEXTS_FALLBACKS[key] ?? '';
+    const get = (key) => texts[key] || SITE_TEXTS_FALLBACKS[key] || '';
 
     // Cargar campos del Hero
     const heroLinea1El = document.getElementById('txt-hero-linea-1');
@@ -3144,7 +3144,7 @@ function saveSiteTexts() {
 
 function fetchAndApplyTexts() {
   const texts = getSiteTexts();
-  const get = (key) => texts[key] ?? SITE_TEXTS_FALLBACKS[key] ?? '';
+  const get = (key) => texts[key] || SITE_TEXTS_FALLBACKS[key] || '';
 
   // Hero
   const heroTitle = document.querySelector('.hero-title');
@@ -3316,6 +3316,12 @@ function init() {
   } catch (e) { products = [...defaults]; }
   if (!products.length) products = [...defaults];
   saveLocal();
+  try {
+    const rawTexts = localStorage.getItem('mg_site_texts');
+    if (!rawTexts || !JSON.parse(rawTexts)) {
+      localStorage.setItem('mg_site_texts', JSON.stringify(SITE_TEXTS_FALLBACKS));
+    }
+  } catch (e) { localStorage.setItem('mg_site_texts', JSON.stringify(SITE_TEXTS_FALLBACKS)); }
   populateCategoryFilter();
   renderCatalog();
   const searchEl = document.getElementById('cat-search');
