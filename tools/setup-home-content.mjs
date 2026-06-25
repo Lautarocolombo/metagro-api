@@ -1,6 +1,13 @@
 import { Pool } from 'pg';
+import { config } from 'dotenv';
 
-const url = 'postgresql://neondb_owner:npg_mL8TqxCdM3EH@ep-empty-king-atptlqim-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require';
+config({ path: new URL('../backend/.env', import.meta.url).pathname });
+
+const url = process.env.POSTGRES_URL;
+if (!url) {
+  console.error('POSTGRES_URL no definido en backend/.env');
+  process.exit(1);
+}
 const pool = new Pool({ connectionString: url, ssl: { rejectUnauthorized: false } });
 
 const sql = `

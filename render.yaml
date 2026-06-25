@@ -7,7 +7,7 @@ services:
     buildCommand: npm install --prefix backend
     startCommand: npm start --prefix backend
     envVars:
-      - key: MG_TOKEN
+      - key: METAGRO_TOKEN
         sync: false
       - key: ADMIN_USER
         sync: false

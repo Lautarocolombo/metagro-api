@@ -58,7 +58,7 @@ async function run() {
     }
   }
 
-  const loginBody = JSON.stringify({ username: 'metagro', password: 'montealegre22' })
+  const loginBody = JSON.stringify({ username: 'metagro', password: 'nuFp2lMkh97lnx6A' })
   const login = await request('/api/admin/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

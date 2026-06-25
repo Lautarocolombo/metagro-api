@@ -1,7 +1,8 @@
 {
   "version": 2,
-  "outputDirectory": ".",
+  "outputDirectory": "frontend/dist",
   "framework": null,
+  "buildCommand": "npm run build",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/styles/(.*)", "destination": "/styles/$1" },
