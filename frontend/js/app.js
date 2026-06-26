@@ -24,7 +24,7 @@ window.DEFAULT_PRODUCTS = [
     "name": "Acople rapido con palanca plastico - copia",
     "tag": "Accesorios",
     "desc": "Consultá disponibilidad y precio en Metagro SRL.",
-    "img": "productos/Acople rapido con palanca plastico - copia.jpg"
+    "img": "productos/Acople-rapido-palanca-plastico-copia.jpg"
   },
   {
     "id": 4,
