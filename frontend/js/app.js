@@ -324,11 +324,17 @@ function renderCatalog() {
       return;
     }
     let html = '<div class="cat-pagination">';
-    html += `<button class="cat-page-btn" ${filtered.page === 1 ? 'disabled' : ''} onclick="goToPage(${filtered.page - 1})">« Anterior</button>`;
+    html += `<button class="cat-page-btn" data-page="${filtered.page - 1}" ${filtered.page === 1 ? 'disabled' : ''}>« Anterior</button>`;
     html += `<span class="cat-page-info">Página ${filtered.page} de ${filtered.totalPages}</span>`;
-    html += `<button class="cat-page-btn" ${filtered.page === filtered.totalPages ? 'disabled' : ''} onclick="goToPage(${filtered.page + 1})">Siguiente »</button>`;
+    html += `<button class="cat-page-btn" data-page="${filtered.page + 1}" ${filtered.page === filtered.totalPages ? 'disabled' : ''}>Siguiente »</button>`;
     html += '</div>';
     paginationEl.innerHTML = html;
+    paginationEl.querySelectorAll('.cat-page-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = parseInt(btn.dataset.page, 10);
+        if (!isNaN(page)) goToPage(page);
+      });
+    });
   }
 }
 
@@ -380,16 +386,16 @@ function renderAdminProducts() {
   grid.innerHTML = filtered.map((p, idx) => {
     const realIndex = products.indexOf(p);
     return `
-    <div class="admin-prod-card" draggable="true" data-index="${realIndex}" ondragstart="onDragStart(event)" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragend="onDragEnd(event)">
+    <div class="admin-prod-card" draggable="true" data-index="${realIndex}">
       <div class="admin-prod-card-header">
         <span class="admin-prod-card-title">${escapeHtml(p.name || 'Sin nombre')}</span>
-        <button class="btn-del" data-role="admin" aria-label="Eliminar producto" onclick="deleteProduct(${realIndex})" title="Eliminar">?</button>
+        <button class="btn-del" data-role="admin" aria-label="Eliminar producto" data-action="delete" data-index="${realIndex}" title="Eliminar">?</button>
       </div>
       <div class="admin-prod-card-body">
         <label class="admin-label">Nombre</label>
-        <input class="admin-input" data-field="name" value="${escapeHtml(p.name || '')}" onchange="updateAdminProduct(${realIndex},'name',this.value)" />
+        <input class="admin-input" data-field="name" data-index="${realIndex}" value="${escapeHtml(p.name || '')}" />
         <label class="admin-label">Categoría</label>
-        <input class="admin-input" data-field="tag" value="${escapeHtml(p.tag || '')}" onchange="updateAdminProduct(${realIndex},'tag',this.value)" />
+        <input class="admin-input" data-field="tag" data-index="${realIndex}" value="${escapeHtml(p.tag || '')}" />
         <label class="admin-label">Descripción</label>
         <div class="wysiwyg-toolbar">
           <button type="button" class="wysiwyg-btn" data-cmd="bold"><b>B</b></button>
@@ -397,18 +403,68 @@ function renderAdminProducts() {
           <button type="button" class="wysiwyg-btn" data-cmd="underline"><u>U</u></button>
           <button type="button" class="wysiwyg-btn" data-cmd="insertUnorderedList">• Lista</button>
         </div>
-        <div class="admin-textarea wysiwyg" contenteditable="true" onblur="updateAdminProduct(${realIndex},'desc',this.innerText)">${escapeHtml(p.desc || '')}</div>
+        <div class="admin-textarea wysiwyg" contenteditable="true" data-field="desc" data-index="${realIndex}">${escapeHtml(p.desc || '')}</div>
         <label class="admin-label">Imagen (ruta o base64)</label>
-        <input class="admin-input" data-field="img" value="${escapeHtml(p.img || '')}" onchange="updateAdminProduct(${realIndex},'img',this.value)" placeholder="productos/foto.jpg" />
-        <div class="img-preview-wrap" onclick="this.querySelector('input').click()">
+        <input class="admin-input" data-field="img" data-index="${realIndex}" value="${escapeHtml(p.img || '')}" placeholder="productos/foto.jpg" />
+        <div class="img-preview-wrap" data-action="open-file" data-index="${realIndex}">
           ${p.img ? `<img src="${encodeImgPath(p.img)}" alt="preview" />` : '<span style="color:#555;font-size:.8rem">Sin imagen</span>'}
-          <input type="file" accept="image/*" class="file-input-hidden" onchange="handleAdminImage(this, ${realIndex})" />
+          <input type="file" accept="image/*" class="file-input-hidden" data-field="img" data-index="${realIndex}" />
         </div>
         <span class="img-preview-label">Clic para cambiar imagen</span>
       </div>
     </div>
   `}).join('');
+  initAdminProductEvents();
   initWysiwyg();
+}
+
+function initAdminProductEvents() {
+  const grid = document.getElementById('admin-prod-grid');
+  if (!grid) return;
+
+  grid.querySelectorAll('.admin-prod-card').forEach(card => {
+    card.ondragstart = (e) => onDragStart(e);
+    card.ondragover = (e) => onDragOver(e);
+    card.ondrop = (e) => onDrop(e);
+    card.ondragend = (e) => onDragEnd(e);
+  });
+
+  grid.querySelectorAll('[data-action="delete"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const index = parseInt(btn.dataset.index, 10);
+      if (!isNaN(index)) deleteProduct(index);
+    });
+  });
+
+  grid.querySelectorAll('input[data-field][data-index]').forEach(input => {
+    input.addEventListener('change', () => {
+      const index = parseInt(input.dataset.index, 10);
+      const field = input.dataset.field;
+      if (!isNaN(index) && field) updateAdminProduct(index, field, input.value);
+    });
+  });
+
+  grid.querySelectorAll('.admin-textarea.wysiwyg[data-field][data-index]').forEach(el => {
+    el.addEventListener('blur', () => {
+      const index = parseInt(el.dataset.index, 10);
+      const field = el.dataset.field;
+      if (!isNaN(index) && field) updateAdminProduct(index, field, el.innerText);
+    });
+  });
+
+  grid.querySelectorAll('.img-preview-wrap[data-action="open-file"]').forEach(wrap => {
+    wrap.addEventListener('click', () => {
+      const input = wrap.querySelector('input[type="file"]');
+      if (input) input.click();
+    });
+  });
+
+  grid.querySelectorAll('input[type="file"].file-input-hidden[data-field][data-index]').forEach(input => {
+    input.addEventListener('change', () => {
+      const index = parseInt(input.dataset.index, 10);
+      if (!isNaN(index)) handleAdminImage(input, index);
+    });
+  });
 }
 
 function updateAdminProduct(index, field, value) {
@@ -830,7 +886,7 @@ async function loadSiteTextsIntoTab() {
         <div class="ventaja-card" data-index="${idx}">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
             <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${idx + 1}</span>
-            <button onclick="removeVentajaCard(${idx})" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">?🗑️ Eliminar</button>
+            <button data-action="remove-ventaja" data-index="${idx}" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">🗑️ Eliminar</button>
           </div>
           <label class="admin-label">�cono (emoji)</label>
           <input class="admin-input ventaja-icon" data-index="${idx}" value="${escapeHtml(card.icon || '')}" placeholder="?" />
@@ -858,7 +914,7 @@ function addVentajaCard() {
     <div class="ventaja-card" data-index="${newIndex}">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
         <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${newIndex + 1}</span>
-        <button onclick="removeVentajaCard(${newIndex})" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">🗑️ Eliminar</button>
+        <button data-action="remove-ventaja" data-index="${newIndex}" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">🗑️ Eliminar</button>
       </div>
       <label class="admin-label">Ícono (emoji)</label>
       <input class="admin-input ventaja-icon" data-index="${newIndex}" value="" placeholder="⚡" />
@@ -1431,6 +1487,21 @@ function initInlineEvents() {
   document.getElementById('btn-close-modal')?.addEventListener('click', closeProductModal);
   document.getElementById('btn-close-modal-2')?.addEventListener('click', closeProductModal);
   document.getElementById('btn-submit-budget')?.addEventListener('click', submitBudget);
+
+  document.getElementById('info-ventajas-grid')?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-action="remove-ventaja"]');
+    if (!btn) return;
+    const index = parseInt(btn.dataset.index, 10);
+    if (!isNaN(index)) removeVentajaCard(index);
+  });
+
+  document.getElementById('trans-list')?.addEventListener('change', e => {
+    const input = e.target.closest('input[data-key][data-lang]');
+    if (!input) return;
+    updateTranslation(input);
+  });
+
+  initAdminProductEvents();
 }
 
 const initApp = () => { init(); initMap(); initWysiwyg(); initLanguage(); applyTranslations(); initInlineEvents(); };
@@ -1485,9 +1556,9 @@ function renderTranslationsEditor() {
     const es = window._translationsCache?.[k] || '';
     return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;background:#0a0a0a;padding:.7rem;border-radius:4px;border:1px solid #222;">
       <div><label style="font-size:.7rem;color:#888;text-transform:uppercase;">ES</label>
-        <input class="admin-input" data-key="${k}" data-lang="es" value="${escapeHtml(es)}" onchange="updateTranslation(this)" /></div>
+        <input class="admin-input" data-key="${k}" data-lang="es" value="${escapeHtml(es)}" /></div>
       <div><label style="font-size:.7rem;color:#888;text-transform:uppercase;">EN</label>
-        <input class="admin-input" data-key="${k}" data-lang="en" value="" onchange="updateTranslation(this)" /></div>
+        <input class="admin-input" data-key="${k}" data-lang="en" value="" /></div>
       <div style="grid-column:1/-1;font-size:.75rem;color:#aaa;">${escapeHtml(k)}</div>
     </div>`;
   }).join('');
