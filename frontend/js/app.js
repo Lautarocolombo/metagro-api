@@ -51,10 +51,12 @@ async function switchLanguage() {
 function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
+    const translation = (translations && translations[key]) || (window._translationsCache && window._translationsCache[key]);
+    if (!translation) return;
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-      el.placeholder = t(key);
+      el.placeholder = translation;
     } else {
-      el.textContent = t(key);
+      el.textContent = translation;
     }
   });
 }
@@ -1504,7 +1506,14 @@ function initInlineEvents() {
   initAdminProductEvents();
 }
 
-const initApp = () => { init(); initMap(); initWysiwyg(); initLanguage(); applyTranslations(); initInlineEvents(); };
+const initApp = async () => {
+  init();
+  initMap();
+  initWysiwyg();
+  await initLanguage();
+  applyTranslations();
+  initInlineEvents();
+};
 if (document.readyState === 'interactive' || document.readyState === 'complete') {
   initApp();
 } else {
