@@ -1,4 +1,19 @@
 const pool = require('../data/pool')
+const { homeContentSchema } = require('../validators/schemas')
+const { invalidateProducts } = require('../services/cache.service')
+
+function registrarCambio(tipo, descripcion, datos, req) {
+  try {
+    const usuario = req?.user?.username || 'anonimo'
+    const ip = req?.ip || req?.connection?.remoteAddress || null
+    pool.query(
+      'INSERT INTO site_changes (tipo, descripcion, datos, usuario, ip_address) VALUES ($1, $2, $3, $4, $5)',
+      [tipo, descripcion, datos ? JSON.stringify(datos) : null, usuario, ip]
+    )
+  } catch (e) {
+    console.error('[registrarCambio] error:', e)
+  }
+}
 
 async function getHomeContent(req, res) {
   try {
@@ -14,7 +29,8 @@ async function getHomeContent(req, res) {
 
 async function postHomeContent(req, res) {
   try {
-    const { changes, usuario, ip_address } = req.body
+    const parsed = homeContentSchema.parse(req.body)
+    const { changes, usuario } = parsed
     if (!Array.isArray(changes)) return res.status(400).json({ error: 'changes debe ser array' })
 
     await pool.query('BEGIN')
@@ -28,7 +44,7 @@ async function postHomeContent(req, res) {
       await pool.query('UPDATE home_content SET valor = $1, updated_at = NOW() WHERE id = $2', [c.nuevo, c.id])
       await pool.query(
         'INSERT INTO home_content_history (content_id, valor_anterior, valor_nuevo, categoria, descripcion_campo, cambiado_por, ip_address) VALUES ($1,$2,$3,$4,$5,$6,$7)',
-        [c.id, anterior, c.nuevo, row.categoria, row.descripcion, usuario || null, ip_address || null]
+        [c.id, anterior, c.nuevo, row.categoria, row.descripcion, usuario || req?.user?.username || null, req?.ip || req?.connection?.remoteAddress || null]
       )
     }
     await pool.query('COMMIT')
@@ -36,10 +52,12 @@ async function postHomeContent(req, res) {
     const updated = await pool.query('SELECT * FROM home_content ORDER BY categoria, id')
     const map = {}
     updated.rows.forEach(r => { map[r.id] = r })
+    invalidateProducts()
     res.json({ ok: true, message: `${changes.filter(c => c.nuevo).length} campos actualizados`, data: map })
   } catch (e) {
     console.error('[home-content] POST error:', e)
     try { await pool.query('ROLLBACK') } catch (_e) { /* rollback fallido */ }
+    if (e.name === 'ZodError') return res.status(400).json({ error: 'Validación fallida', issues: e.errors })
     res.status(500).json({ error: e.message })
   }
 }
@@ -58,7 +76,7 @@ async function getHomeContentHistory(req, res) {
 
 async function restoreHomeContent(req, res) {
   try {
-    const { history_id, usuario, ip_address } = req.body
+    const { history_id } = req.body
     const record = await pool.query('SELECT * FROM home_content_history WHERE id = $1', [history_id])
     if (!record.rows.length) return res.status(404).json({ error: 'No encontrado' })
     const rec = record.rows[0]
@@ -66,10 +84,11 @@ async function restoreHomeContent(req, res) {
     await pool.query('UPDATE home_content SET valor = $1, updated_at = NOW() WHERE id = $2', [rec.valor_anterior, rec.content_id])
     await pool.query(
       'INSERT INTO home_content_history (content_id, valor_anterior, valor_nuevo, categoria, descripcion_campo, cambiado_por, ip_address) VALUES ($1,$2,$3,$4,$5,$6,$7)',
-      [rec.content_id, rec.valor_nuevo, rec.valor_anterior, rec.categoria, rec.descripcion_campo, usuario || null, ip_address || null]
+      [rec.content_id, rec.valor_nuevo, rec.valor_anterior, rec.categoria, rec.descripcion_campo, req?.user?.username || null, req?.ip || req?.connection?.remoteAddress || null]
     )
     await pool.query('COMMIT')
 
+    invalidateProducts()
     res.json({ ok: true, message: 'Versión restaurada' })
   } catch (e) {
     console.error('[home-content] restore error:', e)

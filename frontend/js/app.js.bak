@@ -1,8 +1,893 @@
-// Usar la misma URL del dominio en producci�n (Vercel) para que /api/* apunte al backend desplegado aqu�.
+﻿// Usar la misma URL del dominio en producci�n (Vercel) para que /api/* apunte al backend desplegado aqu�.
 const API_BASE =
   window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:4000/api'
     : (window.METAGRO_API_BASE || `${window.location.origin}/api`);
+
+window.DEFAULT_PRODUCTS = [
+  {
+    "id": 1,
+    "name": "A - Rosca Hembra 2",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/A - Rosca Hembra 2.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Acople Rapido a palanca aluminio",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Acople Rapido a palanca aluminio.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Acople rapido con palanca plastico - copia",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Acople-rapido-palanca-plastico-copia.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Adaptador BIN",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Adaptador BIN.jpeg"
+  },
+  {
+    "id": 5,
+    "name": "Aislador W",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Aislador W.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Arandela Grower",
+    "tag": "Bulonería",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arandela Grower.jpeg"
+  },
+  {
+    "id": 7,
+    "name": "Arandela plana Zincada",
+    "tag": "Bulonería",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arandela plana Zincada.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Arreador b",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arreador b.jpeg"
+  },
+  {
+    "id": 9,
+    "name": "Arreador con pilas",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arreador con pilas.jpeg"
+  },
+  {
+    "id": 10,
+    "name": "Arreador corto y largo",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arreador corto y largo.jpeg"
+  },
+  {
+    "id": 11,
+    "name": "Arreador mango",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arreador mango.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Arreador puas",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arreador puas.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Arreador Tapa Roscada b",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arreador Tapa Roscada b.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Arreador",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arreador.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Arredor Tapa roscada",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Arredor Tapa roscada.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Autoperforante Madera",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Autoperforante Madera.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Autoperforante Metal",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Autoperforante Metal.jpeg"
+  },
+  {
+    "id": 18,
+    "name": "B - Rosca Macho a Palanca 3",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/B - Rosca Macho a Palanca 3.jpg"
+  },
+  {
+    "id": 19,
+    "name": "bebederos cemento",
+    "tag": "Bebederos",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/bebederos cemento.JPG"
+  },
+  {
+    "id": 20,
+    "name": "Blanca 1",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Blanca 1.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Blanca 2",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Blanca 2.jpg"
+  },
+  {
+    "id": 22,
+    "name": "bobina 1000",
+    "tag": "Bobinas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/bobina 1000.jpg"
+  },
+  {
+    "id": 23,
+    "name": "bobina 250",
+    "tag": "Bobinas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/bobina 250.jpg"
+  },
+  {
+    "id": 24,
+    "name": "bobina 500",
+    "tag": "Bobinas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/bobina 500.jpg"
+  },
+  {
+    "id": 25,
+    "name": "bobina 750",
+    "tag": "Bobinas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/bobina 750.jpg"
+  },
+  {
+    "id": 26,
+    "name": "Buje reduccion",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Buje reduccion.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Bulon Cabeza Hexagonal Dorado",
+    "tag": "Bulonería",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Bulon Cabeza Hexagonal Dorado.jpg"
+  },
+  {
+    "id": 28,
+    "name": "Bulon Cabeza Hexagonal",
+    "tag": "Bulonería",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Bulon Cabeza Hexagonal.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Bulon Cabeza Redonda",
+    "tag": "Bulonería",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Bulon Cabeza Redonda.jpeg"
+  },
+  {
+    "id": 30,
+    "name": "C - Espiga a Palanca 3",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/C - Espiga a Palanca 3.jpg"
+  },
+  {
+    "id": 31,
+    "name": "Cable Dogo",
+    "tag": "Cables",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Cable Dogo.jpg"
+  },
+  {
+    "id": 32,
+    "name": "Cable subterraneo Rolin 1.8mm",
+    "tag": "Cables",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Cable subterraneo Rolin 1.8mm.jpg"
+  },
+  {
+    "id": 33,
+    "name": "Cable",
+    "tag": "Cables",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Cable.jpeg"
+  },
+  {
+    "id": 34,
+    "name": "CAdena Balde 2",
+    "tag": "Cadenas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/CAdena Balde 2.jpg"
+  },
+  {
+    "id": 35,
+    "name": "CAdena Balde",
+    "tag": "Cadenas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/CAdena Balde.jpg"
+  },
+  {
+    "id": 36,
+    "name": "CAdena",
+    "tag": "Cadenas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/CAdena.jpg"
+  },
+  {
+    "id": 37,
+    "name": "Campanita con Trabas",
+    "tag": "Campanitas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Campanita con Trabas.jpg"
+  },
+  {
+    "id": 38,
+    "name": "Campanita",
+    "tag": "Campanitas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Campanita.jpg"
+  },
+  {
+    "id": 39,
+    "name": "Carretel con Hilo 500 Mts",
+    "tag": "Carreteles",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Carretel con Hilo 500 Mts.jpg"
+  },
+  {
+    "id": 40,
+    "name": "Carretel con Hilo 750 Mts",
+    "tag": "Carreteles",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Carretel con Hilo 750 Mts.jpg"
+  },
+  {
+    "id": 41,
+    "name": "Carretel Vacio - Estructura Metal",
+    "tag": "Carreteles",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Carretel Vacio - Estructura Metal.jpg"
+  },
+  {
+    "id": 42,
+    "name": "Carretel Vacio - Estructura Plastica",
+    "tag": "Carreteles",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Carretel Vacio - Estructura Plastica.jpeg"
+  },
+  {
+    "id": 43,
+    "name": "Caños Galvanizados",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Caños Galvanizados.jpg"
+  },
+  {
+    "id": 44,
+    "name": "Cupla",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Cupla.jpg"
+  },
+  {
+    "id": 45,
+    "name": "D - Rosca Hembra Palanca",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/D - Rosca Hembra Palanca.jpg"
+  },
+  {
+    "id": 46,
+    "name": "E - Espiga  2",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/E - Espiga  2.jpg"
+  },
+  {
+    "id": 47,
+    "name": "Entre rosca",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Entre rosca.jpg"
+  },
+  {
+    "id": 48,
+    "name": "Esclusa 2 Pulgadas",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Esclusa 2 Pulgadas.jpeg"
+  },
+  {
+    "id": 49,
+    "name": "Esclusa 3 Pulgadas",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Esclusa 3 Pulgadas.jpeg"
+  },
+  {
+    "id": 50,
+    "name": "Esferica Mariposa",
+    "tag": "Llaves",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Esferica Mariposa.jpg"
+  },
+  {
+    "id": 51,
+    "name": "Eslabon abierto",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Eslabon abierto.jpg"
+  },
+  {
+    "id": 52,
+    "name": "Gancho - Ojo",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Gancho - Ojo.jpg"
+  },
+  {
+    "id": 53,
+    "name": "GAncho J Estira Tejido",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/GAncho J Estira Tejido.jpg"
+  },
+  {
+    "id": 54,
+    "name": "Grillete corazon 1",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Grillete corazon 1.jpg"
+  },
+  {
+    "id": 55,
+    "name": "Grillete Recto",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Grillete Recto.jpg"
+  },
+  {
+    "id": 56,
+    "name": "Guardacabo",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Guardacabo.jpg"
+  },
+  {
+    "id": 57,
+    "name": "Llave ESferica 2",
+    "tag": "Llaves",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Llave ESferica 2.jpg"
+  },
+  {
+    "id": 58,
+    "name": "Llave ESferica Plastica 2",
+    "tag": "Llaves",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Llave ESferica Plastica 2.jpg"
+  },
+  {
+    "id": 59,
+    "name": "Llave ESferica Plastica 3",
+    "tag": "Llaves",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Llave ESferica Plastica 3.jpg"
+  },
+  {
+    "id": 60,
+    "name": "Llave ESferica Plastica 4",
+    "tag": "Llaves",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Llave ESferica Plastica 4.jpg"
+  },
+  {
+    "id": 61,
+    "name": "Llave ESferica Plastica Duke",
+    "tag": "Llaves",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Llave ESferica Plastica Duke.jpg"
+  },
+  {
+    "id": 62,
+    "name": "Llave ESferica Plastica",
+    "tag": "Llaves",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Llave ESferica Plastica.jpg"
+  },
+  {
+    "id": 63,
+    "name": "Llave Esferica",
+    "tag": "Llaves",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Llave Esferica.jpg"
+  },
+  {
+    "id": 64,
+    "name": "Manija Aislada con resorte",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Manija Aislada con resorte.jpg"
+  },
+  {
+    "id": 65,
+    "name": "Manija Aislada Reforzada",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Manija Aislada Reforzada.jpg"
+  },
+  {
+    "id": 66,
+    "name": "Manija Puntera",
+    "tag": "Aisladores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Manija Puntera.jpg"
+  },
+  {
+    "id": 67,
+    "name": "Medidor de bateria 1",
+    "tag": "Medidores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Medidor de bateria 1.jpg"
+  },
+  {
+    "id": 68,
+    "name": "Medidor de bateria",
+    "tag": "Medidores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Medidor de bateria.jpg"
+  },
+  {
+    "id": 69,
+    "name": "Modelo A - Rosca Hembra",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Modelo A - Rosca Hembra.jpg"
+  },
+  {
+    "id": 70,
+    "name": "Modelo C - Espiga",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Modelo C - Espiga.jpg"
+  },
+  {
+    "id": 71,
+    "name": "Modelo D - Rosca  Hembra",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Modelo D - Rosca  Hembra.jpg"
+  },
+  {
+    "id": 72,
+    "name": "Modelo E - Eespiga",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Modelo E - Eespiga.jpg"
+  },
+  {
+    "id": 73,
+    "name": "Niple Galvanizados 2",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Niple Galvanizados 2.jpg"
+  },
+  {
+    "id": 74,
+    "name": "Niple Galvanizados",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Niple Galvanizados.jpg"
+  },
+  {
+    "id": 75,
+    "name": "Plastica",
+    "tag": "General",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Plastica.jpg"
+  },
+  {
+    "id": 76,
+    "name": "pluviometro chicho",
+    "tag": "Pluviometros",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/pluviometro chicho.jpg"
+  },
+  {
+    "id": 77,
+    "name": "pluviometro grande",
+    "tag": "Pluviometros",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/pluviometro grande.jpg"
+  },
+  {
+    "id": 78,
+    "name": "Poste Quebracho 2",
+    "tag": "Postes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Poste Quebracho.JPG"
+  },
+  {
+    "id": 79,
+    "name": "Poste Quebracho",
+    "tag": "Postes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Poste Quebracho-79.JPG"
+  },
+  {
+    "id": 80,
+    "name": "postes de quebracho colorado",
+    "tag": "Postes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/postes de quebracho colorado.JPG"
+  },
+  {
+    "id": 81,
+    "name": "Postes Quebracho 3",
+    "tag": "Postes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Postes Quebracho 3.JPG"
+  },
+  {
+    "id": 82,
+    "name": "Postes Quebracho",
+    "tag": "Postes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Postes Quebracho.JPG"
+  },
+  {
+    "id": 83,
+    "name": "Prensa Cable",
+    "tag": "Cables",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Prensa Cable.jpg"
+  },
+  {
+    "id": 84,
+    "name": "Pôste quebracho",
+    "tag": "Postes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/P-ste-quebracho-84.JPG"
+  },
+  {
+    "id": 85,
+    "name": "reforzada 500",
+    "tag": "Bobinas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/reforzada 500.jpg"
+  },
+  {
+    "id": 86,
+    "name": "reforzada 750",
+    "tag": "Bobinas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/reforzada 750.jpg"
+  },
+  {
+    "id": 87,
+    "name": "Regulable Ajustable",
+    "tag": "Regulables",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Regulable Ajustable.jpeg"
+  },
+  {
+    "id": 88,
+    "name": "Regulable con Gancho y Mariposa",
+    "tag": "Regulables",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Regulable con Gancho y Mariposa.jpeg"
+  },
+  {
+    "id": 89,
+    "name": "Roldana Plastico",
+    "tag": "Roldanas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Roldana Plastico.jpg"
+  },
+  {
+    "id": 90,
+    "name": "Separador Corto",
+    "tag": "Separadores",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Separador Corto.jpg"
+  },
+  {
+    "id": 91,
+    "name": "Tapon Goma 2",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tapon Goma 2.jpg"
+  },
+  {
+    "id": 92,
+    "name": "Tapon Goma 3",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tapon Goma 3.jpg"
+  },
+  {
+    "id": 93,
+    "name": "Tapon Goma",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tapon Goma.jpg"
+  },
+  {
+    "id": 94,
+    "name": "Tarugo fischer 10 hueco solo",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tarugo fischer 10 hueco solo.jpg"
+  },
+  {
+    "id": 95,
+    "name": "tarugo fischer con balde",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/tarugo fischer con balde.jpg"
+  },
+  {
+    "id": 96,
+    "name": "tarugo fischer Nº6 x 30 caja",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/tarugo fischer Nº6 x 30 caja.jpg"
+  },
+  {
+    "id": 97,
+    "name": "Terminal Liviano",
+    "tag": "Terminales",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Terminal Liviano.jpg"
+  },
+  {
+    "id": 98,
+    "name": "Terminal Reforzado",
+    "tag": "Terminales",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Terminal Reforzado.jpg"
+  },
+  {
+    "id": 99,
+    "name": "todos los acoples y adaptadores",
+    "tag": "Accesorios",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/todos los acoples y adaptadores.jpg"
+  },
+  {
+    "id": 100,
+    "name": "Tornillos tirafondo",
+    "tag": "Bulonería",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tornillos tirafondo.jpg"
+  },
+  {
+    "id": 101,
+    "name": "Torniquete Nº8 Negro",
+    "tag": "Torniquetes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Torniquete Nº8 Negro.jpg"
+  },
+  {
+    "id": 102,
+    "name": "Torniquete Nº8 Zincado",
+    "tag": "Torniquetes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Torniquete Nº8 Zincado.jpg"
+  },
+  {
+    "id": 103,
+    "name": "Torniquete Nº9 Negro",
+    "tag": "Torniquetes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Torniquete Nº9 Negro.jpeg"
+  },
+  {
+    "id": 104,
+    "name": "Torniquete Nº9Tv Zincado",
+    "tag": "Torniquetes",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Torniquete Nº9Tv Zincado.jpeg"
+  },
+  {
+    "id": 105,
+    "name": "Tripode para carretel 2",
+    "tag": "Carreteles",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tripode para carretel 2.jpeg"
+  },
+  {
+    "id": 106,
+    "name": "Tripode para carretel 3",
+    "tag": "Carreteles",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tripode para carretel 3.jpeg"
+  },
+  {
+    "id": 107,
+    "name": "Tripode para carretel",
+    "tag": "Carreteles",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tripode para carretel.jpeg"
+  },
+  {
+    "id": 108,
+    "name": "Tuerca Zincada",
+    "tag": "Bulonería",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Tuerca Zincada.jpg"
+  },
+  {
+    "id": 109,
+    "name": "Valvula Flotante 2",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Valvula Flotante 2.jpg"
+  },
+  {
+    "id": 110,
+    "name": "Valvula flotante Plastica",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Valvula flotante Plastica.jpg"
+  },
+  {
+    "id": 111,
+    "name": "Valvula Flotante",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Valvula Flotante.jpg"
+  },
+  {
+    "id": 112,
+    "name": "Valvula Foglia",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Valvula Foglia.png"
+  },
+  {
+    "id": 113,
+    "name": "Valvula Fundicion completa",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Valvula Fundicion completa.jpg"
+  },
+  {
+    "id": 114,
+    "name": "Valvula Fundicion",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Valvula Fundicion.jpg"
+  },
+  {
+    "id": 115,
+    "name": "Valvula Hansen",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Valvula Hansen.jpg"
+  },
+  {
+    "id": 116,
+    "name": "Valvula Hierro Verde sola a",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Valvula Hierro Verde sola a.png"
+  },
+  {
+    "id": 117,
+    "name": "valvula Plastica completa roja",
+    "tag": "Válvulas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/valvula Plastica completa roja.jpg"
+  },
+  {
+    "id": 118,
+    "name": "Varilla Con 1 Rulo",
+    "tag": "Varillas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Varilla Con 1 Rulo.jpg"
+  },
+  {
+    "id": 119,
+    "name": "Varilla con 2 Rulos",
+    "tag": "Varillas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Varilla con 2 Rulos.jpg"
+  },
+  {
+    "id": 120,
+    "name": "Varilla Galvanizada",
+    "tag": "Varillas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Varilla Galvanizada.JPG"
+  },
+  {
+    "id": 121,
+    "name": "Varilla Plastica",
+    "tag": "Varillas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Varilla Plastica.jpg"
+  },
+  {
+    "id": 122,
+    "name": "Varilla Roscada",
+    "tag": "Varillas",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Varilla Roscada.jpg"
+  },
+  {
+    "id": 123,
+    "name": "Velas Electrico 1",
+    "tag": "Instalacion Electrica",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Velas Electrico 1.jpg"
+  },
+  {
+    "id": 124,
+    "name": "Velas Eletrico 2",
+    "tag": "Instalacion Electrica",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Velas Eletrico 2.jpg"
+  },
+  {
+    "id": 125,
+    "name": "Voltimetro 1",
+    "tag": "Instalacion Electrica",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Voltimetro 1.jpg"
+  },
+  {
+    "id": 126,
+    "name": "Voltimetro",
+    "tag": "Instalacion Electrica",
+    "desc": "Consultá disponibilidad y precio en Metagro SRL.",
+    "img": "productos/Voltimetro.jpg"
+  }
+];
 
 let products = [];
 let useApi = true;
@@ -81,21 +966,13 @@ function initWysiwyg() {
       btn.addEventListener('mousedown', (e) => {
         e.preventDefault();
         const cmd = btn.dataset.cmd;
-        if (cmd === 'insertImage') {
-          const url = prompt('URL de la imagen:');
-          if (url) document.execCommand('insertImage', false, url);
-        } else if (cmd === 'createLink') {
-          const url = prompt('URL del enlace:');
-          if (url) document.execCommand('createLink', false, url);
-        } else {
-          document.execCommand(cmd, false, null);
-        }
+        document.execCommand(cmd, false, null);
       });
     });
   });
   document.querySelectorAll('.wysiwyg').forEach(el => {
     el.addEventListener('blur', () => {
-      el.dataset.value = el.innerHTML || '';
+      el.dataset.value = el.innerText || '';
     });
   });
 }
@@ -110,38 +987,9 @@ async function api(path, opts = {}) {
   const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
   const token = sessionStorage.getItem('mg_admin_token');
   if (token) headers['x-mg-token'] = token;
-  let res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
-  if (res.status === 401 && token) {
-    const refreshed = await tryRefreshToken();
-    if (refreshed) {
-      const newToken = sessionStorage.getItem('mg_admin_token');
-      if (newToken) headers['x-mg-token'] = newToken;
-      res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
-    }
-  }
+  const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
   if (!res.ok) throw new Error(`API ${res.status}`);
   return res;
-}
-
-async function tryRefreshToken() {
-  const refreshToken = sessionStorage.getItem('mg_refresh_token');
-  if (!refreshToken) return false;
-  try {
-    const res = await fetch(`${API_BASE}/admin/refresh`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken })
-    });
-    const data = await res.json();
-    if (data.token) {
-      sessionStorage.setItem('mg_admin_token', data.token);
-      if (data.refreshToken) sessionStorage.setItem('mg_refresh_token', data.refreshToken);
-      return true;
-    }
-  } catch (e) {
-    console.error('[api] refresh failed:', e);
-  }
-  return false;
 }
 
 function showError(message) {
@@ -214,13 +1062,13 @@ async function fetchProducts() {
     } else if (!data || !data.length) {
       const saved = localStorage.getItem('mg_products');
       if (saved) { try { products = JSON.parse(saved); } catch (e) { /* localStorage corrupto, ignorar */ } }
-      if (!products.length) products = [];
+      if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
     }
   } catch (e) {
     useApi = false;
     const saved = localStorage.getItem('mg_products');
     if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
-    if (!products.length) products = [];
+    if (!products.length) products = [...(window.DEFAULT_PRODUCTS || [])];
     showError('No se pudo cargar el cat�logo. Se mostrar�n los productos guardados.');
     const bar = document.getElementById('api-status-bar');
     if (bar) bar.classList.add('show');
@@ -301,12 +1149,13 @@ function renderCatalog() {
     const descHtml = descClean.length
       ? `<div class="cat-desc">${escapeHtml(descClean.join('\n'))}</div>`
       : '';
-    const iconAttr = escapeHtml(p.icon || '??');
+    const iconSafe = escapeHtml(p.icon || '??');
+    const imgOnError = hasImg ? ` onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\\'cat-icon-fallback\\'>${iconSafe}</span>')"` : '';
     const thumbs = allImages.slice(1).map(src => `<img src="${encodeImgPath(src)}" alt="" loading="lazy" />`).join('');
     return `
     <div class="cat-card" data-index="${i}">
       <div class="cat-img-placeholder${hasImg ? '' : ' cat-img-placeholder--noimg'}">
-        ${hasImg ? `<img src="${encodeImgPath(mainImg)}" loading="lazy" fetchpriority="low" decoding="async" alt="${escapeHtml(p.name || '')}" data-icon="${iconAttr}" />` : `<span class="cat-icon-fallback">${iconAttr}</span>`}
+        ${hasImg ? `<img src="${encodeImgPath(mainImg)}" loading="lazy" fetchpriority="low" decoding="async" alt="${escapeHtml(p.name || '')}"${imgOnError} />` : `<span class="cat-icon-fallback">${iconSafe}</span>`}
       </div>
       ${thumbs ? `<div class="cat-variants">${thumbs}</div>` : ''}
       <div class="cat-body">
@@ -383,7 +1232,7 @@ function renderAdminProducts() {
     <div class="admin-prod-card" draggable="true" data-index="${realIndex}" ondragstart="onDragStart(event)" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragend="onDragEnd(event)">
       <div class="admin-prod-card-header">
         <span class="admin-prod-card-title">${escapeHtml(p.name || 'Sin nombre')}</span>
-        <button class="btn-del" data-role="admin" aria-label="Eliminar producto" onclick="deleteProduct(${realIndex})" title="Eliminar">?</button>
+        <button class="btn-del" aria-label="Eliminar producto" onclick="deleteProduct(${realIndex})" title="Eliminar">?</button>
       </div>
       <div class="admin-prod-card-body">
         <label class="admin-label">Nombre</label>
@@ -401,7 +1250,7 @@ function renderAdminProducts() {
         <label class="admin-label">Imagen (ruta o base64)</label>
         <input class="admin-input" data-field="img" value="${escapeHtml(p.img || '')}" onchange="updateAdminProduct(${realIndex},'img',this.value)" placeholder="productos/foto.jpg" />
         <div class="img-preview-wrap" onclick="this.querySelector('input').click()">
-          ${p.img ? `<img src="${encodeImgPath(p.img)}" alt="preview" />` : '<span style="color:#555;font-size:.8rem">Sin imagen</span>'}
+          ${p.img ? `<img src="${p.img}" alt="preview" />` : '<span style="color:#555;font-size:.8rem">Sin imagen</span>'}
           <input type="file" accept="image/*" class="file-input-hidden" onchange="handleAdminImage(this, ${realIndex})" />
         </div>
         <span class="img-preview-label">Clic para cambiar imagen</span>
@@ -1086,20 +1935,11 @@ function fetchAndApplyTexts() {
   if (tagline) tagline.textContent = get('footer_tagline');
 }
 
-function applyRoleVisibility() {
-  const role = sessionStorage.getItem('mg_admin_role') || 'admin';
-  document.querySelectorAll('[data-role]').forEach(el => {
-    const allowed = el.dataset.role.split(',');
-    el.style.display = allowed.includes(role) ? '' : 'none';
-  });
-}
-
 function doLogout() {
-  if (hasUnsavedChanges && !confirm('Tenés cambios sin guardar. ¿Estás seguro que querés salir?')) return;
+  if (hasUnsavedChanges && !confirm('Ten�s cambios sin guardar. �Est�s seguro que quer�s salir?')) return;
   hasUnsavedChanges = false;
   updateUnsavedIndicator();
   sessionStorage.removeItem('mg_admin_token');
-  sessionStorage.removeItem('mg_refresh_token');
   document.getElementById('adminPanel').classList.remove('open');
 }
 
@@ -1146,8 +1986,8 @@ function openProductModal(p) {
   document.getElementById('modalTag').textContent = p.tag || 'Producto';
   const imgWrap = document.getElementById('modalImage');
   if (p.img) {
-    const iconAttr = escapeHtml(p.icon || '📦');
-    imgWrap.innerHTML = `<img src="${encodeImgPath(p.img)}" alt="${escapeHtml(p.name || '')}" data-icon="${iconAttr}" />`;
+    const iconSafe = escapeHtml(p.icon || '📦');
+    imgWrap.innerHTML = `<img src="${encodeImgPath(p.img)}" alt="${escapeHtml(p.name || '')}" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\\'font-size:4rem\\'>${iconSafe}</span>')" />`;
   } else {
     imgWrap.innerHTML = `<span style="font-size:4rem">${escapeHtml(p.icon || '📦')}</span>`;
   }
@@ -1183,14 +2023,8 @@ async function doLogin() {
     const data = await res.json();
     if (data.token) {
       sessionStorage.setItem('mg_admin_token', data.token);
-      if (data.refreshToken) sessionStorage.setItem('mg_refresh_token', data.refreshToken);
-      try {
-        const payload = JSON.parse(atob(data.token.split('.')[1]));
-        sessionStorage.setItem('mg_admin_role', payload.role || 'admin');
-      } catch (e) { /* ignore */ }
       document.getElementById('adminOverlay').classList.remove('open');
       document.getElementById('adminPanel').classList.add('open');
-      applyRoleVisibility();
       await fetchProducts();
       originalProducts = JSON.parse(JSON.stringify(products || []));
       renderAdminProducts();
@@ -1230,7 +2064,7 @@ function init() {
   }
   let defaults = [];
   try {
-    defaults = [];
+    defaults = window.DEFAULT_PRODUCTS || [];
     if (!Array.isArray(defaults)) defaults = [];
   } catch (e) { defaults = []; }
   products = [...defaults];
@@ -1322,7 +2156,7 @@ function applyLocalConfig() {
   if (dirEl && cfg.dir) dirEl.textContent = cfg.dir;
   const horEl = document.querySelector('[data-horario-text]');
   if (horEl && cfg.horario1 && cfg.horario2) {
-    horEl.innerHTML = escapeHtml(cfg.horario1 || '') + '<br/>' + escapeHtml(cfg.horario2 || '');
+    horEl.innerHTML = cfg.horario1 + '<br/>' + cfg.horario2;
   }
 }
 
@@ -1483,26 +2317,3 @@ window.addEventListener('popstate', () => {
     handleProductRoute();
   }
 })();
-
-function initImageFallbacks() {
-  document.getElementById('cat-grid')?.addEventListener('error', function(e) {
-    const img = e.target;
-    if (img.tagName !== 'IMG' || img.dataset.handled) return;
-    img.dataset.handled = '1';
-    img.style.display = 'none';
-    const fallback = document.createElement('span');
-    fallback.className = 'cat-icon-fallback';
-    fallback.textContent = img.dataset.icon || '📦';
-    img.insertAdjacentElement('afterend', fallback);
-  });
-  document.getElementById('modalImage')?.addEventListener('error', function(e) {
-    const img = e.target;
-    if (img.tagName !== 'IMG' || img.dataset.handled) return;
-    img.dataset.handled = '1';
-    img.style.display = 'none';
-    const fallback = document.createElement('span');
-    fallback.style.fontSize = '4rem';
-    fallback.textContent = img.dataset.icon || '📦';
-    img.insertAdjacentElement('afterend', fallback);
-  });
-}

@@ -15,8 +15,9 @@
   <title>Metagro SRL – Insumos para el Agro</title>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="styles/main.css" />
-html { scroll-behavior: smooth; scroll-padding-top: 62px; }
+  <style>html { scroll-behavior: smooth; scroll-padding-top: 62px; }</style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,10 +48,10 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
   </div>
 
   <nav class="navbar-menu" id="navLinks">
-    <a href="#productos" class="menu-link">PRODUCTOS</a>
-    <a href="#ventajas" class="menu-link">NOSOTROS</a>
-    <a href="#info" class="menu-link">LOCAL</a>
-    <a href="#contacto" class="menu-link">CONTACTO</a>
+    <a href="#productos" class="menu-link" data-i18n="nav.products">PRODUCTOS</a>
+    <a href="#ventajas" class="menu-link" data-i18n="nav.about">NOSOTROS</a>
+    <a href="#info" class="menu-link" data-i18n="nav.location">LOCAL</a>
+    <a href="#contacto" class="menu-link" data-i18n="nav.contact">CONTACTO</a>
   </nav>
 
   <div class="navbar-actions">
@@ -59,6 +60,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
     </a>
     <button class="btn-admin" onclick="openAdminLogin()">
       <span class="icon">⚙</span> ADMIN
+    </button>
+    <button class="btn-lang" onclick="switchLanguage()" title="Cambiar idioma">
+      <span id="lang-label">EN</span>
     </button>
   </div>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menú">
@@ -88,11 +92,11 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
 <section class="hero">
   <div class="hero-content">
     <div class="hero-text">
-      <p class="hero-eyebrow">Gualeguay, Entre Ríos · Desde 1983</p>
+      <p class="hero-eyebrow" data-i18n="hero.eyebrow">Gualeguay, Entre Ríos · Desde 1983</p>
       <h1 class="hero-title">Siempre<br/>junto<br/>al <em>campo.</em></h1>
-      <p class="hero-desc">Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería. Atención personalizada, precios competitivos y cuenta corriente para nuestros clientes.</p>
+      <p class="hero-desc" data-i18n="hero.desc">Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería. Atención personalizada, precios competitivos y cuenta corriente para nuestros clientes.</p>
       <div class="hero-actions">
-        <a href="#productos" class="btn-primary">Ver Productos</a>
+        <a href="#productos" class="btn-primary" data-i18n="hero.products">Ver Productos</a>
         <a href="#contacto" class="btn-outline">📞 Contactarnos</a>
       </div>
     </div>
@@ -105,7 +109,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
 <!-- PRODUCTOS -->
 <section id="productos">
   <div class="container">
-    <p class="section-label">Lo que ofrecemos</p>
+    <p class="section-label" data-i18n="products.label">Lo que ofrecemos</p>
     <h2 class="section-title">Nuestros <span>Productos</span></h2>
     <div class="divider"></div>
 
@@ -124,7 +128,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
 <!-- VENTAJAS -->
 <section id="ventajas">
   <div class="container">
-    <p class="section-label">Por qué elegirnos</p>
+    <p class="section-label" data-i18n="ventajas.label">Por qué elegirnos</p>
     <h2 class="section-title">Ventajas <span>Metagro</span></h2>
     <div class="divider"></div>
     <div class="vent-grid">
@@ -141,7 +145,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
 <!-- INFO LOCAL -->
 <section id="info">
   <div class="container">
-    <p class="section-label">Dónde encontrarnos</p>
+    <p class="section-label" data-i18n="info.label">Dónde encontrarnos</p>
     <h2 class="section-title">Nuestro <span>Local</span></h2>
     <div class="divider"></div>
     <div class="info-grid">
@@ -166,7 +170,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
 <section id="contacto">
   <div class="container">
     <div class="cta-inner">
-      <p class="section-label">Contacto</p>
+      <p class="section-label" data-i18n="contacto.label">Contacto</p>
       <h2 class="section-title">¿Necesitás un producto?<br/>Consultanos.</h2>
       <div class="divider"></div>
       <p class="cta-desc">Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rápido por WhatsApp o por teléfono.</p>
@@ -200,9 +204,30 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
 
   <div class="admin-body">
     <div class="admin-tabs">
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-dashboard')">📊 Dashboard</button>
       <button class="admin-tab" onclick="switchAdminTab(event, 'tab-productos')">📦 Productos</button>
       <button class="admin-tab" onclick="switchAdminTab(event, 'tab-colores')">🎨 Colores</button>
-      <button class="admin-tab active" onclick="switchAdminTab(event, 'tab-info')">📍 Info Local</button>
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-texts')">📝 Info / Textos</button>
+      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-translations')">🌐 Traducciones</button>
+    </div>
+
+    <div id="tab-dashboard" class="admin-tab-content">
+      <div class="dashboard-grid">
+        <div class="dash-card"><div class="dash-value" id="dash-products">0</div><div class="dash-label">Productos</div></div>
+        <div class="dash-card"><div class="dash-value" id="dash-views">0</div><div class="dash-label">Visitas</div></div>
+        <div class="dash-card"><div class="dash-value" id="dash-budgets">0</div><div class="dash-label">Presupuestos</div></div>
+        <div class="dash-card"><div class="dash-value" id="dash-changes">0</div><div class="dash-label">Cambios (7d)</div></div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-box">
+          <h3>Top 5 Productos más Consultados</h3>
+          <canvas id="chart-top-products"></canvas>
+        </div>
+        <div class="chart-box">
+          <h3>Búsquedas más Frecuentes</h3>
+          <canvas id="chart-top-searches"></canvas>
+        </div>
+      </div>
     </div>
 
     <div id="tab-productos" class="admin-tab-content">
@@ -210,7 +235,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
         <button class="btn-add" onclick="addProduct()">➕ Nuevo Producto</button>
         <button class="btn-add" onclick="openBulkUpload()">📁 Carga Masiva</button>
         <button class="btn-add" id="btn-sync-db" onclick="syncFromDB()">🔄 Sincronizar DB</button>
-        <button class="btn-add" onclick="syncToDB()" style="background:#1a5f2a;border-color:#27ae60;">📤 Migrar Todo a DB</button>
+        <button class="btn-add" data-role="admin" onclick="syncToDB()" style="background:#1a5f2a;border-color:#27ae60;">📤 Migrar Todo a DB</button>
+        <button class="btn-add" onclick="exportProductsCSV()">📊 Exportar CSV</button>
+        <input type="text" id="admin-search" class="admin-search" placeholder="🔍 Buscar producto..." oninput="renderAdminProducts()" />
       </div>
       <div id="prod-count-bar" style="color:#888;font-size:.82rem;margin-bottom:.8rem;"></div>
       <div class="admin-prod-grid" id="admin-prod-grid"></div>
@@ -235,7 +262,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
       </div>
     </div>
 
-    <div id="tab-info" class="admin-tab-content">
+    <div id="tab-texts" class="admin-tab-content">
       <div class="config-grid">
         <div class="config-field"><label class="admin-label">Teléfono</label><input class="admin-input" id="cfg-tel" value="03444 – 466919" /></div>
         <div class="config-field"><label class="admin-label">Número WhatsApp (con código de país)</label><input class="admin-input" id="cfg-wa" value="5403444466919" /></div>
@@ -265,7 +292,15 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
           </div>
           <div class="config-field" style="grid-column:1/-1">
             <label class="admin-label">Bajada de Texto / Subtítulo</label>
-            <textarea class="admin-textarea" id="txt-hero-desc" rows="3" placeholder="Insumos para la agroganadería..."></textarea>
+            <div class="wysiwyg-toolbar">
+              <button type="button" class="wysiwyg-btn" data-cmd="bold"><b>B</b></button>
+              <button type="button" class="wysiwyg-btn" data-cmd="italic"><i>I</i></button>
+              <button type="button" class="wysiwyg-btn" data-cmd="underline"><u>U</u></button>
+              <button type="button" class="wysiwyg-btn" data-cmd="insertUnorderedList">• Lista</button>
+              <button type="button" class="wysiwyg-btn" data-cmd="createLink">🔗 Link</button>
+              <button type="button" class="wysiwyg-btn" data-cmd="insertImage">🖼 Img</button>
+            </div>
+            <div class="admin-textarea wysiwyg" id="txt-hero-desc" contenteditable="true" placeholder="Insumos para la agroganadería..."></div>
           </div>
           <div class="config-field">
             <label class="admin-label">Número del Stat (ej: 43)</label>
@@ -314,6 +349,19 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
       </div>
     </div>
 
+    <div id="tab-translations" class="admin-tab-content">
+      <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá las traducciones ES/EN. Si una clave falta en un idioma, se muestra la versión ES por defecto.</p>
+      <div style="margin-bottom:1rem;display:flex;gap:.5rem;align-items:center;">
+        <span style="color:#aaa;font-size:.85rem;">Filtrar:</span>
+        <input type="text" id="trans-search" class="admin-search" placeholder="🔍 Buscar clave..." oninput="renderTranslationsEditor()" style="min-width:220px;" />
+      </div>
+      <div id="trans-list" style="max-height:500px;overflow-y:auto;display:flex;flex-direction:column;gap:.6rem;"></div>
+      <div class="admin-save-bar" style="margin-top:1rem;">
+        <button class="btn-save" onclick="saveAllTranslations()">💾 Guardar Traducciones</button>
+        <span class="save-msg" id="save-msg-trans">✓ Traducciones guardadas</span>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -350,1529 +398,34 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
           <a href="#" class="btn-wa" id="modalWa" target="_blank">💬 Consultar por WhatsApp</a>
           <button class="btn-outline" onclick="closeProductModal()">Volver</button>
         </div>
+        <div class="budget-form" id="budgetForm" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #333;">
+          <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1.1rem;margin-bottom:1rem;">Solicitar Presupuesto</h3>
+          <div class="config-grid">
+            <div class="config-field" style="grid-column:1/-1">
+              <label class="admin-label">Nombre / Empresa</label>
+              <input class="admin-input" id="budget-cliente" placeholder="Tu nombre o empresa" required />
+            </div>
+            <div class="config-field" style="grid-column:1/-1">
+              <label class="admin-label">Email</label>
+              <input class="admin-input" id="budget-email" type="email" placeholder="email@ejemplo.com" required />
+            </div>
+            <div class="config-field" style="grid-column:1/-1">
+              <label class="admin-label">Cantidad</label>
+              <input class="admin-input" id="budget-cantidad" type="number" min="1" value="1" />
+            </div>
+            <div class="config-field" style="grid-column:1/-1">
+              <label class="admin-label">Notas (opcional)</label>
+              <textarea class="admin-textarea" id="budget-notas" rows="2" placeholder="Información adicional..."></textarea>
+            </div>
+          </div>
+          <button class="btn-save" onclick="submitBudget()" style="margin-top:1rem;">📧 Solicitar Presupuesto</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script>
-window.DEFAULT_PRODUCTS = [
-  {
-    "id": 1,
-    "name": "A - Rosca Hembra 2",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/A - Rosca Hembra 2.jpg",
-    "imagen_url": "productos/A - Rosca Hembra 2.jpg",
-    "images": [
-      "productos/A - Rosca Hembra 2.jpg"
-    ]
-  },
-  {
-    "id": 2,
-    "name": "Acople Rapido a palanca aluminio",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Acople Rapido a palanca aluminio.jpg",
-    "imagen_url": "productos/Acople Rapido a palanca aluminio.jpg",
-    "images": [
-      "productos/Acople Rapido a palanca aluminio.jpg"
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Acople rapido con palanca plastico - copia",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Acople rapido con palanca plastico - copia.jpg",
-    "imagen_url": "productos/Acople rapido con palanca plastico - copia.jpg",
-    "images": [
-      "productos/Acople rapido con palanca plastico - copia.jpg"
-    ]
-  },
-  {
-    "id": 4,
-    "name": "Adaptador BIN",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Adaptador BIN.jpeg",
-    "imagen_url": "productos/Adaptador BIN.jpeg",
-    "images": [
-      "productos/Adaptador BIN.jpeg"
-    ]
-  },
-  {
-    "id": 5,
-    "name": "Aislador W",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Aislador W.jpg",
-    "imagen_url": "productos/Aislador W.jpg",
-    "images": [
-      "productos/Aislador W.jpg"
-    ]
-  },
-  {
-    "id": 6,
-    "name": "Arandela Grower",
-    "tag": "Bulonería",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arandela Grower.jpeg",
-    "imagen_url": "productos/Arandela Grower.jpeg",
-    "images": [
-      "productos/Arandela Grower.jpeg"
-    ]
-  },
-  {
-    "id": 7,
-    "name": "Arandela plana Zincada",
-    "tag": "Bulonería",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arandela plana Zincada.jpg",
-    "imagen_url": "productos/Arandela plana Zincada.jpg",
-    "images": [
-      "productos/Arandela plana Zincada.jpg"
-    ]
-  },
-  {
-    "id": 8,
-    "name": "Arreador b",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arreador b.jpeg",
-    "imagen_url": "productos/Arreador b.jpeg",
-    "images": [
-      "productos/Arreador b.jpeg"
-    ]
-  },
-  {
-    "id": 9,
-    "name": "Arreador con pilas",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arreador con pilas.jpeg",
-    "imagen_url": "productos/Arreador con pilas.jpeg",
-    "images": [
-      "productos/Arreador con pilas.jpeg"
-    ]
-  },
-  {
-    "id": 10,
-    "name": "Arreador corto y largo",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arreador corto y largo.jpeg",
-    "imagen_url": "productos/Arreador corto y largo.jpeg",
-    "images": [
-      "productos/Arreador corto y largo.jpeg"
-    ]
-  },
-  {
-    "id": 11,
-    "name": "Arreador mango",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arreador mango.jpg",
-    "imagen_url": "productos/Arreador mango.jpg",
-    "images": [
-      "productos/Arreador mango.jpg"
-    ]
-  },
-  {
-    "id": 12,
-    "name": "Arreador puas",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arreador puas.jpg",
-    "imagen_url": "productos/Arreador puas.jpg",
-    "images": [
-      "productos/Arreador puas.jpg"
-    ]
-  },
-  {
-    "id": 13,
-    "name": "Arreador Tapa Roscada b",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arreador Tapa Roscada b.jpg",
-    "imagen_url": "productos/Arreador Tapa Roscada b.jpg",
-    "images": [
-      "productos/Arreador Tapa Roscada b.jpg"
-    ]
-  },
-  {
-    "id": 14,
-    "name": "Arreador",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arreador.jpg",
-    "imagen_url": "productos/Arreador.jpg",
-    "images": [
-      "productos/Arreador.jpg"
-    ]
-  },
-  {
-    "id": 15,
-    "name": "Arredor Tapa roscada",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Arredor Tapa roscada.jpg",
-    "imagen_url": "productos/Arredor Tapa roscada.jpg",
-    "images": [
-      "productos/Arredor Tapa roscada.jpg"
-    ]
-  },
-  {
-    "id": 16,
-    "name": "Autoperforante Madera",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Autoperforante Madera.jpg",
-    "imagen_url": "productos/Autoperforante Madera.jpg",
-    "images": [
-      "productos/Autoperforante Madera.jpg"
-    ]
-  },
-  {
-    "id": 17,
-    "name": "Autoperforante Metal",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Autoperforante Metal.jpeg",
-    "imagen_url": "productos/Autoperforante Metal.jpeg",
-    "images": [
-      "productos/Autoperforante Metal.jpeg"
-    ]
-  },
-  {
-    "id": 18,
-    "name": "B - Rosca Macho a Palanca 3",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/B - Rosca Macho a Palanca 3.jpg",
-    "imagen_url": "productos/B - Rosca Macho a Palanca 3.jpg",
-    "images": [
-      "productos/B - Rosca Macho a Palanca 3.jpg"
-    ]
-  },
-  {
-    "id": 19,
-    "name": "bebederos cemento",
-    "tag": "Bebederos",
-    "desc": "",
-    "icon": "",
-    "img": "productos/bebederos cemento.JPG",
-    "imagen_url": "productos/bebederos cemento.JPG",
-    "images": [
-      "productos/bebederos cemento.JPG"
-    ]
-  },
-  {
-    "id": 20,
-    "name": "Blanca 1",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Blanca 1.jpg",
-    "imagen_url": "productos/Blanca 1.jpg",
-    "images": [
-      "productos/Blanca 1.jpg"
-    ]
-  },
-  {
-    "id": 21,
-    "name": "Blanca 2",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Blanca 2.jpg",
-    "imagen_url": "productos/Blanca 2.jpg",
-    "images": [
-      "productos/Blanca 2.jpg"
-    ]
-  },
-  {
-    "id": 22,
-    "name": "bobina 1000",
-    "tag": "Bobinas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/bobina 1000.jpg",
-    "imagen_url": "productos/bobina 1000.jpg",
-    "images": [
-      "productos/bobina 1000.jpg"
-    ]
-  },
-  {
-    "id": 23,
-    "name": "bobina 250",
-    "tag": "Bobinas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/bobina 250.jpg",
-    "imagen_url": "productos/bobina 250.jpg",
-    "images": [
-      "productos/bobina 250.jpg"
-    ]
-  },
-  {
-    "id": 24,
-    "name": "bobina 500",
-    "tag": "Bobinas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/bobina 500.jpg",
-    "imagen_url": "productos/bobina 500.jpg",
-    "images": [
-      "productos/bobina 500.jpg"
-    ]
-  },
-  {
-    "id": 25,
-    "name": "bobina 750",
-    "tag": "Bobinas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/bobina 750.jpg",
-    "imagen_url": "productos/bobina 750.jpg",
-    "images": [
-      "productos/bobina 750.jpg"
-    ]
-  },
-  {
-    "id": 26,
-    "name": "Buje reduccion",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Buje reduccion.jpg",
-    "imagen_url": "productos/Buje reduccion.jpg",
-    "images": [
-      "productos/Buje reduccion.jpg"
-    ]
-  },
-  {
-    "id": 27,
-    "name": "Bulon Cabeza Hexagonal Dorado",
-    "tag": "Bulonería",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Bulon Cabeza Hexagonal Dorado.jpg",
-    "imagen_url": "productos/Bulon Cabeza Hexagonal Dorado.jpg",
-    "images": [
-      "productos/Bulon Cabeza Hexagonal Dorado.jpg"
-    ]
-  },
-  {
-    "id": 28,
-    "name": "Bulon Cabeza Hexagonal",
-    "tag": "Bulonería",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Bulon Cabeza Hexagonal.jpg",
-    "imagen_url": "productos/Bulon Cabeza Hexagonal.jpg",
-    "images": [
-      "productos/Bulon Cabeza Hexagonal.jpg"
-    ]
-  },
-  {
-    "id": 29,
-    "name": "Bulon Cabeza Redonda",
-    "tag": "Bulonería",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Bulon Cabeza Redonda.jpeg",
-    "imagen_url": "productos/Bulon Cabeza Redonda.jpeg",
-    "images": [
-      "productos/Bulon Cabeza Redonda.jpeg"
-    ]
-  },
-  {
-    "id": 30,
-    "name": "C - Espiga a Palanca 3",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/C - Espiga a Palanca 3.jpg",
-    "imagen_url": "productos/C - Espiga a Palanca 3.jpg",
-    "images": [
-      "productos/C - Espiga a Palanca 3.jpg"
-    ]
-  },
-  {
-    "id": 31,
-    "name": "Cable Dogo",
-    "tag": "Cables",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Cable Dogo.jpg",
-    "imagen_url": "productos/Cable Dogo.jpg",
-    "images": [
-      "productos/Cable Dogo.jpg"
-    ]
-  },
-  {
-    "id": 32,
-    "name": "Cable subterraneo Rolin 1.8mm",
-    "tag": "Cables",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Cable subterraneo Rolin 1.8mm.jpg",
-    "imagen_url": "productos/Cable subterraneo Rolin 1.8mm.jpg",
-    "images": [
-      "productos/Cable subterraneo Rolin 1.8mm.jpg"
-    ]
-  },
-  {
-    "id": 33,
-    "name": "Cable",
-    "tag": "Cables",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Cable.jpeg",
-    "imagen_url": "productos/Cable.jpeg",
-    "images": [
-      "productos/Cable.jpeg"
-    ]
-  },
-  {
-    "id": 34,
-    "name": "CAdena Balde 2",
-    "tag": "Cadenas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/CAdena Balde 2.jpg",
-    "imagen_url": "productos/CAdena Balde 2.jpg",
-    "images": [
-      "productos/CAdena Balde 2.jpg"
-    ]
-  },
-  {
-    "id": 35,
-    "name": "CAdena Balde",
-    "tag": "Cadenas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/CAdena Balde.jpg",
-    "imagen_url": "productos/CAdena Balde.jpg",
-    "images": [
-      "productos/CAdena Balde.jpg"
-    ]
-  },
-  {
-    "id": 36,
-    "name": "CAdena",
-    "tag": "Cadenas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/CAdena.jpg",
-    "imagen_url": "productos/CAdena.jpg",
-    "images": [
-      "productos/CAdena.jpg"
-    ]
-  },
-  {
-    "id": 37,
-    "name": "Campanita con Trabas",
-    "tag": "Campanitas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Campanita con Trabas.jpg",
-    "imagen_url": "productos/Campanita con Trabas.jpg",
-    "images": [
-      "productos/Campanita con Trabas.jpg"
-    ]
-  },
-  {
-    "id": 38,
-    "name": "Campanita",
-    "tag": "Campanitas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Campanita.jpg",
-    "imagen_url": "productos/Campanita.jpg",
-    "images": [
-      "productos/Campanita.jpg"
-    ]
-  },
-  {
-    "id": 39,
-    "name": "Carretel con Hilo 500 Mts",
-    "tag": "Carreteles",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Carretel con Hilo 500 Mts.jpg",
-    "imagen_url": "productos/Carretel con Hilo 500 Mts.jpg",
-    "images": [
-      "productos/Carretel con Hilo 500 Mts.jpg"
-    ]
-  },
-  {
-    "id": 40,
-    "name": "Carretel con Hilo 750 Mts",
-    "tag": "Carreteles",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Carretel con Hilo 750 Mts.jpg",
-    "imagen_url": "productos/Carretel con Hilo 750 Mts.jpg",
-    "images": [
-      "productos/Carretel con Hilo 750 Mts.jpg"
-    ]
-  },
-  {
-    "id": 41,
-    "name": "Carretel Vacio - Estructura Metal",
-    "tag": "Carreteles",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Carretel Vacio - Estructura Metal.jpg",
-    "imagen_url": "productos/Carretel Vacio - Estructura Metal.jpg",
-    "images": [
-      "productos/Carretel Vacio - Estructura Metal.jpg"
-    ]
-  },
-  {
-    "id": 42,
-    "name": "Carretel Vacio - Estructura Plastica",
-    "tag": "Carreteles",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Carretel Vacio - Estructura Plastica.jpeg",
-    "imagen_url": "productos/Carretel Vacio - Estructura Plastica.jpeg",
-    "images": [
-      "productos/Carretel Vacio - Estructura Plastica.jpeg"
-    ]
-  },
-  {
-    "id": 43,
-    "name": "Caños Galvanizados",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Caños Galvanizados.jpg",
-    "imagen_url": "productos/Caños Galvanizados.jpg",
-    "images": [
-      "productos/Caños Galvanizados.jpg"
-    ]
-  },
-  {
-    "id": 44,
-    "name": "Cupla",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Cupla.jpg",
-    "imagen_url": "productos/Cupla.jpg",
-    "images": [
-      "productos/Cupla.jpg"
-    ]
-  },
-  {
-    "id": 45,
-    "name": "D - Rosca Hembra Palanca",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/D - Rosca Hembra Palanca.jpg",
-    "imagen_url": "productos/D - Rosca Hembra Palanca.jpg",
-    "images": [
-      "productos/D - Rosca Hembra Palanca.jpg"
-    ]
-  },
-  {
-    "id": 46,
-    "name": "E - Espiga  2",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/E - Espiga  2.jpg",
-    "imagen_url": "productos/E - Espiga  2.jpg",
-    "images": [
-      "productos/E - Espiga  2.jpg"
-    ]
-  },
-  {
-    "id": 47,
-    "name": "Entre rosca",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Entre rosca.jpg",
-    "imagen_url": "productos/Entre rosca.jpg",
-    "images": [
-      "productos/Entre rosca.jpg"
-    ]
-  },
-  {
-    "id": 48,
-    "name": "Esclusa 2 Pulgadas",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Esclusa 2 Pulgadas.jpeg",
-    "imagen_url": "productos/Esclusa 2 Pulgadas.jpeg",
-    "images": [
-      "productos/Esclusa 2 Pulgadas.jpeg"
-    ]
-  },
-  {
-    "id": 49,
-    "name": "Esclusa 3 Pulgadas",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Esclusa 3 Pulgadas.jpeg",
-    "imagen_url": "productos/Esclusa 3 Pulgadas.jpeg",
-    "images": [
-      "productos/Esclusa 3 Pulgadas.jpeg"
-    ]
-  },
-  {
-    "id": 50,
-    "name": "Esferica Mariposa",
-    "tag": "Llaves",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Esferica Mariposa.jpg",
-    "imagen_url": "productos/Esferica Mariposa.jpg",
-    "images": [
-      "productos/Esferica Mariposa.jpg"
-    ]
-  },
-  {
-    "id": 51,
-    "name": "Eslabon abierto",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Eslabon abierto.jpg",
-    "imagen_url": "productos/Eslabon abierto.jpg",
-    "images": [
-      "productos/Eslabon abierto.jpg"
-    ]
-  },
-  {
-    "id": 52,
-    "name": "Gancho - Ojo",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Gancho - Ojo.jpg",
-    "imagen_url": "productos/Gancho - Ojo.jpg",
-    "images": [
-      "productos/Gancho - Ojo.jpg"
-    ]
-  },
-  {
-    "id": 53,
-    "name": "GAncho J Estira Tejido",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/GAncho J Estira Tejido.jpg",
-    "imagen_url": "productos/GAncho J Estira Tejido.jpg",
-    "images": [
-      "productos/GAncho J Estira Tejido.jpg"
-    ]
-  },
-  {
-    "id": 54,
-    "name": "Grillete corazon 1",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Grillete corazon 1.jpg",
-    "imagen_url": "productos/Grillete corazon 1.jpg",
-    "images": [
-      "productos/Grillete corazon 1.jpg"
-    ]
-  },
-  {
-    "id": 55,
-    "name": "Grillete Recto",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Grillete Recto.jpg",
-    "imagen_url": "productos/Grillete Recto.jpg",
-    "images": [
-      "productos/Grillete Recto.jpg"
-    ]
-  },
-  {
-    "id": 56,
-    "name": "Guardacabo",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Guardacabo.jpg",
-    "imagen_url": "productos/Guardacabo.jpg",
-    "images": [
-      "productos/Guardacabo.jpg"
-    ]
-  },
-  {
-    "id": 57,
-    "name": "Llave ESferica 2",
-    "tag": "Llaves",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Llave ESferica 2.jpg",
-    "imagen_url": "productos/Llave ESferica 2.jpg",
-    "images": [
-      "productos/Llave ESferica 2.jpg"
-    ]
-  },
-  {
-    "id": 58,
-    "name": "Llave ESferica Plastica 2",
-    "tag": "Llaves",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Llave ESferica Plastica 2.jpg",
-    "imagen_url": "productos/Llave ESferica Plastica 2.jpg",
-    "images": [
-      "productos/Llave ESferica Plastica 2.jpg"
-    ]
-  },
-  {
-    "id": 59,
-    "name": "Llave ESferica Plastica 3",
-    "tag": "Llaves",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Llave ESferica Plastica 3.jpg",
-    "imagen_url": "productos/Llave ESferica Plastica 3.jpg",
-    "images": [
-      "productos/Llave ESferica Plastica 3.jpg"
-    ]
-  },
-  {
-    "id": 60,
-    "name": "Llave ESferica Plastica 4",
-    "tag": "Llaves",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Llave ESferica Plastica 4.jpg",
-    "imagen_url": "productos/Llave ESferica Plastica 4.jpg",
-    "images": [
-      "productos/Llave ESferica Plastica 4.jpg"
-    ]
-  },
-  {
-    "id": 61,
-    "name": "Llave ESferica Plastica Duke",
-    "tag": "Llaves",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Llave ESferica Plastica Duke.jpg",
-    "imagen_url": "productos/Llave ESferica Plastica Duke.jpg",
-    "images": [
-      "productos/Llave ESferica Plastica Duke.jpg"
-    ]
-  },
-  {
-    "id": 62,
-    "name": "Llave ESferica Plastica",
-    "tag": "Llaves",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Llave ESferica Plastica.jpg",
-    "imagen_url": "productos/Llave ESferica Plastica.jpg",
-    "images": [
-      "productos/Llave ESferica Plastica.jpg"
-    ]
-  },
-  {
-    "id": 63,
-    "name": "Llave Esferica",
-    "tag": "Llaves",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Llave Esferica.jpg",
-    "imagen_url": "productos/Llave Esferica.jpg",
-    "images": [
-      "productos/Llave Esferica.jpg"
-    ]
-  },
-  {
-    "id": 64,
-    "name": "Manija Aislada con resorte",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Manija Aislada con resorte.jpg",
-    "imagen_url": "productos/Manija Aislada con resorte.jpg",
-    "images": [
-      "productos/Manija Aislada con resorte.jpg"
-    ]
-  },
-  {
-    "id": 65,
-    "name": "Manija Aislada Reforzada",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Manija Aislada Reforzada.jpg",
-    "imagen_url": "productos/Manija Aislada Reforzada.jpg",
-    "images": [
-      "productos/Manija Aislada Reforzada.jpg"
-    ]
-  },
-  {
-    "id": 66,
-    "name": "Manija Puntera",
-    "tag": "Aisladores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Manija Puntera.jpg",
-    "imagen_url": "productos/Manija Puntera.jpg",
-    "images": [
-      "productos/Manija Puntera.jpg"
-    ]
-  },
-  {
-    "id": 67,
-    "name": "Medidor de bateria 1",
-    "tag": "Medidores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Medidor de bateria 1.jpg",
-    "imagen_url": "productos/Medidor de bateria 1.jpg",
-    "images": [
-      "productos/Medidor de bateria 1.jpg"
-    ]
-  },
-  {
-    "id": 68,
-    "name": "Medidor de bateria",
-    "tag": "Medidores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Medidor de bateria.jpg",
-    "imagen_url": "productos/Medidor de bateria.jpg",
-    "images": [
-      "productos/Medidor de bateria.jpg"
-    ]
-  },
-  {
-    "id": 69,
-    "name": "Modelo A - Rosca Hembra",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Modelo A - Rosca Hembra.jpg",
-    "imagen_url": "productos/Modelo A - Rosca Hembra.jpg",
-    "images": [
-      "productos/Modelo A - Rosca Hembra.jpg"
-    ]
-  },
-  {
-    "id": 70,
-    "name": "Modelo C - Espiga",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Modelo C - Espiga.jpg",
-    "imagen_url": "productos/Modelo C - Espiga.jpg",
-    "images": [
-      "productos/Modelo C - Espiga.jpg"
-    ]
-  },
-  {
-    "id": 71,
-    "name": "Modelo D - Rosca  Hembra",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Modelo D - Rosca  Hembra.jpg",
-    "imagen_url": "productos/Modelo D - Rosca  Hembra.jpg",
-    "images": [
-      "productos/Modelo D - Rosca  Hembra.jpg"
-    ]
-  },
-  {
-    "id": 72,
-    "name": "Modelo E - Eespiga",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Modelo E - Eespiga.jpg",
-    "imagen_url": "productos/Modelo E - Eespiga.jpg",
-    "images": [
-      "productos/Modelo E - Eespiga.jpg"
-    ]
-  },
-  {
-    "id": 73,
-    "name": "Niple Galvanizados 2",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Niple Galvanizados 2.jpg",
-    "imagen_url": "productos/Niple Galvanizados 2.jpg",
-    "images": [
-      "productos/Niple Galvanizados 2.jpg"
-    ]
-  },
-  {
-    "id": 74,
-    "name": "Niple Galvanizados",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Niple Galvanizados.jpg",
-    "imagen_url": "productos/Niple Galvanizados.jpg",
-    "images": [
-      "productos/Niple Galvanizados.jpg"
-    ]
-  },
-  {
-    "id": 75,
-    "name": "Plastica",
-    "tag": "General",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Plastica.jpg",
-    "imagen_url": "productos/Plastica.jpg",
-    "images": [
-      "productos/Plastica.jpg"
-    ]
-  },
-  {
-    "id": 76,
-    "name": "pluviometro chicho",
-    "tag": "Pluviometros",
-    "desc": "",
-    "icon": "",
-    "img": "productos/pluviometro chicho.jpg",
-    "imagen_url": "productos/pluviometro chicho.jpg",
-    "images": [
-      "productos/pluviometro chicho.jpg"
-    ]
-  },
-  {
-    "id": 77,
-    "name": "pluviometro grande",
-    "tag": "Pluviometros",
-    "desc": "",
-    "icon": "",
-    "img": "productos/pluviometro grande.jpg",
-    "imagen_url": "productos/pluviometro grande.jpg",
-    "images": [
-      "productos/pluviometro grande.jpg"
-    ]
-  },
-  {
-    "id": 78,
-    "name": "Poste Quebracho 2",
-    "tag": "Postes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Poste Quebracho 2.JPG",
-    "imagen_url": "productos/Poste Quebracho 2.JPG",
-    "images": [
-      "productos/Poste Quebracho 2.JPG"
-    ]
-  },
-  {
-    "id": 79,
-    "name": "Poste Quebracho",
-    "tag": "Postes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Poste Quebracho.JPG",
-    "imagen_url": "productos/Poste Quebracho.JPG",
-    "images": [
-      "productos/Poste Quebracho.JPG"
-    ]
-  },
-  {
-    "id": 80,
-    "name": "postes de quebracho colorado",
-    "tag": "Postes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/postes de quebracho colorado.JPG",
-    "imagen_url": "productos/postes de quebracho colorado.JPG",
-    "images": [
-      "productos/postes de quebracho colorado.JPG"
-    ]
-  },
-  {
-    "id": 81,
-    "name": "Postes Quebracho 3",
-    "tag": "Postes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Postes Quebracho 3.JPG",
-    "imagen_url": "productos/Postes Quebracho 3.JPG",
-    "images": [
-      "productos/Postes Quebracho 3.JPG"
-    ]
-  },
-  {
-    "id": 82,
-    "name": "Postes Quebracho",
-    "tag": "Postes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Postes Quebracho.JPG",
-    "imagen_url": "productos/Postes Quebracho.JPG",
-    "images": [
-      "productos/Postes Quebracho.JPG"
-    ]
-  },
-  {
-    "id": 83,
-    "name": "Prensa Cable",
-    "tag": "Cables",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Prensa Cable.jpg",
-    "imagen_url": "productos/Prensa Cable.jpg",
-    "images": [
-      "productos/Prensa Cable.jpg"
-    ]
-  },
-  {
-    "id": 84,
-    "name": "Pôste quebracho",
-    "tag": "Postes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Pôste quebracho.JPG",
-    "imagen_url": "productos/Pôste quebracho.JPG",
-    "images": [
-      "productos/Pôste quebracho.JPG"
-    ]
-  },
-  {
-    "id": 85,
-    "name": "reforzada 500",
-    "tag": "Bobinas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/reforzada 500.jpg",
-    "imagen_url": "productos/reforzada 500.jpg",
-    "images": [
-      "productos/reforzada 500.jpg"
-    ]
-  },
-  {
-    "id": 86,
-    "name": "reforzada 750",
-    "tag": "Bobinas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/reforzada 750.jpg",
-    "imagen_url": "productos/reforzada 750.jpg",
-    "images": [
-      "productos/reforzada 750.jpg"
-    ]
-  },
-  {
-    "id": 87,
-    "name": "Regulable Ajustable",
-    "tag": "Regulables",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Regulable Ajustable.jpeg",
-    "imagen_url": "productos/Regulable Ajustable.jpeg",
-    "images": [
-      "productos/Regulable Ajustable.jpeg"
-    ]
-  },
-  {
-    "id": 88,
-    "name": "Regulable con Gancho y Mariposa",
-    "tag": "Regulables",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Regulable con Gancho y Mariposa.jpeg",
-    "imagen_url": "productos/Regulable con Gancho y Mariposa.jpeg",
-    "images": [
-      "productos/Regulable con Gancho y Mariposa.jpeg"
-    ]
-  },
-  {
-    "id": 89,
-    "name": "Roldana Plastico",
-    "tag": "Roldanas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Roldana Plastico.jpg",
-    "imagen_url": "productos/Roldana Plastico.jpg",
-    "images": [
-      "productos/Roldana Plastico.jpg"
-    ]
-  },
-  {
-    "id": 90,
-    "name": "Separador Corto",
-    "tag": "Separadores",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Separador Corto.jpg",
-    "imagen_url": "productos/Separador Corto.jpg",
-    "images": [
-      "productos/Separador Corto.jpg"
-    ]
-  },
-  {
-    "id": 91,
-    "name": "Tapon Goma 2",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tapon Goma 2.jpg",
-    "imagen_url": "productos/Tapon Goma 2.jpg",
-    "images": [
-      "productos/Tapon Goma 2.jpg"
-    ]
-  },
-  {
-    "id": 92,
-    "name": "Tapon Goma 3",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tapon Goma 3.jpg",
-    "imagen_url": "productos/Tapon Goma 3.jpg",
-    "images": [
-      "productos/Tapon Goma 3.jpg"
-    ]
-  },
-  {
-    "id": 93,
-    "name": "Tapon Goma",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tapon Goma.jpg",
-    "imagen_url": "productos/Tapon Goma.jpg",
-    "images": [
-      "productos/Tapon Goma.jpg"
-    ]
-  },
-  {
-    "id": 94,
-    "name": "Tarugo fischer 10 hueco solo",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tarugo fischer 10 hueco solo.jpg",
-    "imagen_url": "productos/Tarugo fischer 10 hueco solo.jpg",
-    "images": [
-      "productos/Tarugo fischer 10 hueco solo.jpg"
-    ]
-  },
-  {
-    "id": 95,
-    "name": "tarugo fischer con balde",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/tarugo fischer con balde.jpg",
-    "imagen_url": "productos/tarugo fischer con balde.jpg",
-    "images": [
-      "productos/tarugo fischer con balde.jpg"
-    ]
-  },
-  {
-    "id": 96,
-    "name": "tarugo fischer Nº6 x 30 caja",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/tarugo fischer Nº6 x 30 caja.jpg",
-    "imagen_url": "productos/tarugo fischer Nº6 x 30 caja.jpg",
-    "images": [
-      "productos/tarugo fischer Nº6 x 30 caja.jpg"
-    ]
-  },
-  {
-    "id": 97,
-    "name": "Terminal Liviano",
-    "tag": "Terminales",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Terminal Liviano.jpg",
-    "imagen_url": "productos/Terminal Liviano.jpg",
-    "images": [
-      "productos/Terminal Liviano.jpg"
-    ]
-  },
-  {
-    "id": 98,
-    "name": "Terminal Reforzado",
-    "tag": "Terminales",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Terminal Reforzado.jpg",
-    "imagen_url": "productos/Terminal Reforzado.jpg",
-    "images": [
-      "productos/Terminal Reforzado.jpg"
-    ]
-  },
-  {
-    "id": 99,
-    "name": "todos los acoples y adaptadores",
-    "tag": "Accesorios",
-    "desc": "",
-    "icon": "",
-    "img": "productos/todos los acoples y adaptadores.jpg",
-    "imagen_url": "productos/todos los acoples y adaptadores.jpg",
-    "images": [
-      "productos/todos los acoples y adaptadores.jpg"
-    ]
-  },
-  {
-    "id": 100,
-    "name": "Tornillos tirafondo",
-    "tag": "Bulonería",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tornillos tirafondo.jpg",
-    "imagen_url": "productos/Tornillos tirafondo.jpg",
-    "images": [
-      "productos/Tornillos tirafondo.jpg"
-    ]
-  },
-  {
-    "id": 101,
-    "name": "Torniquete Nº8 Negro",
-    "tag": "Torniquetes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Torniquete Nº8 Negro.jpg",
-    "imagen_url": "productos/Torniquete Nº8 Negro.jpg",
-    "images": [
-      "productos/Torniquete Nº8 Negro.jpg"
-    ]
-  },
-  {
-    "id": 102,
-    "name": "Torniquete Nº8 Zincado",
-    "tag": "Torniquetes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Torniquete Nº8 Zincado.jpg",
-    "imagen_url": "productos/Torniquete Nº8 Zincado.jpg",
-    "images": [
-      "productos/Torniquete Nº8 Zincado.jpg"
-    ]
-  },
-  {
-    "id": 103,
-    "name": "Torniquete Nº9 Negro",
-    "tag": "Torniquetes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Torniquete Nº9 Negro.jpeg",
-    "imagen_url": "productos/Torniquete Nº9 Negro.jpeg",
-    "images": [
-      "productos/Torniquete Nº9 Negro.jpeg"
-    ]
-  },
-  {
-    "id": 104,
-    "name": "Torniquete Nº9Tv Zincado",
-    "tag": "Torniquetes",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Torniquete Nº9Tv Zincado.jpeg",
-    "imagen_url": "productos/Torniquete Nº9Tv Zincado.jpeg",
-    "images": [
-      "productos/Torniquete Nº9Tv Zincado.jpeg"
-    ]
-  },
-  {
-    "id": 105,
-    "name": "Tripode para carretel 2",
-    "tag": "Carreteles",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tripode para carretel 2.jpeg",
-    "imagen_url": "productos/Tripode para carretel 2.jpeg",
-    "images": [
-      "productos/Tripode para carretel 2.jpeg"
-    ]
-  },
-  {
-    "id": 106,
-    "name": "Tripode para carretel 3",
-    "tag": "Carreteles",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tripode para carretel 3.jpeg",
-    "imagen_url": "productos/Tripode para carretel 3.jpeg",
-    "images": [
-      "productos/Tripode para carretel 3.jpeg"
-    ]
-  },
-  {
-    "id": 107,
-    "name": "Tripode para carretel",
-    "tag": "Carreteles",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tripode para carretel.jpeg",
-    "imagen_url": "productos/Tripode para carretel.jpeg",
-    "images": [
-      "productos/Tripode para carretel.jpeg"
-    ]
-  },
-  {
-    "id": 108,
-    "name": "Tuerca Zincada",
-    "tag": "Bulonería",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Tuerca Zincada.jpg",
-    "imagen_url": "productos/Tuerca Zincada.jpg",
-    "images": [
-      "productos/Tuerca Zincada.jpg"
-    ]
-  },
-  {
-    "id": 109,
-    "name": "Valvula Flotante 2",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Valvula Flotante 2.jpg",
-    "imagen_url": "productos/Valvula Flotante 2.jpg",
-    "images": [
-      "productos/Valvula Flotante 2.jpg"
-    ]
-  },
-  {
-    "id": 110,
-    "name": "Valvula flotante Plastica",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Valvula flotante Plastica.jpg",
-    "imagen_url": "productos/Valvula flotante Plastica.jpg",
-    "images": [
-      "productos/Valvula flotante Plastica.jpg"
-    ]
-  },
-  {
-    "id": 111,
-    "name": "Valvula Flotante",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Valvula Flotante.jpg",
-    "imagen_url": "productos/Valvula Flotante.jpg",
-    "images": [
-      "productos/Valvula Flotante.jpg"
-    ]
-  },
-  {
-    "id": 112,
-    "name": "Valvula Foglia",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Valvula Foglia.png",
-    "imagen_url": "productos/Valvula Foglia.png",
-    "images": [
-      "productos/Valvula Foglia.png"
-    ]
-  },
-  {
-    "id": 113,
-    "name": "Valvula Fundicion completa",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Valvula Fundicion completa.jpg",
-    "imagen_url": "productos/Valvula Fundicion completa.jpg",
-    "images": [
-      "productos/Valvula Fundicion completa.jpg"
-    ]
-  },
-  {
-    "id": 114,
-    "name": "Valvula Fundicion",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Valvula Fundicion.jpg",
-    "imagen_url": "productos/Valvula Fundicion.jpg",
-    "images": [
-      "productos/Valvula Fundicion.jpg"
-    ]
-  },
-  {
-    "id": 115,
-    "name": "Valvula Hansen",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Valvula Hansen.jpg",
-    "imagen_url": "productos/Valvula Hansen.jpg",
-    "images": [
-      "productos/Valvula Hansen.jpg"
-    ]
-  },
-  {
-    "id": 116,
-    "name": "Valvula Hierro Verde sola a",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Valvula Hierro Verde sola a.png",
-    "imagen_url": "productos/Valvula Hierro Verde sola a.png",
-    "images": [
-      "productos/Valvula Hierro Verde sola a.png"
-    ]
-  },
-  {
-    "id": 117,
-    "name": "valvula Plastica completa roja",
-    "tag": "Válvulas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/valvula Plastica completa roja.jpg",
-    "imagen_url": "productos/valvula Plastica completa roja.jpg",
-    "images": [
-      "productos/valvula Plastica completa roja.jpg"
-    ]
-  },
-  {
-    "id": 118,
-    "name": "Varilla Con 1 Rulo",
-    "tag": "Varillas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Varilla Con 1 Rulo.jpg",
-    "imagen_url": "productos/Varilla Con 1 Rulo.jpg",
-    "images": [
-      "productos/Varilla Con 1 Rulo.jpg"
-    ]
-  },
-  {
-    "id": 119,
-    "name": "Varilla con 2 Rulos",
-    "tag": "Varillas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Varilla con 2 Rulos.jpg",
-    "imagen_url": "productos/Varilla con 2 Rulos.jpg",
-    "images": [
-      "productos/Varilla con 2 Rulos.jpg"
-    ]
-  },
-  {
-    "id": 120,
-    "name": "Varilla Galvanizada",
-    "tag": "Varillas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Varilla Galvanizada.JPG",
-    "imagen_url": "productos/Varilla Galvanizada.JPG",
-    "images": [
-      "productos/Varilla Galvanizada.JPG"
-    ]
-  },
-  {
-    "id": 121,
-    "name": "Varilla Plastica",
-    "tag": "Varillas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Varilla Plastica.jpg",
-    "imagen_url": "productos/Varilla Plastica.jpg",
-    "images": [
-      "productos/Varilla Plastica.jpg"
-    ]
-  },
-  {
-    "id": 122,
-    "name": "Varilla Roscada",
-    "tag": "Varillas",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Varilla Roscada.jpg",
-    "imagen_url": "productos/Varilla Roscada.jpg",
-    "images": [
-      "productos/Varilla Roscada.jpg"
-    ]
-  },
-  {
-    "id": 123,
-    "name": "Velas Electrico 1",
-    "tag": "Instalacion Electrica",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Velas Electrico 1.jpg",
-    "imagen_url": "productos/Velas Electrico 1.jpg",
-    "images": [
-      "productos/Velas Electrico 1.jpg"
-    ]
-  },
-  {
-    "id": 124,
-    "name": "Velas Eletrico 2",
-    "tag": "Instalacion Electrica",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Velas Eletrico 2.jpg",
-    "imagen_url": "productos/Velas Eletrico 2.jpg",
-    "images": [
-      "productos/Velas Eletrico 2.jpg"
-    ]
-  },
-  {
-    "id": 125,
-    "name": "Voltimetro 1",
-    "tag": "Instalacion Electrica",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Voltimetro 1.jpg",
-    "imagen_url": "productos/Voltimetro 1.jpg",
-    "images": [
-      "productos/Voltimetro 1.jpg"
-    ]
-  },
-  {
-    "id": 126,
-    "name": "Voltimetro",
-    "tag": "Instalacion Electrica",
-    "desc": "",
-    "icon": "",
-    "img": "productos/Voltimetro.jpg",
-    "imagen_url": "productos/Voltimetro.jpg",
-    "images": [
-      "productos/Voltimetro.jpg"
-    ]
-  }
-];
-</script>
-
 <script>
 // Usar la misma URL del dominio en producción (Vercel) para que /api/* apunte al backend desplegado aquí.
 const API_BASE =
@@ -1962,7 +515,8 @@ function normalizeProducts(arr) {
       icon:       p.icon || '',
       img:        imgMain,
       imagen_url: p.imagen_url || imgMain,
-      images:     imgs
+      images:     imgs,
+      seo:        p.seo || null
     };
   }).filter(p => p.id != null);
 }
@@ -2060,13 +614,12 @@ const grid = document.getElementById('cat-grid');
     const descHtml = descClean.length
       ? `<div class="cat-desc">${escapeHtml(descClean.join('\n'))}</div>`
       : '';
-    const iconSafe = escapeHtml(p.icon || '📦');
-    const imgOnError = hasImg ? ` onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\\'cat-icon-fallback\\'>${iconSafe}</span>')"` : '';
+    const iconAttr = escapeHtml(p.icon || '📦');
     const thumbs = allImages.slice(1).map(src => `<img src="${encodeImgPath(src)}" alt="" loading="lazy" />`).join('');
     return `
     <div class="cat-card" data-index="${i}">
       <div class="cat-img-placeholder${hasImg ? '' : ' cat-img-placeholder--noimg'}">
-        ${hasImg ? `<img src="${encodeImgPath(mainImg)}" loading="lazy" alt="${escapeHtml(p.name || '')}"${imgOnError} />` : `<span class="cat-icon-fallback">${iconSafe}</span>`}
+         ${hasImg ? `<img src="${encodeImgPath(mainImg)}" loading="lazy" alt="${escapeHtml(p.name || '')}" data-icon="${iconAttr}" />` : `<span class="cat-icon-fallback">${iconAttr}</span>`}
       </div>
       ${thumbs ? `<div class="cat-variants">${thumbs}</div>` : ''}
       <div class="cat-body">
@@ -2105,7 +658,7 @@ function renderAdminProducts() {
         <label class="admin-label">Imagen (ruta o base64)</label>
         <input class="admin-input" data-field="img" value="${escapeHtml(p.img || '')}" onchange="updateAdminProduct(${i},'img',this.value)" placeholder="productos/foto.jpg" />
         <div class="img-preview-wrap" onclick="this.querySelector('input').click()">
-          ${p.img ? `<img src="${p.img}" alt="preview" />` : '<span style="color:#555;font-size:.8rem">Sin imagen</span>'}
+          ${p.img ? `<img src="${encodeImgPath(p.img)}" alt="preview" />` : '<span style="color:#555;font-size:.8rem">Sin imagen</span>'}
           <input type="file" accept="image/*" class="file-input-hidden" onchange="handleAdminImage(this, ${i})" />
         </div>
         <span class="img-preview-label">Clic para cambiar imagen</span>
@@ -2742,13 +1295,23 @@ function doLogout() {
 }
 
 function openProductModal(p) {
+  if (p.seo) {
+    document.title = p.seo.title || document.title;
+    const ogImg = document.querySelector('meta[property="og:image"]');
+    if (ogImg) ogImg.content = p.seo.image || '';
+    document.querySelector('meta[property="og:title"]').content = p.seo.title || '';
+    document.querySelector('meta[property="og:description"]').content = p.seo.description || '';
+    document.querySelector('meta[name="description"]').content = p.seo.description || '';
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = p.seo.url || '';
+  }
   document.getElementById('modalName').textContent = p.name || '';
   document.getElementById('modalDesc').textContent = p.desc || '';
   document.getElementById('modalTag').textContent = p.tag || 'Producto';
   const imgWrap = document.getElementById('modalImage');
   if (p.img) {
-    const iconSafe = escapeHtml(p.icon || '📦');
-    imgWrap.innerHTML = `<img src="${encodeImgPath(p.img)}" alt="${escapeHtml(p.name || '')}" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\\'font-size:4rem\\'>${iconSafe}</span>')" />`;
+    const iconAttr = escapeHtml(p.icon || '📦');
+    imgWrap.innerHTML = `<img src="${encodeImgPath(p.img)}" alt="${escapeHtml(p.name || '')}" data-icon="${iconAttr}" />`;
   } else {
     imgWrap.innerHTML = `<span style="font-size:4rem">${escapeHtml(p.icon || '📦')}</span>`;
   }
@@ -2916,7 +1479,7 @@ function applyLocalConfig() {
   if (dirEl && cfg.dir) dirEl.textContent = cfg.dir;
   const horEl = document.querySelector('[data-horario-text]');
   if (horEl && cfg.horario1 && cfg.horario2) {
-    horEl.innerHTML = cfg.horario1 + '<br/>' + cfg.horario2;
+    horEl.innerHTML = escapeHtml(cfg.horario1 || '') + '<br/>' + escapeHtml(cfg.horario2 || '');
   }
 }
 
@@ -2950,7 +1513,30 @@ function switchAdminTab(event, tabId) {
   event.currentTarget.classList.add('active');
 }
 
-document.addEventListener('DOMContentLoaded', () => { init(); initMap(); });
+document.addEventListener('DOMContentLoaded', () => { init(); initMap(); initImageFallbacks(); });
+
+function initImageFallbacks() {
+  document.getElementById('cat-grid')?.addEventListener('error', function(e) {
+    const img = e.target;
+    if (img.tagName !== 'IMG' || img.dataset.handled) return;
+    img.dataset.handled = '1';
+    img.style.display = 'none';
+    const fallback = document.createElement('span');
+    fallback.className = 'cat-icon-fallback';
+    fallback.textContent = img.dataset.icon || '📦';
+    img.insertAdjacentElement('afterend', fallback);
+  });
+  document.getElementById('modalImage')?.addEventListener('error', function(e) {
+    const img = e.target;
+    if (img.tagName !== 'IMG' || img.dataset.handled) return;
+    img.dataset.handled = '1';
+    img.style.display = 'none';
+    const fallback = document.createElement('span');
+    fallback.style.fontSize = '4rem';
+    fallback.textContent = img.dataset.icon || '📦';
+    img.insertAdjacentElement('afterend', fallback);
+  });
+}
 </script>
   <script src="js/app.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1/dist/script.js"></script>

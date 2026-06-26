@@ -7,11 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  backend:
+  lint-test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,7 +16,7 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run lint
-      - run: npm test -- --coverage
+      - run: npm run test:unit -- --coverage
 
   frontend:
     runs-on: ubuntu-latest

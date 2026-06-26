@@ -7,6 +7,7 @@ const helmet = require('helmet')
 const rateLimit = require('express-rate-limit')
 const compression = require('compression')
 const winston = require('winston')
+const Sentry = require('@sentry/node')
 const pool = require('./data/pool')
 const app = express()
 
@@ -32,6 +33,14 @@ if (process.env.NODE_ENV === 'production') {
   }))
 }
 
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: process.env.NODE_ENV || 'development',
+    tracesSampleRate: 0.1
+  })
+}
+
 const originalConsoleError = console.error
 console.error = (...args) => {
   logger.error(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '))
@@ -40,10 +49,16 @@ console.error = (...args) => {
 
 const ALLOWED_ORIGINS = process.env.NODE_ENV === 'production'
   ? ['https://metagro.com.ar', 'https://www.metagro.com.ar']
-  : ['http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173'];
+  : ['http://localhost:*', 'http://127.0.0.1:*', 'http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'file://'];
 
 const corsOptions = {
-  origin: ALLOWED_ORIGINS,
+  origin: (origin, cb) => {
+    if (!origin || ALLOWED_ORIGINS.some(o => origin === o || (o.endsWith('*') && origin.startsWith(o.slice(0, -1))))) {
+      cb(null, true);
+    } else {
+      cb(new Error('Origin not allowed by CORS'));
+    }
+  },
   credentials: true
 };
 
@@ -55,7 +70,9 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://unpkg.com", "https://cdn.jsdelivr.net"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
-      connectSrc: ["'self'", "https://api.openstreetmap.org"],
+      connectSrc: process.env.NODE_ENV === 'production'
+        ? ["'self'", "https://api.openstreetmap.org"]
+        : ["'self'", "http://localhost:*", "http://127.0.0.1:*", "https://api.openstreetmap.org"],
       frameSrc: ["'self'"]
     }
   },
@@ -64,6 +81,13 @@ app.use(helmet({
 app.use(cors(corsOptions))
 app.use(compression())
 app.use(express.json({ limit: '50mb' }))
+
+const { languageMiddleware } = require('./middleware/language.middleware')
+app.use(languageMiddleware)
+
+if (process.env.SENTRY_DSN) {
+  app.use(Sentry.requestHandler())
+}
 
 app.use((req, res, next) => {
   res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
@@ -97,9 +121,15 @@ function csrf(req, res, next) {
 app.use(csrf)
 
 let JWT_SECRET = process.env.JWT_SECRET
-if (!JWT_SECRET) console.warn('[WARN] JWT_SECRET no configurado. Defínelo en .env para mayor seguridad.')
 const ADMIN_TOKEN = process.env.METAGRO_TOKEN
-if (!ADMIN_TOKEN) console.warn('[WARN] METAGRO_TOKEN no configurado. Defínelo en .env o no podrás autenticar.')
+
+if (!JWT_SECRET && !ADMIN_TOKEN) {
+  logger.error('[STARTUP] JWT_SECRET y METAGRO_TOKEN NO configurados. El servidor arrancará en modo solo lectura.')
+} else if (!JWT_SECRET) {
+  logger.warn('[STARTUP] JWT_SECRET no configurado. Defínelo en .env para mayor seguridad.')
+} else if (!ADMIN_TOKEN) {
+  logger.warn('[STARTUP] METAGRO_TOKEN no configurado. Defínelo en .env o no podrás autenticar.')
+}
 
 function ensureDirs() {
   [DATA_DIR, UPLOAD_DIR].forEach(d => {
@@ -175,8 +205,18 @@ async function initDb() {
   await pool.query('CREATE INDEX IF NOT EXISTS idx_site_texts_key ON site_texts(key)');
   await pool.query('CREATE INDEX IF NOT EXISTS idx_site_changes_tipo ON site_changes(tipo)');
 
-  const rows = await pool.query('SELECT count(*) FROM home_content');
-  const count = parseInt(rows.rows[0].count, 10);
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS translations (
+      id VARCHAR(100) PRIMARY KEY,
+      lang VARCHAR(10) NOT NULL DEFAULT 'es',
+      value TEXT NOT NULL,
+      updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+    )
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_translations_lang ON translations(lang)`);
+
+  const rows = await pool.query('SELECT count(*) as total FROM home_content');
+  const count = parseInt(rows.rows[0].total, 10);
   if (count === 0) {
     await pool.query(`
       INSERT INTO home_content (id, valor, categoria, descripcion) VALUES
@@ -188,9 +228,75 @@ async function initDb() {
         ('direccion', 'Gualeguay, Entre Ríos · Argentina · CP 2840', 'ubicacion', 'Dirección')
     `);
   }
+
+  const transRows = await pool.query('SELECT count(*) as total FROM translations');
+  const transCount = parseInt(transRows.rows[0].total, 10);
+  if (transCount === 0) {
+    await pool.query(`
+      INSERT INTO translations (id, lang, value) VALUES
+        ('hero.linea1', 'es', 'SIEMPRE JUNTO'),
+        ('hero.linea2', 'es', 'AL CAMPO.'),
+        ('hero.desc', 'es', 'Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería.'),
+        ('vent.eyebrow', 'es', 'POR QUÉ ELEGIRNOS'),
+        ('vent.title.1', 'es', 'VENTAJAS'),
+        ('vent.title.2', 'es', 'METAGRO'),
+        ('cont.eyebrow', 'es', 'CONTACTO'),
+        ('cont.title.1', 'es', '¿NECESITÁS UN PRODUCTO?'),
+        ('cont.title.2', 'es', 'CONSULTANOS.'),
+        ('cont.desc', 'es', 'Asesoramiento sin compromiso por WhatsApp o teléfono.'),
+        ('nav.products', 'es', 'PRODUCTOS'),
+        ('nav.about', 'es', 'NOSOTROS'),
+        ('nav.location', 'es', 'LOCAL'),
+        ('nav.contact', 'es', 'CONTACTO'),
+        ('hero.eyebrow', 'es', 'Gualeguay, Entre Ríos · Desde 1983'),
+        ('hero.products', 'es', 'Ver Productos'),
+        ('products.label', 'es', 'Lo que ofrecemos'),
+        ('ventajas.label', 'es', 'Por qué elegirnos'),
+        ('info.label', 'es', 'Dónde encontrarnos'),
+        ('contacto.label', 'es', 'Contacto'),
+        ('hero.linea1', 'en', 'ALWAYS WITH'),
+        ('hero.linea2', 'en', 'THE COUNTRYSIDE.'),
+        ('hero.desc', 'en', 'Supplies for livestock farming, fencing, windmills, water troughs, and hardware.'),
+        ('vent.eyebrow', 'en', 'WHY CHOOSE US'),
+        ('vent.title.1', 'en', 'ADVANTAGES'),
+        ('vent.title.2', 'en', 'METAGRO'),
+        ('cont.eyebrow', 'en', 'CONTACT'),
+        ('cont.title.1', 'en', 'DO YOU NEED A PRODUCT?'),
+        ('cont.title.2', 'en', 'CONTACT US.'),
+        ('cont.desc', 'en', 'Free advice via WhatsApp or phone.'),
+        ('nav.products', 'en', 'PRODUCTS'),
+        ('nav.about', 'en', 'ABOUT US'),
+        ('nav.location', 'en', 'LOCATION'),
+        ('nav.contact', 'en', 'CONTACT'),
+        ('hero.eyebrow', 'en', 'Gualeguay, Entre Ríos · Since 1983'),
+        ('hero.products', 'en', 'View Products'),
+        ('products.label', 'en', 'What we offer'),
+        ('ventajas.label', 'en', 'Why choose us'),
+        ('info.label', 'en', 'Where to find us'),
+        ('contacto.label', 'en', 'Contact')
+    `);
+  }
 }
 
 initDb().catch(err => console.error('[DB] init error:', err));
+
+const { scheduledBackup } = require('./services/backup.service')
+let lastBackupDate = null;
+async function maybeRunScheduledBackup() {
+  const date = new Date();
+  const hour = date.getHours();
+  const dateStr = date.toDateString();
+  if (dateStr !== lastBackupDate && hour === 3) {
+    lastBackupDate = dateStr;
+    try {
+      await scheduledBackup({})
+      logger.info('[backup] scheduled backup completed')
+    } catch (e) {
+      logger.error('[backup] scheduled backup failed:', e)
+    }
+  }
+}
+setInterval(maybeRunScheduledBackup, 60 * 60 * 1000)
 
 const PRODUCTOS_DIR = path.join(__dirname, '..', 'frontend', 'productos')
 app.use('/productos', express.static(PRODUCTOS_DIR, {
@@ -211,9 +317,14 @@ app.use('/api/admin', require('./routes/auth.routes'))
 app.use('/api', require('./routes/productos.routes'))
 app.use('/api', require('./routes/home.routes'))
 app.use('/api', require('./routes/site.routes'))
+app.use('/api', require('./routes/health.routes'))
+app.use('/api', require('./routes/seo.routes'))
 
 app.use((err, _req, res, _next) => {
   logger.error('Unhandled error', err)
+  if (process.env.SENTRY_DSN) {
+    Sentry.captureException(err)
+  }
   if (err && err.code === 'LIMIT_FILE_SIZE') {
     return res.status(413).json({ error: 'Archivo demasiado grande (máximo 5MB).' })
   }
@@ -225,5 +336,34 @@ app.use((err, _req, res, _next) => {
   }
   res.status(500).json({ error: 'Server error' })
 })
+
+if (process.env.SENTRY_DSN) {
+  app.use(Sentry.errorHandler())
+}
+
+async function shutdown() {
+  logger.info('Cerrando servidor...')
+  await pool.end()
+  process.exit(0)
+}
+process.on('SIGTERM', shutdown)
+process.on('SIGINT', shutdown)
+
+const { backupDatabase } = require('./services/backup.service')
+
+const dbBackupEnabled = process.env.DB_BACKUP_ENABLED === 'true' && process.env.DATABASE_URL
+
+setInterval(async () => {
+  if (!dbBackupEnabled) return
+  const now = new Date()
+  if (now.getHours() === 3 && now.getMinutes() === 0) {
+    logger.info('Iniciando backup programado de DB + S3')
+    try {
+      await backupDatabase()
+    } catch (e) {
+      logger.error('Backup programado falló:', e)
+    }
+  }
+}, 60 * 1000)
 
 app.listen(PORT, () => logger.info(`Metagro API on :${PORT}`))

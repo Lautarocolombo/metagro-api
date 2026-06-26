@@ -24,8 +24,8 @@ describe('listProducts', () => {
 
     await listProducts(req, res)
     expect(res.json).toHaveBeenCalledWith([
-      { id: 1, name: 'Torniquete', tag: 'General', desc: 'Desc', icon: '', img: 'img.jpg', imagen_url: 'img.jpg', images: ['img.jpg'], especificaciones: 'Esp' },
-      { id: 2, name: 'Bulon', tag: 'Buloneria', desc: '', icon: '', img: '', imagen_url: '', images: [], especificaciones: '' }
+      { id: 1, name: 'Torniquete', tag: 'General', desc: 'Desc', icon: '', img: 'img.jpg', imagen_url: 'img.jpg', images: ['img.jpg'], especificaciones: 'Esp', seo: { title: 'Torniquete | Metagro SRL', description: 'Desc - Metagro SRL, insumos para el agro en Gualeguay, Entre Ríos.', image: 'https://metagro.com.ar/img.jpg', url: 'https://metagro.com.ar/productos/1-torniquete' } },
+      { id: 2, name: 'Bulon', tag: 'Buloneria', desc: '', icon: '', img: '', imagen_url: '', images: [], especificaciones: '', seo: { title: 'Bulon | Metagro SRL', description: 'Producto - Metagro SRL, insumos para el agro en Gualeguay, Entre Ríos.', image: 'https://metagro.com.ar/logo/Logo.jpg', url: 'https://metagro.com.ar/productos/2-bulon' } }
     ])
   })
 

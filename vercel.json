@@ -7,6 +7,8 @@
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/styles/(.*)", "destination": "/styles/$1" },
     { "source": "/js/(.*)", "destination": "/js/$1" },
+    { "source": "/sitemap.xml", "destination": "/api/seo/sitemap.xml" },
+    { "source": "/producto/:id", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

@@ -1,19 +1,14 @@
 const jwt = require('jsonwebtoken')
 
 function extractToken(req) {
-  // Preferimos el esquema que usa tu frontend actual
   const xMg = req.headers['x-mg-token']
   if (typeof xMg === 'string' && xMg.trim()) return xMg.trim()
-
-  // Compatibilidad: Authorization: Bearer <token>
   const auth = req.headers['authorization']
   if (typeof auth === 'string') {
     const m = auth.match(/^Bearer\s+(.+)$/i)
     if (m && m[1]) return m[1].trim()
-    // Compatibilidad extra: Authorization: <token>
     if (!auth.toLowerCase().startsWith('bearer ')) return auth.trim()
   }
-
   return ''
 }
 
@@ -24,18 +19,34 @@ function auth(req, res, next) {
   const JWT_SECRET = process.env.JWT_SECRET
   const ADMIN_TOKEN = process.env.METAGRO_TOKEN
 
-  // Caso 1: token hardcodeado
-  if (ADMIN_TOKEN && header === ADMIN_TOKEN) return next()
+  if (!JWT_SECRET && !ADMIN_TOKEN) {
+    return res.status(500).json({ error: 'Servicio no disponible: credenciales de autenticación no configuradas.' })
+  }
 
-  // Caso 2: token JWT
-  if (!JWT_SECRET) return res.status(500).json({ error: 'JWT_SECRET no configurado en el servidor.' })
+  if (ADMIN_TOKEN && header === ADMIN_TOKEN) {
+    req.user = { username: 'admin', role: 'admin', source: 'token' }
+    return next()
+  }
+
+  if (!JWT_SECRET) {
+    return res.status(500).json({ error: 'Servicio no disponible: JWT_SECRET no configurado.' })
+  }
   try {
-    jwt.verify(header, JWT_SECRET)
+    const decoded = jwt.verify(header, JWT_SECRET)
+    req.user = { username: decoded.user || decoded.sub || 'jwt-user', role: decoded.role || 'admin', source: 'jwt' }
     return next()
   } catch (_e) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
 }
 
-module.exports = { auth }
+function requireRole(role) {
+  if (typeof role === 'string') role = [role]
+  return (req, res, next) => {
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized' })
+    if (!role.includes(req.user.role)) return res.status(403).json({ error: 'Forbidden' })
+    next()
+  }
+}
 
+module.exports = { auth, requireRole }
