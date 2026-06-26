@@ -2,7 +2,7 @@
 const API_BASE =
   window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:4000/api'
-    : (window.METAGRO_API_BASE || `${window.location.origin}/api`);
+    : (window.METAGRO_API_BASE || 'https://metagro-api-ds6r.onrender.com/api');
 
 let products = [];
 let useApi = true;
