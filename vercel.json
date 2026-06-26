@@ -2,7 +2,8 @@
   "version": 2,
   "outputDirectory": "frontend/dist",
   "framework": null,
-  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "buildCommand": "npm install && npm run build",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/styles/(.*)", "destination": "/styles/$1" },
