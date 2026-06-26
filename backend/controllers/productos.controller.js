@@ -43,7 +43,7 @@ async function createProduct(req, res) {
     const variantImages = images.slice(1)
     const result = await pool.query(
       'INSERT INTO productos_ganaderos (categoria, nombre, descripcion, especificaciones, imagen_url) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [req.body.tag || req.body.categoria || 'General', req.body.name || '', req.body.desc || '', req.body.desc || '', mainImg]
+      [req.body.tag || req.body.categoria || 'General', req.body.name || '', req.body.desc || '', req.body.especificaciones || '', mainImg]
     )
     const productId = result.rows[0].id
     if (variantImages.length > 0) {
@@ -81,7 +81,7 @@ async function updateProduct(req, res) {
     const variantImages = images.slice(1)
     await pool.query(
       'UPDATE productos_ganaderos SET categoria = $1, nombre = $2, descripcion = $3, especificaciones = $4, imagen_url = $5 WHERE id = $6',
-      [req.body.tag || req.body.categoria || 'General', req.body.name || '', req.body.desc || '', req.body.desc || '', mainImg, productId]
+      [req.body.tag || req.body.categoria || 'General', req.body.name || '', req.body.desc || '', req.body.especificaciones || '', mainImg, productId]
     )
     if (variantImages.length > 0) {
       await pool.query('DELETE FROM product_images WHERE product_id = $1', [productId])

@@ -1,7 +1,7 @@
 ﻿// Usar la misma URL del dominio en producci�n (Vercel) para que /api/* apunte al backend desplegado aqu�.
 const API_BASE =
   window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:4001/api'
+    ? 'http://localhost:4000/api'
     : (window.METAGRO_API_BASE || `${window.location.origin}/api`);
 
 window.DEFAULT_PRODUCTS = [
@@ -1779,6 +1779,7 @@ async function doLogin() {
       renderAdminProducts();
       syncLocalInfoToInputs();
       applyLocalConfig();
+      loadSiteTextsIntoTab();
       errEl.style.display = 'none';
     } else {
       errEl.textContent = data.error || 'Usuario o contrase�a incorrectos.';
@@ -1932,11 +1933,15 @@ async function syncToDB() {
 }
 
 function switchAdminTab(event, tabId) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.admin-tab-content').forEach(content => content.classList.remove('active'));
-  const clickedTab = event.target.closest('.admin-tab') || event.currentTarget;
-  event.currentTarget.classList.remove('active');
-  clickedTab.classList.add('active');
+  event.currentTarget.classList.add('active');
   document.getElementById(tabId).classList.add('active');
 }
 
-document.addEventListener('DOMContentLoaded', () => { init(); initMap(); });
+const initApp = () => { init(); initMap(); };
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+  initApp();
+} else {
+  document.addEventListener('DOMContentLoaded', initApp);
+}

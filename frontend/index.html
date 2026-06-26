@@ -283,7 +283,21 @@ html { scroll-behavior: smooth; scroll-padding-top: 62px; }
       <div style="margin-bottom:2rem;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">⚡ Tarjetas de Ventajas</div>
         <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá, eliminá o agregá tarjetas de la sección "Ventajas Metagro".</p>
-        <div id="leyendas-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+        <div class="config-grid" style="margin-bottom:1rem;">
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Eyebrow (texto chico arriba del título)</label>
+            <input class="admin-input" id="txt-vent-eyebrow" placeholder="POR QUÉ ELEGIRNOS" />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Título Línea 1</label>
+            <input class="admin-input" id="txt-vent-titulo-1" placeholder="VENTAJAS" />
+          </div>
+          <div class="config-field" style="grid-column:1/-1">
+            <label class="admin-label">Título Línea 2</label>
+            <input class="admin-input" id="txt-vent-titulo-2" placeholder="METAGRO" />
+          </div>
+        </div>
+        <div id="info-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
         <button class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
         <button class="btn-save" onclick="saveSiteTexts()" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
       </div>
