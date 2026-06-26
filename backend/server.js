@@ -72,8 +72,8 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
       connectSrc: process.env.NODE_ENV === 'production'
-        ? ["'self'", "https://api.openstreetmap.org"]
-        : ["'self'", "http://localhost:*", "http://127.0.0.1:*", "https://api.openstreetmap.org"],
+        ? ["'self'", "https://api.openstreetmap.org", "https://cdn.jsdelivr.net"]
+        : ["'self'", "http://localhost:*", "http://127.0.0.1:*", "https://api.openstreetmap.org", "https://cdn.jsdelivr.net"],
       frameSrc: ["'self'"]
     }
   },

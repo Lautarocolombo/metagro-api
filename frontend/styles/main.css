@@ -171,6 +171,7 @@ section { padding: 5rem 2rem; }
 .cat-page-btn:hover:not(:disabled) { border-color: var(--yellow); color: var(--yellow); }
 .cat-page-btn:disabled { opacity: .4; cursor: not-allowed; }
 .cat-page-info { font-size: 0.9rem; color: #bbb; }
+.prod-total-display { text-align: center; padding: 0.8rem; color: #bbb; font-size: 0.9rem; }
 
 /* ── VENTAJAS ── */
 #ventajas { background: var(--black); }
