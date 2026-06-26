@@ -58,14 +58,14 @@
     <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-whatsapp">
       <span class="icon">💬</span> WHATSAPP
     </a>
-    <button class="btn-admin" onclick="openAdminLogin()">
+    <button class="btn-admin" id="btn-open-admin">
       <span class="icon">⚙</span> ADMIN
     </button>
-    <button class="btn-lang" onclick="switchLanguage()" title="Cambiar idioma">
+    <button class="btn-lang" id="btn-lang" title="Cambiar idioma">
       <span id="lang-label">EN</span>
     </button>
   </div>
-  <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menú">
+  <div class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menú">
     <span></span><span></span><span></span>
   </div>
 </header>
@@ -188,10 +188,10 @@
     <h2>🔒 Admin <span style="color:var(--yellow)">Metagro</span></h2>
     <p>Ingresá tu usuario y contraseña para acceder al panel.</p>
     <div class="admin-field"><label>Usuario</label><input type="text" id="adminUser" placeholder="usuario" autocomplete="username" /></div>
-    <div class="admin-field"><label>Contraseña</label><input type="password" id="adminPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" /></div>
+    <div class="admin-field"><label>Contraseña</label><input type="password" id="adminPass" placeholder="••••••••" autocomplete="current-password" /></div>
     <div class="admin-error" id="loginError">Usuario o contraseña incorrectos.</div>
-    <button class="btn-admin-login" onclick="doLogin()">Ingresar</button>
-    <button class="btn-cancel" onclick="closeAdminLogin()">Cancelar</button>
+    <button class="btn-admin-login" id="btn-do-login">Ingresar</button>
+    <button class="btn-cancel" id="btn-close-login">Cancelar</button>
   </div>
 </div>
 
@@ -199,16 +199,16 @@
 <div class="admin-panel" id="adminPanel">
   <div class="admin-topbar">
     <div class="admin-topbar-title">PANEL <span>METAGRO</span></div>
-    <button class="btn-logout" onclick="doLogout()">CERRAR SESIÓN</button>
+    <button class="btn-logout" id="btn-logout">CERRAR SESIÓN</button>
   </div>
 
   <div class="admin-body">
     <div class="admin-tabs">
-      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-dashboard')">📊 Dashboard</button>
-      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-productos')">📦 Productos</button>
-      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-colores')">🎨 Colores</button>
-      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-texts')">📝 Info / Textos</button>
-      <button class="admin-tab" onclick="switchAdminTab(event, 'tab-translations')">🌐 Traducciones</button>
+      <button class="admin-tab" data-tab="tab-dashboard">📊 Dashboard</button>
+      <button class="admin-tab" data-tab="tab-productos">📦 Productos</button>
+      <button class="admin-tab" data-tab="tab-colores">🎨 Colores</button>
+      <button class="admin-tab" data-tab="tab-texts">📝 Info / Textos</button>
+      <button class="admin-tab" data-tab="tab-translations">🌐 Traducciones</button>
     </div>
 
     <div id="tab-dashboard" class="admin-tab-content">
@@ -232,17 +232,17 @@
 
     <div id="tab-productos" class="admin-tab-content">
       <div class="admin-prod-toolbar">
-        <button class="btn-add" onclick="addProduct()">➕ Nuevo Producto</button>
-        <button class="btn-add" onclick="openBulkUpload()">📁 Carga Masiva</button>
-        <button class="btn-add" id="btn-sync-db" onclick="syncFromDB()">🔄 Sincronizar DB</button>
-        <button class="btn-add" data-role="admin" onclick="syncToDB()" style="background:#1a5f2a;border-color:#27ae60;">📤 Migrar Todo a DB</button>
-        <button class="btn-add" onclick="exportProductsCSV()">📊 Exportar CSV</button>
-        <input type="text" id="admin-search" class="admin-search" placeholder="🔍 Buscar producto..." oninput="renderAdminProducts()" />
+        <button class="btn-add" id="btn-add-product">➕ Nuevo Producto</button>
+        <button class="btn-add" id="btn-bulk-upload">📁 Carga Masiva</button>
+        <button class="btn-add" id="btn-sync-db">🔄 Sincronizar DB</button>
+        <button class="btn-add" data-role="admin" id="btn-sync-to-db" style="background:#1a5f2a;border-color:#27ae60;">📤 Migrar Todo a DB</button>
+        <button class="btn-add" id="btn-export-csv">📊 Exportar CSV</button>
+        <input type="text" id="admin-search" class="admin-search" placeholder="🔍 Buscar producto..." />
       </div>
       <div id="prod-count-bar" style="color:#888;font-size:.82rem;margin-bottom:.8rem;"></div>
       <div class="admin-prod-grid" id="admin-prod-grid"></div>
       <div class="admin-save-bar">
-        <button class="btn-save" onclick="saveProducts()">💾 Guardar Cambios</button>
+        <button class="btn-save" id="btn-save-products">💾 Guardar Cambios</button>
         <span class="save-msg" id="save-msg-prod">✓ Cambios guardados</span>
       </div>
     </div>
@@ -250,15 +250,14 @@
     <div id="tab-colores" class="admin-tab-content">
       <p style="color:#888;font-size:.9rem;margin-bottom:1.5rem;">Modificá los colores principales del sitio. Los cambios se aplican en tiempo real.</p>
       <div class="color-grid">
-        <div class="color-field"><input type="color" id="color-yellow" value="#F5C800" oninput="applyColor('--yellow',this.value);document.getElementById('hex-yellow').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Color Principal</div><div class="color-field-hex" id="hex-yellow">#F5C800</div></div></div>
-        <div class="color-field"><input type="color" id="color-black" value="#111111" oninput="applyColor('--black',this.value);document.getElementById('hex-black').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Color Secundario</div><div class="color-field-hex" id="hex-black">#111111</div></div></div>
-        <div class="color-field"><input type="color" id="color-steel" value="#1a1a1a" oninput="applyColor('--steel',this.value);document.getElementById('hex-steel').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Fondo Secciones</div><div class="color-field-hex" id="hex-steel">#1a1a1a</div></div></div>
-        <div class="color-field"><input type="color" id="color-cream" value="#F5F0E8" oninput="applyColor('--cream',this.value);document.getElementById('hex-cream').textContent=this.value" /><div class="color-field-info"><div class="color-field-name">Color de Texto</div><div class="color-field-hex" id="hex-cream">#F5F0E8</div></div></div>
+        <div class="color-field"><input type="color" id="color-yellow" value="#F5C800" data-hex="hex-yellow" data-css="--yellow" /><div class="color-field-info"><div class="color-field-name">Color Principal</div><div class="color-field-hex" id="hex-yellow">#F5C800</div></div></div>
+        <div class="color-field"><input type="color" id="color-black" value="#111111" data-hex="hex-black" data-css="--black" /><div class="color-field-info"><div class="color-field-name">Color Secundario</div><div class="color-field-hex" id="hex-black">#111111</div></div></div>
+        <div class="color-field"><input type="color" id="color-steel" value="#1a1a1a" data-hex="hex-steel" data-css="--steel" /><div class="color-field-info"><div class="color-field-name">Fondo Secciones</div><div class="color-field-hex" id="hex-steel">#1a1a1a</div></div></div>
+        <div class="color-field"><input type="color" id="color-cream" value="#F5F0E8" data-hex="hex-cream" data-css="--cream" /><div class="color-field-info"><div class="color-field-name">Color de Texto</div><div class="color-field-hex" id="hex-cream">#F5F0E8</div></div></div>
       </div>
       <div class="admin-save-bar">
-        <button class="btn-save" onclick="saveColors()">💾 Guardar Colores</button>
-        <button style="background:var(--steel2);color:#aaa;border:1px solid #333;border-radius:4px;padding:.6rem 1.2rem;cursor:pointer;font-size:.9rem;" onclick="resetColors()">↩ Restaurar originales</button>
-        <span class="save-msg" id="save-msg-color">✓ Colores guardados</span>
+        <button class="btn-save" id="btn-save-colors">💾 Guardar Colores</button>
+        <button style="background:var(--steel2);color:#aaa;border:1px solid #333;border-radius:4px;padding:.6rem 1.2rem;cursor:pointer;font-size:.9rem;" id="btn-reset-colors">↩ Restaurar originales</button>
       </div>
     </div>
 
@@ -333,8 +332,8 @@
           </div>
         </div>
         <div id="info-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
-        <button class="btn-add" onclick="addVentajaCard()">+ Agregar Nueva Tarjeta</button>
-        <button class="btn-save" onclick="saveSiteTexts()" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
+        <button class="btn-add" id="btn-add-ventaja">+ Agregar Nueva Tarjeta</button>
+        <button class="btn-save" id="btn-save-texts" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
       </div>
 
       <div style="margin-bottom:2rem;">
@@ -353,11 +352,11 @@
       <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá las traducciones ES/EN. Si una clave falta en un idioma, se muestra la versión ES por defecto.</p>
       <div style="margin-bottom:1rem;display:flex;gap:.5rem;align-items:center;">
         <span style="color:#aaa;font-size:.85rem;">Filtrar:</span>
-        <input type="text" id="trans-search" class="admin-search" placeholder="🔍 Buscar clave..." oninput="renderTranslationsEditor()" style="min-width:220px;" />
+        <input type="text" id="trans-search" class="admin-search" placeholder="🔍 Buscar clave..." style="min-width:220px;" />
       </div>
       <div id="trans-list" style="max-height:500px;overflow-y:auto;display:flex;flex-direction:column;gap:.6rem;"></div>
       <div class="admin-save-bar" style="margin-top:1rem;">
-        <button class="btn-save" onclick="saveAllTranslations()">💾 Guardar Traducciones</button>
+        <button class="btn-save" id="btn-save-translations">💾 Guardar Traducciones</button>
         <span class="save-msg" id="save-msg-trans">✓ Traducciones guardadas</span>
       </div>
     </div>
@@ -378,16 +377,16 @@
     <div id="bulk-list" class="bulk-list"></div>
     <div class="bulk-bar-wrap"><div class="bulk-bar" id="bulk-bar"></div></div>
     <div class="admin-save-bar" style="margin-top:1rem">
-      <button class="btn-save" onclick="closeBulkUpload()">Cerrar</button>
+      <button class="btn-save" id="btn-close-bulk">Cerrar</button>
     </div>
   </div>
 </div>
 
 
 <!-- PRODUCT DETAIL MODAL -->
-<div class="product-modal" id="productModal" onclick="if(event.target===this)closeProductModal()">
+<div class="product-modal" id="productModal">
   <div class="product-modal-content">
-    <button class="product-modal-close" onclick="closeProductModal()">✕</button>
+    <button class="product-modal-close" id="btn-close-modal">✕</button>
     <div class="product-modal-body">
       <div class="product-modal-image" id="modalImage"></div>
       <div class="product-modal-info">
@@ -396,7 +395,7 @@
         <p class="product-modal-desc" id="modalDesc"></p>
         <div class="product-modal-actions">
           <a href="#" class="btn-wa" id="modalWa" target="_blank">💬 Consultar por WhatsApp</a>
-          <button class="btn-outline" onclick="closeProductModal()">Volver</button>
+          <button class="btn-outline" id="btn-close-modal-2">Volver</button>
         </div>
         <div class="budget-form" id="budgetForm" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #333;">
           <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1.1rem;margin-bottom:1rem;">Solicitar Presupuesto</h3>
@@ -418,7 +417,7 @@
               <textarea class="admin-textarea" id="budget-notas" rows="2" placeholder="Información adicional..."></textarea>
             </div>
           </div>
-          <button class="btn-save" onclick="submitBudget()" style="margin-top:1rem;">📧 Solicitar Presupuesto</button>
+          <button class="btn-save" id="btn-submit-budget" style="margin-top:1rem;">📧 Solicitar Presupuesto</button>
         </div>
       </div>
     </div>
@@ -427,7 +426,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="js/app.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1/dist/script.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1/dist/script.js"></script>
 </body>
 </html>

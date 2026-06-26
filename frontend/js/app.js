@@ -1385,7 +1385,54 @@ function switchAdminTab(event, tabId) {
   if (tabId === 'tab-translations') loadTranslationsEditor();
 }
 
-const initApp = () => { init(); initMap(); initWysiwyg(); initLanguage(); applyTranslations(); };
+function initInlineEvents() {
+  document.getElementById('btn-open-admin')?.addEventListener('click', openAdminLogin);
+  document.getElementById('btn-lang')?.addEventListener('click', switchLanguage);
+  document.getElementById('hamburger')?.addEventListener('click', toggleMenu);
+  document.getElementById('btn-do-login')?.addEventListener('click', doLogin);
+  document.getElementById('btn-close-login')?.addEventListener('click', closeAdminLogin);
+  document.getElementById('btn-logout')?.addEventListener('click', doLogout);
+  document.getElementById('adminPass')?.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('adminLoginForm')?.addEventListener('submit', e => { e.preventDefault(); doLogin(); });
+
+  document.querySelectorAll('.admin-tab').forEach(btn => {
+    btn.addEventListener('click', (e) => switchAdminTab(e, btn.dataset.tab));
+  });
+
+  document.getElementById('btn-add-product')?.addEventListener('click', addProduct);
+  document.getElementById('btn-bulk-upload')?.addEventListener('click', openBulkUpload);
+  document.getElementById('btn-sync-db')?.addEventListener('click', syncFromDB);
+  document.getElementById('btn-sync-to-db')?.addEventListener('click', syncToDB);
+  document.getElementById('btn-export-csv')?.addEventListener('click', exportProductsCSV);
+  document.getElementById('admin-search')?.addEventListener('input', renderAdminProducts);
+  document.getElementById('btn-save-products')?.addEventListener('click', saveProducts);
+
+  document.getElementById('btn-save-colors')?.addEventListener('click', saveColors);
+  document.getElementById('btn-reset-colors')?.addEventListener('click', resetColors);
+  document.querySelectorAll('#tab-colores input[type="color"]').forEach(input => {
+    input.addEventListener('input', () => {
+      applyColor(input.dataset.css, input.value);
+      const hexEl = document.getElementById(input.dataset.hex);
+      if (hexEl) hexEl.textContent = input.value;
+    });
+  });
+
+  document.getElementById('btn-save-local')?.addEventListener('click', saveLocalInfo);
+  document.getElementById('btn-add-ventaja')?.addEventListener('click', addVentajaCard);
+  document.getElementById('btn-save-texts')?.addEventListener('click', saveSiteTexts);
+  document.getElementById('btn-save-translations')?.addEventListener('click', saveAllTranslations);
+  document.getElementById('trans-search')?.addEventListener('input', renderTranslationsEditor);
+
+  document.getElementById('btn-close-bulk')?.addEventListener('click', closeBulkUpload);
+  document.getElementById('bulk-input')?.addEventListener('change', handleBulkUpload);
+
+  document.getElementById('productModal')?.addEventListener('click', e => { if (e.target.id === 'productModal') closeProductModal(); });
+  document.getElementById('btn-close-modal')?.addEventListener('click', closeProductModal);
+  document.getElementById('btn-close-modal-2')?.addEventListener('click', closeProductModal);
+  document.getElementById('btn-submit-budget')?.addEventListener('click', submitBudget);
+}
+
+const initApp = () => { init(); initMap(); initWysiwyg(); initLanguage(); applyTranslations(); initInlineEvents(); };
 if (document.readyState === 'interactive' || document.readyState === 'complete') {
   initApp();
 } else {
