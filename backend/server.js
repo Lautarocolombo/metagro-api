@@ -52,7 +52,7 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
-      scriptSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://unpkg.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://unpkg.com", "https://cdn.jsdelivr.net"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
       connectSrc: ["'self'", "https://api.openstreetmap.org"],
