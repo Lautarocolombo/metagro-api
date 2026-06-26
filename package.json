@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "node --watch backend/server.js",
     "build": "node tools/build.mjs",
-    "start": "node backend/server.js",
     "deploy": "vercel --prod",
     "deploy:preview": "vercel",
     "test": "node tools/test-api.cjs",

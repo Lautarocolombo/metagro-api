@@ -5,7 +5,7 @@ services:
     plan: free
     env: node
     buildCommand: npm install && npm run build
-    startCommand: node backend/server.js
+    startCommand: node server.cjs
     envVars:
       - key: METAGRO_TOKEN
         sync: false
