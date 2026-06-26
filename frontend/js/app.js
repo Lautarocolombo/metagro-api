@@ -549,14 +549,14 @@ window.DEFAULT_PRODUCTS = [
     "name": "Poste Quebracho 2",
     "tag": "Postes",
     "desc": "Consultá disponibilidad y precio en Metagro SRL.",
-    "img": "productos/Poste Quebracho 2.JPG"
+    "img": "productos/Poste Quebracho.JPG"
   },
   {
     "id": 79,
     "name": "Poste Quebracho",
     "tag": "Postes",
     "desc": "Consultá disponibilidad y precio en Metagro SRL.",
-    "img": "productos/Poste Quebracho.JPG"
+    "img": "productos/Poste Quebracho-79.JPG"
   },
   {
     "id": 80,
@@ -591,7 +591,7 @@ window.DEFAULT_PRODUCTS = [
     "name": "Pôste quebracho",
     "tag": "Postes",
     "desc": "Consultá disponibilidad y precio en Metagro SRL.",
-    "img": "productos/Pôste quebracho.JPG"
+    "img": "productos/P-ste-quebracho-84.JPG"
   },
   {
     "id": 85,
