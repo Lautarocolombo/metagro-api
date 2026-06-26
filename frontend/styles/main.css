@@ -180,6 +180,11 @@ section { padding: 5rem 2rem; }
 .vent-icon { font-size: 2rem; margin-bottom: 0.8rem; }
 .vent-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; color: var(--cream); margin-bottom: 0.4rem; }
 .vent-desc { font-size: 0.85rem; color: #bbb; line-height: 1.6; }
+.vent-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+.vent-actions .btn-primary { background: var(--yellow); color: var(--black); padding: 0.75rem 1.6rem; border-radius: var(--radius); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; transition: background .2s; }
+.vent-actions .btn-primary:hover { background: var(--yellow-dark); }
+.vent-actions .btn-outline { border: 2px solid #fff; color: #fff; padding: 0.75rem 1.6rem; border-radius: var(--radius); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; transition: border-color .2s, color .2s; }
+.vent-actions .btn-outline:hover { border-color: var(--yellow); color: var(--yellow); }
 
 /* ── INFO LOCAL ── */
 #info { background: var(--steel); }
