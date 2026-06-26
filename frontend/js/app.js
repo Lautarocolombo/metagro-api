@@ -1424,7 +1424,8 @@ function initInlineEvents() {
   document.getElementById('trans-search')?.addEventListener('input', renderTranslationsEditor);
 
   document.getElementById('btn-close-bulk')?.addEventListener('click', closeBulkUpload);
-  document.getElementById('bulk-input')?.addEventListener('change', handleBulkUpload);
+  document.getElementById('bulk-input')?.addEventListener('change', handleBulkFiles);
+  document.getElementById('bulk-drop')?.addEventListener('click', () => document.getElementById('bulk-input')?.click());
 
   document.getElementById('productModal')?.addEventListener('click', e => { if (e.target.id === 'productModal') closeProductModal(); });
   document.getElementById('btn-close-modal')?.addEventListener('click', closeProductModal);

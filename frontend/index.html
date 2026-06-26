@@ -273,7 +273,7 @@
         <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Contraseña Admin</label><input class="admin-input" id="cfg-admin-pass" type="password" /></div>
       </div>
       <div class="admin-save-bar">
-        <button class="btn-save" onclick="saveLocalInfo()">💾 Guardar Info</button>
+        <button class="btn-save" id="btn-save-local">💾 Guardar Info</button>
         <span class="save-msg" id="save-msg-local">✓ Información guardada</span>
       </div>
 
@@ -368,9 +368,9 @@
   <div class="bulk-box">
     <h3>📁 Carga Masiva de Productos</h3>
     <p>Subí imágenes y editá nombre/categoría luego de la carga automática.</p>
-    <div class="bulk-drop" onclick="document.getElementById('bulk-input').click()">
+    <div class="bulk-drop" id="bulk-drop">
       <div>📸 Arrastrá las imágenes acá o hacé clic para seleccionar</div>
-      <input type="file" accept="image/*" multiple class="file-input-hidden" id="bulk-input" onchange="handleBulkFiles(this)" />
+      <input type="file" accept="image/*" multiple class="file-input-hidden" id="bulk-input" />
     </div>
     <label style="margin-top:.8rem;font-size:.9rem;color:#ccc">Nombres opcionales (uno por línea, coincide con el orden de archivos)</label>
     <textarea id="bulk-names" class="admin-textarea" rows="4" placeholder="Torniquete Nº10&#10;Regulable Premium&#10;..."></textarea>
