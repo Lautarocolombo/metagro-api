@@ -201,32 +201,40 @@ function normalizeProducts(arr) {
   }).filter(p => p.id !== null);
 }
 
-async function fetchProducts() {
+async function fetchProducts(retries = 3, delay = 2000) {
   if (!useApi) return;
   renderSkeletons();
-  try {
-    const res = await api('/products');
-    const data = await res.json();
-    if (Array.isArray(data) && data.length > 0) {
-      products = normalizeProducts(data);
-      localStorage.setItem('mg_products', JSON.stringify(products));
-    } else if (!data || !data.length) {
-      const saved = localStorage.getItem('mg_products');
-      if (saved) { try { products = JSON.parse(saved); } catch (e) { /* localStorage corrupto, ignorar */ } }
-      if (!products.length) products = [];
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const res = await api('/products');
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        products = normalizeProducts(data);
+        localStorage.setItem('mg_products', JSON.stringify(products));
+        useApi = true;
+        const bar = document.getElementById('api-status-bar');
+        if (bar) bar.classList.remove('show');
+        populateCategoryFilter();
+        renderCatalog();
+        return;
+      }
+    } catch (e) {
+      if (attempt === retries) break;
+      await new Promise(r => setTimeout(r, delay * attempt));
     }
-  } catch (e) {
-    useApi = false;
-    const saved = localStorage.getItem('mg_products');
-    if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
-    if (!products.length) products = [];
-    showError('No se pudo cargar el catalogo. Se mostraran los productos guardados.');
-    const bar = document.getElementById('api-status-bar');
-    if (bar) bar.classList.add('show');
-  } finally {
-    populateCategoryFilter();
-    renderCatalog();
   }
+  useApi = false;
+  const saved = localStorage.getItem('mg_products');
+  if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
+  if (!products.length) products = [];
+  showError('No se pudo cargar el catalogo. Se mostraran los productos guardados.');
+  const bar = document.getElementById('api_status_bar');
+  if (bar) bar.classList.add('show');
+  populateCategoryFilter();
+  renderCatalog();
+  setTimeout(() => {
+    if (!useApi) fetchProducts(3, 3000);
+  }, 15000);
 }
 
 function localFallback() {
