@@ -83,7 +83,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
       connectSrc: process.env.NODE_ENV === 'production'
-        ? ["'self'", "https://api.openstreetmap.org", "https://cdn.jsdelivr.net"]
+        ? ["'self'", "https://api.openstreetmap.org", "https://cdn.jsdelivr.net", "https://metagro-api-ds6r.onrender.com"]
         : ["'self'", "http://localhost:*", "http://127.0.0.1:*", "https://api.openstreetmap.org", "https://cdn.jsdelivr.net"],
       frameSrc: ["'self'"]
     }
@@ -91,6 +91,12 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false,
 }))
 app.use(cors(corsOptions))
+app.options('*', cors(corsOptions))
+app.use((req, res, next) => {
+  const origin = req.headers.origin || 'no-origin';
+  logger.info(`[REQUEST] ${req.method} ${req.path} from ${origin}`);
+  next();
+})
 app.use(compression())
 app.use(express.json({ limit: '50mb' }))
 
