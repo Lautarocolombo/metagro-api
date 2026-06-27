@@ -89,6 +89,7 @@ app.use(helmet({
     }
   },
   crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: false,
 }))
 app.use(cors(corsOptions))
 app.options('*', cors(corsOptions))
