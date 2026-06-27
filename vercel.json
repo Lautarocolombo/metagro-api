@@ -5,10 +5,10 @@
   "installCommand": "npm install",
   "buildCommand": "npm install && npm run build",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/api/(.*)", "destination": "https://metagro-api-ds6r.onrender.com/api/$1" },
     { "source": "/styles/(.*)", "destination": "/styles/$1" },
     { "source": "/js/(.*)", "destination": "/js/$1" },
-    { "source": "/sitemap.xml", "destination": "/api/seo/sitemap.xml" },
+    { "source": "/sitemap.xml", "destination": "https://metagro-api-ds6r.onrender.com/api/seo/sitemap.xml" },
     { "source": "/producto/:id", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]

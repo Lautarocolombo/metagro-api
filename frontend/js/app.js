@@ -1,8 +1,5 @@
 // Usar la misma URL del dominio en producci�n (Vercel) para que /api/* apunte al backend desplegado aqu�.
-const API_BASE =
-  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:4000/api'
-    : (window.METAGRO_API_BASE || 'https://metagro-api-ds6r.onrender.com/api');
+const API_BASE = 'https://metagro-api-ds6r.onrender.com/api';
 
 let products = [];
 let useApi = true;
