@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('path').join(__dirname, '.env') })
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') })
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
@@ -49,14 +49,16 @@ console.error = (...args) => {
 }
 
 const ALLOWED_ORIGINS = process.env.NODE_ENV === 'production'
-  ? ['https://metagro.com.ar', 'https://www.metagro.com.ar']
-  : ['http://localhost:*', 'http://127.0.0.1:*', 'http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'file://'];
+  ? ['https://metagro.com.ar', 'https://www.metagro.com.ar', 'https://*.vercel.app', 'https://metagro.vercel.app']
+  : ['http://localhost:*', 'http://127.0.0.1:*', 'http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:4173', 'http://localhost:8080', 'http://localhost:8081', 'file://', 'null'];
 
 const corsOptions = {
   origin: (origin, cb) => {
-    if (!origin || ALLOWED_ORIGINS.some(o => origin === o || (o.endsWith('*') && origin.startsWith(o.slice(0, -1))))) {
+    const allowed = ALLOWED_ORIGINS
+    if (!origin || allowed.some(o => o === '*' || (o.endsWith('*') && origin.startsWith(o.slice(0, -1))) || origin === o)) {
       cb(null, true);
     } else {
+      console.log('[CORS] Blocked origin:', origin);
       cb(new Error('Origin not allowed by CORS'));
     }
   },

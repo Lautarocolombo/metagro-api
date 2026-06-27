@@ -223,7 +223,7 @@ async function fetchProducts() {
     const saved = localStorage.getItem('mg_products');
     if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
     if (!products.length) products = [];
-    showError('No se pudo cargar el cat�logo. Se mostrar�n los productos guardados.');
+    showError('No se pudo cargar el catalogo. Se mostraran los productos guardados.');
     const bar = document.getElementById('api-status-bar');
     if (bar) bar.classList.add('show');
   } finally {
@@ -251,7 +251,7 @@ function populateCategoryFilter() {
   const current = sel.value;
   const set = new Set(products.map(p => (p.tag || '').trim()).filter(Boolean));
   const cats = Array.from(set).sort((a, b) => a.localeCompare(b, 'es'));
-  sel.innerHTML = '<option value="__all__">Todas las categor�as</option>' +
+  sel.innerHTML = '<option value="__all__">Todas las categorias</option>' +
     cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
   sel.value = cats.includes(current) ? current : '__all__';
 }
@@ -890,11 +890,11 @@ async function loadSiteTextsIntoTab() {
             <span style="font-weight:bold;color:var(--yellow);">Tarjeta #${idx + 1}</span>
             <button data-action="remove-ventaja" data-index="${idx}" style="background:#c0392b;color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;font-size:0.8rem;">🗑️ Eliminar</button>
           </div>
-          <label class="admin-label">�cono (emoji)</label>
+          <label class="admin-label">icono (emoji)</label>
           <input class="admin-input ventaja-icon" data-index="${idx}" value="${escapeHtml(card.icon || '')}" placeholder="?" />
-          <label class="admin-label">T�tulo</label>
+          <label class="admin-label">Titulo</label>
           <input class="admin-input ventaja-titulo" data-index="${idx}" value="${escapeHtml(card.titulo || '')}" placeholder="Atención R�pida" />
-          <label class="admin-label">Descripci�n</label>
+          <label class="admin-label">Descripcion</label>
           <div class="admin-textarea wysiwyg ventaja-desc" data-index="${idx}" contenteditable="true">${escapeHtml(card.descripcion || '')}</div>
         </div>
       `).join('');
@@ -1261,7 +1261,7 @@ async function doLogin() {
       errEl.style.display = 'block';
     }
   } catch (e) {
-    errEl.textContent = 'Error de conexi�n con el servidor.';
+    errEl.textContent = 'Error de conexion con el servidor.';
     errEl.style.display = 'block';
   }
 }
