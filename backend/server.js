@@ -49,8 +49,8 @@ console.error = (...args) => {
 }
 
 const ALLOWED_ORIGINS = process.env.NODE_ENV === 'production'
-  ? ['https://metagro.com.ar', 'https://www.metagro.com.ar', 'https://metagro-srl.vercel.app', 'https://metagro.vercel.app', 'https://metagro-ijzxek2xc-damianrichard76-1354s-projects.vercel.app', 'https://*.vercel.app']
-  : ['http://localhost:*', 'http://127.0.0.1:*', 'http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:4173', 'http://localhost:8080', 'http://localhost:8081', 'file://', 'null'];
+  ? ['https://metagro.com.ar', 'https://www.metagro.com.ar', 'https://metagro-srl.vercel.app', 'https://metagro.vercel.app', 'https://metagro-ijzxek2xc-damianrichard76-1354s-projects.vercel.app']
+  : ['http://localhost:*', 'http://127.0.0.1:*', 'http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:4173', 'http://localhost:8080', 'http://localhost:8081'];
 
 const corsOptions = {
   origin: (origin, cb) => {
@@ -99,7 +99,7 @@ app.use((req, res, next) => {
   next();
 })
 app.use(compression())
-app.use(express.json({ limit: '50mb' }))
+app.use(express.json({ limit: '1mb' }))
 
 const { languageMiddleware } = require('./middleware/language.middleware')
 app.use(languageMiddleware)
@@ -367,6 +367,16 @@ async function shutdown() {
 }
 process.on('SIGTERM', shutdown)
 process.on('SIGINT', shutdown)
+
+process.on('uncaughtException', (err) => {
+  logger.error('[FATAL] Uncaught exception:', err)
+  process.exit(1)
+})
+
+process.on('unhandledRejection', (reason) => {
+  logger.error('[FATAL] Unhandled rejection:', reason)
+  process.exit(1)
+})
 
 const { backupDatabase } = require('./services/backup.service')
 

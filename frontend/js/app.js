@@ -788,7 +788,8 @@ async function saveLocalInfo() {
     dir: document.getElementById('cfg-dir')?.value || '',
     wamsg: document.getElementById('cfg-wamsg')?.value || ''
   };
-  localStorage.setItem('mg_config', JSON.stringify(cfg));
+  const { adminPass: _adminPass, ...safe } = cfg;
+  localStorage.setItem('mg_config', JSON.stringify(safe));
   try {
     await api('/guardar-config', {
       method: 'POST',
@@ -990,12 +991,14 @@ function saveSiteTexts() {
   localStorage.setItem('mg_site_texts', JSON.stringify(texts));
   addHistoryEntry(prevTexts, texts);
   fetchAndApplyTexts();
-  Object.entries(texts).forEach(([key, value]) => {
-    api(`/site-texts/${encodeURIComponent(key)}`, {
-      method: 'PUT',
-      body: JSON.stringify({ value })
-    }).catch(() => {});
-  });
+  await Promise.allSettled(
+    Object.entries(texts).map(([key, value]) =>
+      api(`/site-texts/${encodeURIComponent(key)}`, {
+        method: 'PUT',
+        body: JSON.stringify({ value })
+      }).catch(e => ({ status: 'rejected', reason: e }))
+    )
+  );
   const msg = document.getElementById('save-msg-texts');
   if (msg) { msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2500); }
   showToast('✓ Todos los textos guardados');
