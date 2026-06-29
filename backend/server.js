@@ -49,14 +49,14 @@ console.error = (...args) => {
 }
 
 const ALLOWED_ORIGINS = process.env.NODE_ENV === 'production'
-  ? ['https://metagro.com.ar', 'https://www.metagro.com.ar', 'https://metagro-srl.vercel.app', 'https://metagro.vercel.app', 'https://metagro-ijzxek2xc-damianrichard76-1354s-projects.vercel.app']
+  ? ['https://metagro.com.ar', 'https://www.metagro.com.ar', 'https://metagro-srl.vercel.app', 'https://metagro.vercel.app']
   : ['http://localhost:*', 'http://127.0.0.1:*', 'http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:4173', 'http://localhost:8080', 'http://localhost:8081'];
 
 const corsOptions = {
   origin: (origin, cb) => {
     const allowed = ALLOWED_ORIGINS
     const originStr = typeof origin === 'string' ? origin : (origin === null ? 'null' : String(origin))
-    if (!origin || allowed.some(o => {
+    const isAllowed = !origin || allowed.some(o => {
       if (o === '*') return true
       if (o === originStr) return true
       if (o.endsWith('*')) {
@@ -64,7 +64,8 @@ const corsOptions = {
         return originStr.startsWith(prefix)
       }
       return false
-    })) {
+    }) || (process.env.NODE_ENV === 'production' && originStr.endsWith('.vercel.app'))
+    if (isAllowed) {
       cb(null, true);
     } else {
       console.log('[CORS] Blocked origin:', originStr);

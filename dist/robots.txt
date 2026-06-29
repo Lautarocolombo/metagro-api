@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /api/admin
+Sitemap: https://metagro.com.ar/sitemap.xml
