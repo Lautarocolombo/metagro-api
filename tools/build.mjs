@@ -13,9 +13,6 @@ const ASSETS = [
   { src: 'frontend/productos', dst: 'productos' },
   { src: 'frontend/image', dst: 'image' },
   { src: 'frontend/logo', dst: 'logo' },
-  { src: 'frontend/api', dst: 'api' },
-  { src: 'backend', dst: 'backend' },
-  { src: 'database/sql', dst: 'sql' },
   { src: 'frontend/styles', dst: 'styles' },
   { src: 'frontend/js', dst: 'js' },
   { src: 'frontend/src-seo/sw.js', dst: 'sw.js' },
@@ -52,7 +49,7 @@ async function build() {
     }
   }
 
-  for (const file of ['package.json', 'vercel.json']) {
+  for (const file of ['package.json']) {
     const src = path.join(root, file);
     const dst = path.join(DIST, file);
     try { await fs.copyFile(src, dst); } catch {}
