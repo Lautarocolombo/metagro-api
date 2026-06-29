@@ -1,4 +1,4 @@
-// Usar la misma URL del dominio en producci�n (Vercel) para que /api/* apunte al backend desplegado aqu�.
+// Usar la misma URL del dominio en producción (Vercel) para que /api/* apunte al backend desplegado aquí.
 const API_BASE = 'https://metagro-api-ds6r.onrender.com/api';
 
 let products = [];
@@ -545,14 +545,14 @@ function exportProductsCSV() {
 }
 
 async function deleteProduct(index) {
-  if (!confirm('�Borrar este producto?')) return;
+  if (!confirm('¿Borrar este producto?')) return;
   const p = products[index];
   if (!p) return;
   if (p.id && originalProducts.find(op => op.id === p.id)) {
     try {
       await api(`/products/${p.id}`, { method: 'DELETE' });
     } catch(e) {
-      showToast('No se pudo eliminar del servidor. Se elimin� localmente.', 'error');
+      showToast('No se pudo eliminar del servidor. Se eliminó localmente.', 'error');
     }
   }
   originalProducts = originalProducts.filter(op => op.id !== p.id);
@@ -620,7 +620,7 @@ function compressImage(file, maxWidth = 1200, quality = 0.8) {
 async function saveProducts() {
   const invalid = products.filter(p => !p.name || !p.name.trim());
   if (invalid.length > 0) {
-    showToast(invalid.length + ' producto(s) sin nombre. Correg� antes de guardar.', 'error');
+    showToast(invalid.length + ' producto(s) sin nombre. Corregí antes de guardar.', 'error');
     return;
   }
   saveLocal();
@@ -814,29 +814,29 @@ const VENTAJAS_CONFIG = [
 const SITE_TEXTS_FALLBACKS = {
   'hero_linea_1': 'SIEMPRE JUNTO',
   'hero_linea_2': 'AL CAMPO.',
-  'hero_desc': 'Insumos para la agroganader�a, alambrados, molinos, aguadas y ferreter�a. Atención personalizada, precios competitivos y cuenta corriente para nuestros clientes.',
+  'hero_desc': 'Insumos para la agroganadería, alambrados, molinos, aguadas y ferretería. Atención personalizada, precios competitivos y cuenta corriente para nuestros clientes.',
   'hero_numero': '43',
-  'hero_etiqueta': 'A�OS EN EL MERCADO',
-  'vent_eyebrow': 'POR QU� ELEGIRNOS',
+  'hero_etiqueta': 'AÑOS EN EL MERCADO',
+  'vent_eyebrow': 'POR QUÉ ELEGIRNOS',
   'vent_titulo_1': 'VENTAJAS',
   'vent_titulo_2': 'METAGRO',
-  'vent_card_1_titulo': 'ATENCI�N R�PIDA',
-  'vent_card_1_desc': 'Atendemos más r�pido que la competencia. Tu tiempo en el campo vale.',
+  'vent_card_1_titulo': 'ATENCIÓN RÁPIDA',
+  'vent_card_1_desc': 'Atendemos más rápido que la competencia. Tu tiempo en el campo vale.',
   'vent_card_2_titulo': 'CUENTA CORRIENTE',
-  'vent_card_2_desc': 'Cr�dito para clientes habituales. Compr� hoy y pag� cuando puedas.',
+  'vent_card_2_desc': 'Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.',
   'vent_card_3_titulo': 'MEJORES PRECIOS',
-  'vent_card_3_desc': 'Precios competitivos respaldados por 43 a�os de trayectoria y volumen de compra.',
+  'vent_card_3_desc': 'Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.',
   'vent_card_4_titulo': 'STOCK PERMANENTE',
   'vent_card_4_desc': 'Amplia disponibilidad de productos para que no pares tu trabajo.',
-  'vent_card_5_titulo': '43 A�OS DE EXPERIENCIA',
-  'vent_card_5_desc': 'Desde 1983 sirviendo al campo de Entre R�os. Cartera de clientes fiel y reconocida.',
+  'vent_card_5_titulo': '43 AÑOS DE EXPERIENCIA',
+  'vent_card_5_desc': 'Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.',
   'vent_card_6_titulo': 'ESPECIALISTAS EN EL AGRO',
   'vent_card_6_desc': 'Asesoramiento técnico para agroganaderos, molineros y alambradores.',
   'cont_eyebrow': 'CONTACTO',
-  'cont_titulo_1': '�NECESIT�S UN PRODUCTO?',
+  'cont_titulo_1': '¿NECESITAS UN PRODUCTO?',
   'cont_titulo_2': 'CONSULTANOS.',
-  'cont_desc': 'Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos r�pido por WhatsApp o por tel�fono.',
-  'footer_tagline': 'Siempre junto al campo � Desde 1983'
+  'cont_desc': 'Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rapido por WhatsApp o por telefono.',
+  'footer_tagline': 'Siempre junto al campo • Desde 1983'
 };
 
 function getSiteTexts() {
@@ -898,7 +898,7 @@ async function loadSiteTextsIntoTab() {
           <label class="admin-label">icono (emoji)</label>
           <input class="admin-input ventaja-icon" data-index="${idx}" value="${escapeHtml(card.icon || '')}" placeholder="?" />
           <label class="admin-label">Titulo</label>
-          <input class="admin-input ventaja-titulo" data-index="${idx}" value="${escapeHtml(card.titulo || '')}" placeholder="Atención R�pida" />
+          <input class="admin-input ventaja-titulo" data-index="${idx}" value="${escapeHtml(card.titulo || '')}" placeholder="Atención Rápida" />
           <label class="admin-label">Descripcion</label>
           <div class="admin-textarea wysiwyg ventaja-desc" data-index="${idx}" contenteditable="true">${escapeHtml(card.descripcion || '')}</div>
         </div>
@@ -991,7 +991,7 @@ function saveSiteTexts() {
   addHistoryEntry(prevTexts, texts);
   fetchAndApplyTexts();
   Object.entries(texts).forEach(([key, value]) => {
-    api(`/api/site-texts/${encodeURIComponent(key)}`, {
+    api(`/site-texts/${encodeURIComponent(key)}`, {
       method: 'PUT',
       body: JSON.stringify({ value })
     }).catch(() => {});
@@ -1237,7 +1237,7 @@ async function doLogin() {
   const u = document.getElementById('adminUser').value.trim();
   const p = document.getElementById('adminPass').value;
   const errEl = document.getElementById('loginError');
-  if (!u || !p) { errEl.style.display = 'block'; errEl.textContent = 'Ingres� usuario y contrase�a.'; return; }
+  if (!u || !p) { errEl.style.display = 'block'; errEl.textContent = 'Ingresá usuario y contraseña.'; return; }
   try {
     const res = await api('/admin/login', {
       method: 'POST',
@@ -1262,7 +1262,7 @@ async function doLogin() {
       loadSiteTextsIntoTab();
       errEl.style.display = 'none';
     } else {
-      errEl.textContent = data.error || 'Usuario o contrase�a incorrectos.';
+      errEl.textContent = data.error || 'Usuario o contraseña incorrectos.';
       errEl.style.display = 'block';
     }
   } catch (e) {
@@ -1363,7 +1363,7 @@ function initMap() {
         }).addTo(map);
         L.marker([-33.1308927, -59.3156888])
           .addTo(map)
-          .bindPopup('<b>Metagro SRL</b><br/>Gualeguay, Entre R�os')
+          .bindPopup('<b>Metagro SRL</b><br/>Gualeguay, Entre Ríos')
           .openPopup();
         setTimeout(() => map.invalidateSize(), 300);
       }, 300);

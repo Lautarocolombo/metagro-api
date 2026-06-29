@@ -57,9 +57,9 @@ async function migrate() {
       ['ventajas', 'vent_card_6_titulo', 'ESPECIALISTAS EN EL AGRO'],
       ['ventajas', 'vent_card_6_desc', 'Asesoramiento técnico para agroganaderos, molineros y alambradores.'],
       ['contacto', 'cont_eyebrow', 'CONTACTO'],
-      ['contacto', 'cont_titulo_1', '¿NECESITÁS UN PRODUCTO?'],
+      ['contacto', 'cont_titulo_1', '¿NECESITAS UN PRODUCTO?'],
       ['contacto', 'cont_titulo_2', 'CONSULTANOS.'],
-      ['contacto', 'cont_desc', 'Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rápido por WhatsApp o por teléfono.']
+      ['contacto', 'cont_desc', 'Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rapido por WhatsApp o por telefono.']
     ]
     for (const [section, key, value] of texts) {
       await pool.query(`INSERT INTO site_texts (section, key, value) VALUES ($1, $2, $3)`, [section, key, value])

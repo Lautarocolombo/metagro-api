@@ -1,15 +1,17 @@
 {
   "version": 2,
-  "outputDirectory": "frontend/dist",
-  "framework": null,
-  "installCommand": "npm install",
-  "buildCommand": "npm install && npm run build",
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://metagro-api-ds6r.onrender.com/api/$1" },
-    { "source": "/styles/(.*)", "destination": "/styles/$1" },
-    { "source": "/js/(.*)", "destination": "/js/$1" },
-    { "source": "/sitemap.xml", "destination": "https://metagro-api-ds6r.onrender.com/api/seo/sitemap.xml" },
-    { "source": "/producto/:id", "destination": "/index.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "builds": [
+    {
+      "src": "frontend/dist/**/*",
+      "use": "@vercel/static",
+      "config": { "maxAge": "1h" }
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "https://metagro-api-ds6r.onrender.com/api/$1" },
+    { "src": "/styles/(.*)", "dest": "/styles/$1" },
+    { "src": "/js/(.*)", "dest": "/js/$1" },
+    { "src": "/producto/([^/]+)", "dest": "/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

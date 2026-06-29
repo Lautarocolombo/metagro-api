@@ -260,7 +260,7 @@ async function initDb() {
         ('vent.title.1', 'es', 'VENTAJAS'),
         ('vent.title.2', 'es', 'METAGRO'),
         ('cont.eyebrow', 'es', 'CONTACTO'),
-        ('cont.title.1', 'es', '¿NECESITÁS UN PRODUCTO?'),
+        ('cont.title.1', 'es', '¿NECESITAS UN PRODUCTO?'),
         ('cont.title.2', 'es', 'CONSULTANOS.'),
         ('cont.desc', 'es', 'Asesoramiento sin compromiso por WhatsApp o teléfono.'),
         ('nav.products', 'es', 'PRODUCTOS'),
