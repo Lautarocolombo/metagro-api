@@ -6,12 +6,14 @@ node_modules/
 *.log
 backend/data/uploads/
 backend/data/config.json
+backend/data/products.json
 backend/logs/
 seed-db.mjs
 migrate-db.mjs
 .vercel
 public/
 build/
+dist/
 *.sql
 tools/productos-list.csv
 frontend/productos/
