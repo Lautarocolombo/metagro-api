@@ -1,73 +1,14 @@
-// En producción (Vercel) las rutas /api/* se proxean a Render automáticamente por vercel.json.
-// En local apunta directo al backend Express.
-const API_BASE =
-  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:4000/api'
-    : window.location.origin + '/api';
+// Configuración en config.js
+// API_BASE: se resuelve automáticamente según entorno
 
 let products = [];
 let useApi = true;
 let hasUnsavedChanges = false;
 let originalProducts = [];
 let currentPage = 1;
-const itemsPerPage = 24;
+const itemsPerPage = APP_CONFIG.ITEMS_PER_PAGE;
 let currentLang = 'es';
 let translations = {};
-
-function detectLanguage() {
-  const saved = localStorage.getItem('mg_lang');
-  if (saved) return saved;
-  const navLang = (navigator.language || navigator.userLanguage || 'es').split('-')[0];
-  return ['es', 'en'].includes(navLang) ? navLang : 'es';
-}
-
-async function fetchTranslations(lang) {
-  try {
-    const res = await fetch(`${API_BASE}/translations?lang=${lang}`);
-    const data = await res.json();
-    if (data.ok) {
-      translations = data.translations || {};
-      window._translationsCache = window._translationsCache || {};
-      Object.assign(window._translationsCache, translations);
-    }
-  } catch (e) {
-    console.error('[lang] failed to fetch translations:', e);
-  }
-}
-
-function t(key) {
-  return translations[key] || key;
-}
-
-async function switchLanguage() {
-  currentLang = currentLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('mg_lang', currentLang);
-  document.cookie = `mg_lang=${currentLang};path=/;max-age=${60*60*24*365}`;
-  const label = document.getElementById('lang-label');
-  if (label) label.textContent = currentLang.toUpperCase();
-  await fetchTranslations(currentLang);
-  applyTranslations();
-}
-
-function applyTranslations() {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const translation = (translations && translations[key]) || (window._translationsCache && window._translationsCache[key]);
-    if (!translation) return;
-    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-      el.placeholder = translation;
-    } else {
-      el.textContent = translation;
-    }
-  });
-}
-
-async function initLanguage() {
-  currentLang = detectLanguage();
-  const label = document.getElementById('lang-label');
-  if (label) label.textContent = currentLang.toUpperCase();
-  await fetchTranslations(currentLang);
-}
 
 function escapeHtml(str) {
   return String(str ?? '')
@@ -107,42 +48,6 @@ function encodeImgPath(path) {
   if (!path) return '';
   if (path.startsWith('data:') || path.startsWith('http')) return path;
   return path.split('/').map(segment => encodeURIComponent(segment)).join('/');
-}
-
-async function api(path, opts = {}) {
-  const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
-  const token = sessionStorage.getItem('mg_admin_token');
-  if (token) headers['x-mg-token'] = token;
-  const ctrl = opts.signal ? { signal: opts.signal } : {};
-  const res = await fetch(API_BASE + path, {
-    method: opts.method || 'GET',
-    headers,
-    body: opts.body ? JSON.stringify(opts.body) : undefined,
-    ...ctrl
-  });
-  if (!res.ok) throw new Error('API ' + res.status);
-  return res;
-}
-
-async function tryRefreshToken() {
-  const refreshToken = sessionStorage.getItem('mg_refresh_token');
-  if (!refreshToken) return false;
-  try {
-    const res = await fetch(`${API_BASE}/admin/refresh`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken })
-    });
-    const data = await res.json();
-    if (data.token) {
-      sessionStorage.setItem('mg_admin_token', data.token);
-      if (data.refreshToken) sessionStorage.setItem('mg_refresh_token', data.refreshToken);
-      return true;
-    }
-  } catch (e) {
-    console.error('[api] refresh failed:', e);
-  }
-  return false;
 }
 
 function showError(message) {
@@ -1141,7 +1046,7 @@ async function loadDashboard() {
     const token = sessionStorage.getItem('mg_admin_token');
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['x-mg-token'] = token;
-    const res = await fetch(`${API_BASE}/analytics/dashboard`, { headers });
+    const res = await fetch(`${APP_CONFIG.API_BASE}/analytics/dashboard`, { headers });
     const data = await res.json();
     if (!data.ok) throw new Error('Failed to load dashboard');
     const stats = data.stats || {};
