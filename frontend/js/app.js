@@ -870,13 +870,34 @@ const SITE_TEXTS_FALLBACKS = {
   'vent_card_5_titulo': '43 AÑOS DE EXPERIENCIA',
   'vent_card_5_desc': 'Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.',
   'vent_card_6_titulo': 'ESPECIALISTAS EN EL AGRO',
-  'vent_card_6_desc': 'Asesoramiento técnico para agroganaderos, molineros y alambradores.',
+  'vent_card_6_desc': 'Conocemos el campo. Asesoramiento técnico real para cada necesidad.',
   'cont_eyebrow': 'CONTACTO',
   'cont_titulo_1': '¿NECESITAS UN PRODUCTO?',
   'cont_titulo_2': 'CONSULTANOS.',
   'cont_desc': 'Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rapido por WhatsApp o por telefono.',
   'footer_tagline': 'Siempre junto al campo • Desde 1983'
 };
+
+const HOME_CONTENT_JSON = [
+  { "id": "hero_title", "valor": "Soluciones para el campo", "categoria": "hero", "descripcion": "Título principal del hero" },
+  { "id": "hero_subtitle", "valor": "Insumos ganaderos, alambrados y herramientas para tu estancia o chacra.", "categoria": "hero", "descripcion": "Subtítulo del hero" },
+  { "id": "hero_btn_products", "valor": "VER PRODUCTOS", "categoria": "hero", "descripcion": "Botón ver productos" },
+  { "id": "hero_btn_contact", "valor": "CONTACTARNOS", "categoria": "hero", "descripcion": "Botón contactarnos" },
+  { "id": "hero_years", "valor": "43 AÑOS EN", "categoria": "hero", "descripcion": "Badge años en el mercado" },
+  { "id": "benefit_rapida_titulo", "valor": "Atención Rápida", "categoria": "beneficios", "descripcion": "Tarjeta 1 - Título" },
+  { "id": "benefit_rapida_desc", "valor": "Atendemos más rápido que la competencia. Tu tiempo en el campo vale.", "categoria": "beneficios", "descripcion": "Tarjeta 1 - Descripción" },
+  { "id": "benefit_cta_titulo", "valor": "Cuenta Corriente", "categoria": "beneficios", "descripcion": "Tarjeta 2 - Título" },
+  { "id": "benefit_cta_desc", "valor": "Crédito para clientes habituales. Comprá hoy y pagá cuando puedas.", "categoria": "beneficios", "descripcion": "Tarjeta 2 - Descripción" },
+  { "id": "benefit_precios_titulo", "valor": "Mejores Precios", "categoria": "beneficios", "descripcion": "Tarjeta 3 - Título" },
+  { "id": "benefit_precios_desc", "valor": "Precios competitivos respaldados por 43 años de trayectoria y volumen de compra.", "categoria": "beneficios", "descripcion": "Tarjeta 3 - Descripción" },
+  { "id": "benefit_stock_titulo", "valor": "Stock Permanente", "categoria": "beneficios", "descripcion": "Tarjeta 4 - Título" },
+  { "id": "benefit_stock_desc", "valor": "Amplia disponibilidad de productos para que no pares tu trabajo.", "categoria": "beneficios", "descripcion": "Tarjeta 4 - Descripción" },
+  { "id": "benefit_exp_titulo", "valor": "43 Años de Experiencia", "categoria": "beneficios", "descripcion": "Tarjeta 5 - Título" },
+  { "id": "benefit_exp_desc", "valor": "Desde 1983 sirviendo al campo de Entre Ríos. Cartera de clientes fiel y reconocida.", "categoria": "beneficios", "descripcion": "Tarjeta 5 - Descripción" },
+  { "id": "benefit_agro_titulo", "valor": "Especialistas en el Agro", "categoria": "beneficios", "descripcion": "Tarjeta 6 - Título" },
+  { "id": "benefit_agro_desc", "valor": "Conocemos el campo. Asesoramiento técnico real para cada necesidad.", "categoria": "beneficios", "descripcion": "Tarjeta 6 - Descripción" },
+  { "id": "guardar-config", "valor": "{\"tel\":\"03444 – 466919\",\"wa\":\"5403444466919\",\"horario1\":\"Lunes a Viernes: 8:00 – 12:00 / 15:00 – 19:00\",\"horario2\":\"Sábados: 8:00 – 12:00\",\"dir\":\"Gualeguay, Entre Ríos · Argentina · CP 2840\",\"wamsg\":\"Hola Metagro! Quiero consultar sobre sus productos.\",\"adminUser\":\"metagro\",\"adminPass\":\"montealegre22\"}", "categoria": "config", "descripcion": "Configuración guardada" }
+];
 
 function getSiteTexts() {
   try {
@@ -886,7 +907,10 @@ function getSiteTexts() {
       if (Object.keys(parsed).length) return parsed;
     }
   } catch(e) { /* ignore */ }
-  return SITE_TEXTS_FALLBACKS;
+  const homeMap = {};
+  (HOME_CONTENT_JSON || []).forEach(row => { homeMap[row.id] = row.valor; });
+  const merged = { ...SITE_TEXTS_FALLBACKS, ...homeMap };
+  return merged;
 }
 
 async function loadSiteTextsIntoTab() {
