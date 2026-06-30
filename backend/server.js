@@ -88,7 +88,10 @@ if (!JWT_SECRET && !ADMIN_TOKEN) {
   logger.warn('[STARTUP] METAGRO_TOKEN no configurado. Defínelo en .env o no podrás autenticar.');
 }
 
-initDb().catch(err => console.error('[DB] init error:', err));
+initDb().catch(err => {
+  console.error('[DB] init error (non-fatal, server continues):', err.message);
+  setTimeout(() => initDb().catch(e => console.error('[DB] retry error:', e.message)), 5000);
+});
 
 const { scheduledBackup } = require('./services/backup.service');
 let lastBackupDate = null;
