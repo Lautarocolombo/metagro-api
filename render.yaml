@@ -3,9 +3,9 @@ services:
     name: metagro-api
     runtime: node
     plan: free
-    env: node
+    env: nodejs
     buildCommand: npm install && cd backend && npm install
-    startCommand: node server.cjs
+    startCommand: node backend/server.js
     envVars:
       - key: METAGRO_TOKEN
         sync: false
