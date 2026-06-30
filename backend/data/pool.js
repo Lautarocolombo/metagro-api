@@ -1,7 +1,11 @@
 const { Pool } = require('pg');
 
+const dbUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+if (!dbUrl) {
+  console.error('[Pool] ERROR: No se encontró DATABASE_URL ni POSTGRES_URL. El servidor no puede conectarse a la base de datos.');
+}
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: dbUrl,
   ssl: { rejectUnauthorized: false },
   max: 20,
   idleTimeoutMillis: 30000,
