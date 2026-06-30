@@ -29,9 +29,9 @@ app.use(require('helmet')({
       styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
       connectSrc: process.env.NODE_ENV === 'production'
-        ? ["'self'", "https://api.openstreetmap.org", "https://cdn.jsdelivr.net", "https://metagro-api-ds6r.onrender.com"]
-        : ["'self'", "http://localhost:*", "http://127.0.0.1:*", "https://api.openstreetmap.org", "https://cdn.jsdelivr.net"],
-      frameSrc: ["'self'"]
+        ? ["'self'", "https://api.openstreetmap.org", "https://tile.openstreetmap.org", "https://*.tile.openstreetmap.org", "https://cdn.jsdelivr.net", "https://metagro-api-ds6r.onrender.com", "https://*.google.com", "https://*.googleapis.com"]
+        : ["'self'", "http://localhost:*", "http://127.0.0.1:*", "https://api.openstreetmap.org", "https://tile.openstreetmap.org", "https://cdn.jsdelivr.net"],
+      frameSrc: ["'self'", "https://www.google.com", "https://www.googleusercontent.com", "https://maps.google.com", "https://*.google.com"]
     }
   },
   crossOriginEmbedderPolicy: false,

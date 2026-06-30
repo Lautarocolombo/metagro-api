@@ -3,7 +3,7 @@ window.APP_CONFIG = {
   API_BASE:
     window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://localhost:4000/api'
-      : window.location.origin + '/api',
+      : 'https://metagro-api-ds6r.onrender.com/api',
   ITEMS_PER_PAGE: 24,
   FALLBACK_PRODUCTS_URL: '/products.json',
   FALLBACK_HOME_URL: '/home-content.json',

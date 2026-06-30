@@ -25,7 +25,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="styles/main.css" />
   <style>html { scroll-behavior: smooth; scroll-padding-top: 62px; }</style>
   <script type="application/ld+json">
@@ -186,7 +185,7 @@
       <div class="divider"></div>
       <p class="cta-desc">Ya sea para tu estancia, chacra o trabajo profesional, en Metagro SRL te asesoramos sin compromiso. Respondemos rapido por WhatsApp o por telefono.</p>
       <div class="cta-btns">
-        <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-wa"><span style="font-size:1.2em">📱</span> WhatsApp</a>
+         <a data-wa-href href="https://wa.me/5403444466919?text=Hola%20Metagro!%20Quiero%20consultar%20sobre%20sus%20productos." target="_blank" class="btn-wa"><span class="btn-wa-icon">📱</span> WhatsApp</a>
         <a data-tel-href href="tel:+5403444466919" class="btn-tel">📞 03444 – 466919</a>
       </div>
     </div>
@@ -196,7 +195,7 @@
 <!-- ADMIN LOGIN -->
 <div class="admin-overlay" id="adminOverlay">
   <div class="admin-login-box">
-    <h2>🔒 Admin <span style="color:var(--yellow)">Metagro</span></h2>
+    <h2>🔒 Admin <span class="hl">Metagro</span></h2>
     <p>Ingresá tu usuario y contraseña para acceder al panel.</p>
     <div class="admin-field"><label>Usuario</label><input type="text" id="adminUser" placeholder="usuario" autocomplete="username" /></div>
     <div class="admin-field"><label>Contraseña</label><input type="password" id="adminPass" placeholder="••••••••" autocomplete="current-password" /></div>
@@ -210,7 +209,10 @@
 <div class="admin-panel" id="adminPanel">
   <div class="admin-topbar">
     <div class="admin-topbar-title">PANEL <span>METAGRO</span></div>
-    <button class="btn-logout" id="btn-logout">CERRAR SESIÓN</button>
+    <div class="admin-topbar-right">
+      <span class="unsaved-indicator" id="unsaved-indicator">● Cambios sin guardar</span>
+      <button class="btn-logout" id="btn-logout">CERRAR SESIÓN</button>
+    </div>
   </div>
 
   <div class="admin-body">
@@ -246,11 +248,11 @@
         <button class="btn-add" id="btn-add-product">➕ Nuevo Producto</button>
         <button class="btn-add" id="btn-bulk-upload">📁 Carga Masiva</button>
         <button class="btn-add" id="btn-sync-db">🔄 Sincronizar DB</button>
-        <button class="btn-add" data-role="admin" id="btn-sync-to-db" style="background:#1a5f2a;border-color:#27ae60;">📤 Migrar Todo a DB</button>
+        <button class="btn-add btn-add--admin" data-role="admin" id="btn-sync-to-db">📤 Migrar Todo a DB</button>
         <button class="btn-add" id="btn-export-csv">📊 Exportar CSV</button>
         <input type="text" id="admin-search" class="admin-search" placeholder="🔍 Buscar producto..." />
       </div>
-      <div id="prod-count-bar" style="color:#888;font-size:.82rem;margin-bottom:.8rem;"></div>
+      <div id="prod-count-bar" class="prod-count-bar"></div>
       <div class="admin-prod-grid" id="admin-prod-grid"></div>
       <div class="admin-save-bar">
         <button class="btn-save" id="btn-save-products">💾 Guardar Cambios</button>
@@ -259,7 +261,7 @@
     </div>
 
     <div id="tab-colores" class="admin-tab-content">
-      <p style="color:#888;font-size:.9rem;margin-bottom:1.5rem;">Modificá los colores principales del sitio. Los cambios se aplican en tiempo real.</p>
+      <p class="admin-desc">Modificá los colores principales del sitio. Los cambios se aplican en tiempo real.</p>
       <div class="color-grid">
         <div class="color-field"><input type="color" id="color-yellow" value="#F5C800" data-hex="hex-yellow" data-css="--yellow" /><div class="color-field-info"><div class="color-field-name">Color Principal</div><div class="color-field-hex" id="hex-yellow">#F5C800</div></div></div>
         <div class="color-field"><input type="color" id="color-black" value="#111111" data-hex="hex-black" data-css="--black" /><div class="color-field-info"><div class="color-field-name">Color Secundario</div><div class="color-field-hex" id="hex-black">#111111</div></div></div>
@@ -268,89 +270,92 @@
       </div>
       <div class="admin-save-bar">
         <button class="btn-save" id="btn-save-colors">💾 Guardar Colores</button>
-        <button style="background:var(--steel2);color:#aaa;border:1px solid #333;border-radius:4px;padding:.6rem 1.2rem;cursor:pointer;font-size:.9rem;" id="btn-reset-colors">↩ Restaurar originales</button>
+        <button class="btn-restore-colors" id="btn-reset-colors">↩ Restaurar originales</button>
       </div>
     </div>
 
     <div id="tab-texts" class="admin-tab-content">
-      <div class="config-grid">
-        <div class="config-field"><label class="admin-label">Teléfono</label><input class="admin-input" id="cfg-tel" value="03444 – 466919" /></div>
-        <div class="config-field"><label class="admin-label">Número WhatsApp (con código de país)</label><input class="admin-input" id="cfg-wa" value="5403444466919" /></div>
-        <div class="config-field"><label class="admin-label">Horario Semana</label><input class="admin-input" id="cfg-horario1" value="Lunes a Viernes: 8:00 – 12:00 / 15:00 – 19:00" /></div>
-        <div class="config-field"><label class="admin-label">Horario Sábado</label><input class="admin-input" id="cfg-horario2" value="Sábados: 8:00 – 12:00" /></div>
-        <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Dirección</label><input class="admin-input" id="cfg-dir" value="Gualeguay, Entre Ríos · Argentina · CP 2840" /></div>
-        <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Mensaje pre-cargado en WhatsApp</label><input class="admin-input" id="cfg-wamsg" value="Hola Metagro! Quiero consultar sobre sus productos." /></div>
-        <div class="config-field"><label class="admin-label">Usuario Admin</label><input class="admin-input" id="cfg-admin-user" value="metagro" /></div>
-        <div class="config-field" style="grid-column:1/-1"><label class="admin-label">Contraseña Admin</label><input class="admin-input" id="cfg-admin-pass" type="password" /></div>
-      </div>
-      <div class="admin-save-bar">
-        <button class="btn-save" id="btn-save-local">💾 Guardar Info</button>
-        <span class="save-msg" id="save-msg-local">✓ Información guardada</span>
+      <div class="admin-section">
+        <div class="admin-section-header">📋 Configuración General</div>
+        <div class="config-grid">
+          <div class="config-field"><label class="admin-label">Teléfono</label><input class="admin-input" id="cfg-tel" value="03444 – 466919" /></div>
+          <div class="config-field"><label class="admin-label">WhatsApp (con código de país)</label><input class="admin-input" id="cfg-wa" value="5403444466919" /></div>
+          <div class="config-field"><label class="admin-label">Horario Semana</label><input class="admin-input" id="cfg-horario1" value="Lunes a Viernes: 8:00 – 12:00 / 15:00 – 19:00" /></div>
+          <div class="config-field"><label class="admin-label">Horario Sábado</label><input class="admin-input" id="cfg-horario2" value="Sábados: 8:00 – 12:00" /></div>
+          <div class="config-field config-field-full"><label class="admin-label">Dirección</label><input class="admin-input" id="cfg-dir" value="Gualeguay, Entre Ríos · Argentina · CP 2840" /></div>
+          <div class="config-field config-field-full"><label class="admin-label">Mensaje WhatsApp</label><input class="admin-input" id="cfg-wamsg" value="Hola Metagro! Quiero consultar sobre sus productos." /></div>
+          <div class="config-field"><label class="admin-label">Usuario Admin</label><input class="admin-input" id="cfg-admin-user" value="metagro" /></div>
+          <div class="config-field config-field-full"><label class="admin-label">Contraseña Admin</label><input class="admin-input" id="cfg-admin-pass" type="password" placeholder="Dejar vacío para no modificar" autocomplete="new-password" /></div>
+        </div>
+        <div class="admin-save-bar">
+          <button class="btn-save" id="btn-save-local">💾 Guardar Info</button>
+          <span class="save-msg" id="save-msg-local">✓ Información guardada</span>
+        </div>
       </div>
 
-      <div style="margin-top:3rem;margin-bottom:2rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">🏠 Banner Principal (Hero)</div>
+      <div class="admin-section">
+        <div class="admin-section-header">🏠 Banner Principal (Hero)</div>
         <form onsubmit="event.preventDefault(); saveSiteTexts();">
           <div class="config-grid">
-          <div class="config-field" style="grid-column:1/-1">
-            <label class="admin-label">Línea 1 del Título (Ej: "SIEMPRE JUNTO")</label>
-            <input class="admin-input" id="txt-hero-linea-1" placeholder="SIEMPRE JUNTO" />
-          </div>
-          <div class="config-field" style="grid-column:1/-1">
-            <label class="admin-label">Línea 2 del Título (Ej: "AL CAMPO.")</label>
-            <input class="admin-input" id="txt-hero-linea-2" placeholder="AL CAMPO." />
-          </div>
-          <div class="config-field" style="grid-column:1/-1">
-            <label class="admin-label">Bajada de Texto / Subtítulo</label>
-            <div class="wysiwyg-toolbar">
-              <button type="button" class="wysiwyg-btn" data-cmd="bold"><b>B</b></button>
-              <button type="button" class="wysiwyg-btn" data-cmd="italic"><i>I</i></button>
-              <button type="button" class="wysiwyg-btn" data-cmd="underline"><u>U</u></button>
-              <button type="button" class="wysiwyg-btn" data-cmd="insertUnorderedList">• Lista</button>
-              <button type="button" class="wysiwyg-btn" data-cmd="createLink">🔗 Link</button>
-              <button type="button" class="wysiwyg-btn" data-cmd="insertImage">🖼 Img</button>
+            <div class="config-field config-field-full">
+              <label class="admin-label">Línea 1 del Título</label>
+              <input class="admin-input" id="txt-hero-linea-1" placeholder="SIEMPRE JUNTO" />
             </div>
-            <div class="admin-textarea wysiwyg" id="txt-hero-desc" contenteditable="true" placeholder="Insumos para la agroganadería..."></div>
+            <div class="config-field config-field-full">
+              <label class="admin-label">Línea 2 del Título</label>
+              <input class="admin-input" id="txt-hero-linea-2" placeholder="AL CAMPO." />
+            </div>
+            <div class="config-field config-field-full">
+              <label class="admin-label">Bajada de Texto / Subtítulo</label>
+              <div class="wysiwyg-toolbar">
+                <button type="button" class="wysiwyg-btn" data-cmd="bold"><b>B</b></button>
+                <button type="button" class="wysiwyg-btn" data-cmd="italic"><i>I</i></button>
+                <button type="button" class="wysiwyg-btn" data-cmd="underline"><u>U</u></button>
+                <button type="button" class="wysiwyg-btn" data-cmd="insertUnorderedList">• Lista</button>
+                <button type="button" class="wysiwyg-btn" data-cmd="createLink">🔗 Link</button>
+                <button type="button" class="wysiwyg-btn" data-cmd="insertImage">🖼 Img</button>
+              </div>
+              <div class="admin-textarea wysiwyg" id="txt-hero-desc" contenteditable="true" placeholder="Insumos para la agroganadería..."></div>
+            </div>
+            <div class="config-field">
+              <label class="admin-label">Número del Stat (ej: 43)</label>
+              <input class="admin-input" id="txt-hero-numero" placeholder="43" />
+            </div>
+            <div class="config-field">
+              <label class="admin-label">Texto del Stat</label>
+              <input class="admin-input" id="txt-hero-etiqueta" placeholder="Años en el mercado" />
+            </div>
           </div>
-          <div class="config-field">
-            <label class="admin-label">Número del Stat (ej: 43)</label>
-            <input class="admin-input" id="txt-hero-numero" placeholder="43" />
-          </div>
-          <div class="config-field">
-            <label class="admin-label">Texto del Stat (ej: Años en el mercado)</label>
-            <input class="admin-input" id="txt-hero-etiqueta" placeholder="Años en el mercado" />
-          </div>
-          </div>
-          <button type="submit" class="btn-save" style="margin-top:1rem;">💾 Guardar Banner Principal</button>
+          <button type="submit" class="btn-save btn-save--mt">💾 Guardar Banner Principal</button>
         </form>
       </div>
 
-      <div style="margin-bottom:2rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">⚡ Tarjetas de Ventajas</div>
-        <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá, eliminá o agregá tarjetas de la sección "Ventajas Metagro".</p>
-        <div class="config-grid" style="margin-bottom:1rem;">
-          <div class="config-field" style="grid-column:1/-1">
+      <div class="admin-section">
+        <div class="admin-section-header">⚡ Tarjetas de Ventajas</div>
+        <p class="admin-desc">Editá, eliminá o agregá tarjetas de la sección "Ventajas Metagro". Los iconos (emojis) se guardan junto con cada tarjeta.</p>
+        <div class="config-grid admin-mb">
+          <div class="config-field config-field-full">
             <label class="admin-label">Eyebrow (texto chico arriba del título)</label>
             <input class="admin-input" id="txt-vent-eyebrow" placeholder="POR QUÉ ELEGIRNOS" />
           </div>
-          <div class="config-field" style="grid-column:1/-1">
+          <div class="config-field config-field-full">
             <label class="admin-label">Título Línea 1</label>
             <input class="admin-input" id="txt-vent-titulo-1" placeholder="VENTAJAS" />
           </div>
-          <div class="config-field" style="grid-column:1/-1">
+          <div class="config-field config-field-full">
             <label class="admin-label">Título Línea 2</label>
             <input class="admin-input" id="txt-vent-titulo-2" placeholder="METAGRO" />
           </div>
         </div>
-        <div id="info-ventajas-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;"></div>
+        <div id="info-ventajas-grid" class="ventajas-grid"></div>
         <button class="btn-add" id="btn-add-ventaja">+ Agregar Nueva Tarjeta</button>
-        <button class="btn-save" id="btn-save-texts" style="margin-left:0.5rem;">💾 Guardar Todos los Cambios</button>
+        <button class="btn-save btn-save--sm" id="btn-save-texts">💾 Guardar Todos los Cambios</button>
       </div>
 
-      <div style="margin-bottom:2rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1rem;letter-spacing:0.12em;border-bottom:1px solid #222;padding-bottom:.5rem;margin-bottom:1rem;">📋 Historial de Cambios</div>
-        <div id="leyendas-history" style="max-height:300px;overflow-y:auto;background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:1rem;">
-          <p style="color:#666;font-size:.85rem;">Sin cambios registrados</p>
+      <div class="admin-section">
+        <div class="admin-section-header">📋 Historial de Cambios</div>
+        <div id="leyendas-history" class="admin-history">
+          <p class="admin-empty">Sin cambios registrados</p>
         </div>
       </div>
 
@@ -360,13 +365,13 @@
     </div>
 
     <div id="tab-translations" class="admin-tab-content">
-      <p style="color:#888;font-size:.9rem;margin-bottom:1rem;">Editá las traducciones ES/EN. Si una clave falta en un idioma, se muestra la versión ES por defecto.</p>
-      <div style="margin-bottom:1rem;display:flex;gap:.5rem;align-items:center;">
-        <span style="color:#aaa;font-size:.85rem;">Filtrar:</span>
-        <input type="text" id="trans-search" class="admin-search" placeholder="🔍 Buscar clave..." style="min-width:220px;" />
+      <p class="admin-desc">Editá las traducciones ES/EN. Si una clave falta en un idioma, se muestra la versión ES por defecto.</p>
+      <div class="trans-filter">
+        <span class="trans-filter-label">Filtrar:</span>
+        <input type="text" id="trans-search" class="admin-search admin-search--wide" placeholder="🔍 Buscar clave..." />
       </div>
-      <div id="trans-list" style="max-height:500px;overflow-y:auto;display:flex;flex-direction:column;gap:.6rem;"></div>
-      <div class="admin-save-bar" style="margin-top:1rem;">
+      <div id="trans-list" class="trans-list"></div>
+      <div class="admin-save-bar btn-save--mt">
         <button class="btn-save" id="btn-save-translations">💾 Guardar Traducciones</button>
         <span class="save-msg" id="save-msg-trans">✓ Traducciones guardadas</span>
       </div>
@@ -375,7 +380,7 @@
   </div>
 </div>
 
-<div class="bulk-overlay" id="bulk-zone" style="display:none">
+<div class="bulk-overlay" id="bulk-zone">
   <div class="bulk-box">
     <h3>📁 Carga Masiva de Productos</h3>
     <p>Subí imágenes y editá nombre/categoría luego de la carga automática.</p>
@@ -383,11 +388,11 @@
       <div>📸 Arrastrá las imágenes acá o hacé clic para seleccionar</div>
       <input type="file" accept="image/*" multiple class="file-input-hidden" id="bulk-input" />
     </div>
-    <label style="margin-top:.8rem;font-size:.9rem;color:#ccc">Nombres opcionales (uno por línea, coincide con el orden de archivos)</label>
+    <label class="bulk-names-label" for="bulk-names">Nombres opcionales (uno por línea, coincide con el orden de archivos)</label>
     <textarea id="bulk-names" class="admin-textarea" rows="4" placeholder="Torniquete Nº10&#10;Regulable Premium&#10;..."></textarea>
     <div id="bulk-list" class="bulk-list"></div>
     <div class="bulk-bar-wrap"><div class="bulk-bar" id="bulk-bar"></div></div>
-    <div class="admin-save-bar" style="margin-top:1rem">
+    <div class="admin-save-bar btn-save--mt">
       <button class="btn-save" id="btn-close-bulk">Cerrar</button>
     </div>
   </div>
@@ -408,27 +413,27 @@
           <a href="#" class="btn-wa" id="modalWa" target="_blank">💬 Consultar por WhatsApp</a>
           <button class="btn-outline" id="btn-close-modal-2">Volver</button>
         </div>
-        <div class="budget-form" id="budgetForm" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #333;">
-          <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;color:var(--yellow);font-size:1.1rem;margin-bottom:1rem;">Solicitar Presupuesto</h3>
+        <div class="budget-form" id="budgetForm">
+          <h3 class="budget-form__title">Solicitar Presupuesto</h3>
           <div class="config-grid">
-            <div class="config-field" style="grid-column:1/-1">
+            <div class="config-field config-field-full">
               <label class="admin-label">Nombre / Empresa</label>
               <input class="admin-input" id="budget-cliente" placeholder="Tu nombre o empresa" required />
             </div>
-            <div class="config-field" style="grid-column:1/-1">
+            <div class="config-field config-field-full">
               <label class="admin-label">Email</label>
               <input class="admin-input" id="budget-email" type="email" placeholder="email@ejemplo.com" required />
             </div>
-            <div class="config-field" style="grid-column:1/-1">
+            <div class="config-field config-field-full">
               <label class="admin-label">Cantidad</label>
               <input class="admin-input" id="budget-cantidad" type="number" min="1" value="1" />
             </div>
-            <div class="config-field" style="grid-column:1/-1">
+            <div class="config-field config-field-full">
               <label class="admin-label">Notas (opcional)</label>
               <textarea class="admin-textarea" id="budget-notas" rows="2" placeholder="Información adicional..."></textarea>
             </div>
           </div>
-          <button class="btn-save" id="btn-submit-budget" style="margin-top:1rem;">📧 Solicitar Presupuesto</button>
+          <button class="btn-save btn-save--mt" id="btn-submit-budget">📧 Solicitar Presupuesto</button>
         </div>
       </div>
     </div>
@@ -436,12 +441,12 @@
 </div>
 
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/home.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/app.js?v=20260630"></script>
+  <script defer src="js/config.js"></script>
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/api.js"></script>
+  <script defer src="js/home.js"></script>
+  <script defer src="js/products.js"></script>
+  <script defer src="js/app.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1/dist/script.js"></script>
 </body>
 </html>
