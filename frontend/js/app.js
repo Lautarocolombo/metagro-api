@@ -1,5 +1,5 @@
 // Usar la misma URL del dominio en producción (Vercel) para que /api/* apunte al backend desplegado aquí.
-const API_BASE = 'https://metagro-api-ds6r.onrender.com/api';
+const API_BASE = 'https://metagro-api-production.up.railway.app/api';
 
 let products = [];
 let useApi = true;
