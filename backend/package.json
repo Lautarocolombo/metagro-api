@@ -17,6 +17,7 @@
     "@sentry/node": "^7.91.0",
     "multer": "^1.4.5-lts.2",
     "@aws-sdk/client-s3": "^3.490.0",
-    "sharp": "^0.33.0"
+    "sharp": "^0.33.0",
+    "uuid": "^9.0.1"
   }
 }
