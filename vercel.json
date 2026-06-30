@@ -3,8 +3,8 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://metagro-api-ds6r.onrender.com/api/$1" },
     { "source": "/products.json", "destination": "/products.json" },
+    { "source": "/api/(.*)", "destination": "https://metagro-api-ds6r.onrender.com/api/$1" },
     { "source": "/:path+", "destination": "/index.html" }
   ]
 }
