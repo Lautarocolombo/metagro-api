@@ -7,7 +7,7 @@ jest.mock('../services/analytics.service', () => ({
   getTopSearches: jest.fn().mockResolvedValue([])
 }))
 
-const pool = require('../data/pool')
+const pool = require('../config/db')
 const { getSiteTexts, updateSiteText, createSiteChange, getSiteChanges, getAnalytics, getTopSearches } = require('../controllers/site.controller')
 
 describe('site.controller', () => {

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const pool = require('../data/pool')
+const pool = require('../config/db')
 const os = require('os')
 
 const START_TIME = Date.now()

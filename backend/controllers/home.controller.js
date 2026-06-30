@@ -1,4 +1,4 @@
-const pool = require('../data/pool')
+const pool = require('../config/db')
 const { homeContentSchema } = require('../validators/schemas')
 const { invalidateProducts } = require('../services/cache.service')
 

@@ -6,7 +6,7 @@ jest.mock('../data/pool', () => ({
 describe('auth.controller', () => {
   const jwt = require('jsonwebtoken')
   const { login, refresh } = require('../controllers/auth.controller')
-  const pool = require('../data/pool')
+  const pool = require('../config/db')
 
   afterEach(() => {
     jest.resetModules()

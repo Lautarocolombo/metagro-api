@@ -2,7 +2,7 @@ jest.mock('../data/pool', () => ({
   query: jest.fn()
 }))
 
-const pool = require('../data/pool')
+const pool = require('../config/db')
 const { listProducts } = require('../controllers/productos.controller')
 
 describe('listProducts', () => {

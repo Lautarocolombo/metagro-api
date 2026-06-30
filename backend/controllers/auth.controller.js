@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
-const pool = require('../data/pool')
+const pool = require('../config/db')
 
 function login(req, res) {
   try {

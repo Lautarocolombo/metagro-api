@@ -2,8 +2,9 @@ const { Pool } = require('pg');
 
 const dbUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 if (!dbUrl) {
-  console.error('[Pool] ERROR: No se encontró DATABASE_URL ni POSTGRES_URL. El servidor no puede conectarse a la base de datos.');
+  console.error('[DB] ERROR: No se encontró DATABASE_URL ni POSTGRES_URL.');
 }
+
 const pool = new Pool({
   connectionString: dbUrl,
   ssl: { rejectUnauthorized: false },
@@ -14,7 +15,7 @@ const pool = new Pool({
 });
 
 pool.on('error', (err) => {
-  console.error('[Pool] Unexpected error:', err);
+  console.error('[DB] Pool error:', err);
 });
 
-module.exports = pool;
+module.exports = { pool };

@@ -2,7 +2,7 @@ jest.mock('../data/pool', () => ({
   query: jest.fn()
 }))
 
-const pool = require('../data/pool')
+const pool = require('../config/db')
 const { getHomeContent, postHomeContent, getHomeContentHistory, restoreHomeContent } = require('../controllers/home.controller')
 
 describe('home.controller', () => {
