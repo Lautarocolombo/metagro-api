@@ -11,6 +11,7 @@ const DailyRotateFile = require('winston-daily-rotate-file')
 const Sentry = require('@sentry/node')
 const pool = require('./data/pool')
 const app = express()
+app.set('trust proxy', 1)
 
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
