@@ -7,9 +7,10 @@ if (!dbUrl) {
 const pool = new Pool({
   connectionString: dbUrl,
   ssl: { rejectUnauthorized: false },
-  max: 20,
-  idleTimeoutMillis: 30000,
+  max: 5,
+  idleTimeoutMillis: 10000,
   connectionTimeoutMillis: 5000,
+  keepAlive: true,
 });
 
 pool.on('error', (err) => {

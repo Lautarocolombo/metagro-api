@@ -244,18 +244,27 @@ async function fetchProducts(retries = 3, delay = 2000) {
   const saved = localStorage.getItem('mg_products');
   if (saved) { try { products = JSON.parse(saved); } catch (e) {} }
   if (!products.length) {
-    products = normalizeProducts([
-      { id: 1, nombre: 'Acople Rápido Aluminio', categoria: 'Acoples', descripcion: 'Acople rápido a palanca de aluminio.', imagen_url: '/productos/Acople Rapido a palanca aluminio.jpg' },
-      { id: 2, nombre: 'Carretel con Hilo 500 Mts', categoria: 'Carreteles', descripcion: 'Carretel con hilo 500 metros.', imagen_url: '/productos/Carretel con Hilo 500 Mts.jpg' },
-      { id: 3, nombre: 'Bujes Reducción', categoria: 'Bujes', descripcion: 'Buje de reducción para caños.', imagen_url: '/productos/Buje reduccion.jpg' },
-      { id: 4, nombre: 'Llave Esférica Plástica', categoria: 'Llaves', descripcion: 'Llave esférica plástica Duke.', imagen_url: '/productos/Llave ESferica Plastica Duke.jpg' },
-      { id: 5, nombre: 'Poste Quebracho', categoria: 'Postes', descripcion: 'Poste de quebracho para alambrado.', imagen_url: '/productos/Poste Quebracho.JPG' },
-      { id: 6, nombre: 'Varilla Galvanizada', categoria: 'Varillas', descripcion: 'Varilla galvanizada 1/2".', imagen_url: '/productos/Varilla Galvanizada.JPG' }
-    ]);
-    saveLocal();
+    try {
+      const res = await fetch('/products.json');
+      const data = await res.json();
+      if (Array.isArray(data) && data.length) {
+        products = normalizeProducts(data);
+        saveLocal();
+      }
+    } catch (e) {
+      products = normalizeProducts([
+        { id: 1, nombre: 'Acople Rápido Aluminio', categoria: 'Acoples', descripcion: 'Acople rápido a palanca de aluminio.', imagen_url: '/productos/Acople Rapido a palanca aluminio.jpg' },
+        { id: 2, nombre: 'Carretel con Hilo 500 Mts', categoria: 'Carreteles', descripcion: 'Carretel con hilo 500 metros.', imagen_url: '/productos/Carretel con Hilo 500 Mts.jpg' },
+        { id: 3, nombre: 'Bujes Reducción', categoria: 'Bujes', descripcion: 'Buje de reducción para caños.', imagen_url: '/productos/Buje reduccion.jpg' },
+        { id: 4, nombre: 'Llave Esférica Plástica', categoria: 'Llaves', descripcion: 'Llave esférica plástica Duke.', imagen_url: '/productos/Llave ESferica Plastica Duke.jpg' },
+        { id: 5, nombre: 'Poste Quebracho', categoria: 'Postes', descripcion: 'Poste de quebracho para alambrado.', imagen_url: '/productos/Poste Quebracho.JPG' },
+        { id: 6, nombre: 'Varilla Galvanizada', categoria: 'Varillas', descripcion: 'Varilla galvanizada 1/2".', imagen_url: '/productos/Varilla Galvanizada.JPG' }
+      ]);
+      saveLocal();
+    }
   }
-  showError('No se pudo cargar el catálogo. Mostrando productos de ejemplo.');
-  const bar = document.getElementById('api_status_bar');
+  showError('No se pudo cargar el catálogo en vivo. Mostrando productos guardados.');
+  const bar = document.getElementById('api-status-bar');
   if (bar) bar.classList.add('show');
   populateCategoryFilter();
   renderCatalog();
