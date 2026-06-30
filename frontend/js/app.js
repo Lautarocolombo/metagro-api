@@ -879,7 +879,14 @@ const SITE_TEXTS_FALLBACKS = {
 };
 
 function getSiteTexts() {
-  try { return JSON.parse(localStorage.getItem('mg_site_texts') || '{}'); } catch(e) { return {}; }
+  try {
+    const raw = localStorage.getItem('mg_site_texts');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Object.keys(parsed).length) return parsed;
+    }
+  } catch(e) { /* ignore */ }
+  return SITE_TEXTS_FALLBACKS;
 }
 
 async function loadSiteTextsIntoTab() {

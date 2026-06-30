@@ -15,6 +15,7 @@ const ASSETS = [
   { src: 'frontend/logo', dst: 'logo' },
   { src: 'frontend/styles', dst: 'styles' },
   { src: 'frontend/js', dst: 'js' },
+  { src: 'frontend/public', dst: '' },
   { src: 'frontend/src-seo/sw.js', dst: 'sw.js' },
   { src: 'frontend/src-seo/robots.txt', dst: 'robots.txt' },
   { src: 'frontend/src-seo/sitemap.xml', dst: 'sitemap.xml' },
