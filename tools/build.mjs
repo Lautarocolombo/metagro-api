@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 
 const SRC = path.join(root, 'frontend', 'index.html');
-const DIST = path.join(root, 'frontend', 'dist');
+const DIST = path.join(root, 'dist');
 
 const ASSETS = [
   { src: 'frontend/productos', dst: 'productos' },
@@ -28,8 +28,7 @@ const options = {
   removeStyleLinkTypeAttributes: true,
   sortClassName: true,
   useShortDoctype: true,
-  minifyJS: true,
-  minifyCSS: true,
+  minifyCSS: true
 };
 
 async function build() {
@@ -49,7 +48,7 @@ async function build() {
     }
   }
 
-  for (const file of ['package.json']) {
+  for (const file of []) {
     const src = path.join(root, file);
     const dst = path.join(DIST, file);
     try { await fs.copyFile(src, dst); } catch {}

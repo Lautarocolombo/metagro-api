@@ -1,21 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "frontend/dist",
-        "buildCommand": "npm run build"
-      }
-    }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "https://metagro-api-ds6r.onrender.com/api/$1" },
-    { "src": "/styles/(.*)", "dest": "/styles/$1" },
-    { "src": "/js/(.*)", "dest": "/js/$1" },
-    { "src": "/sitemap.xml", "dest": "https://metagro-api-ds6r.onrender.com/api/seo/sitemap.xml" },
-    { "src": "/producto/([^/]+)", "dest": "/index.html" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://metagro-api-ds6r.onrender.com/api/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

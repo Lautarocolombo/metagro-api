@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') })
+﻿require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') })
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
@@ -7,7 +7,7 @@ const helmet = require('helmet')
 const rateLimit = require('express-rate-limit')
 const compression = require('compression')
 const winston = require('winston')
-require('winston-daily-rotate-file')
+const DailyRotateFile = require('winston-daily-rotate-file')
 const Sentry = require('@sentry/node')
 const pool = require('./data/pool')
 const app = express()
@@ -24,7 +24,7 @@ const logger = winston.createLogger({
 })
 
 if (process.env.NODE_ENV === 'production') {
-  logger.add(new winston.transports.DailyRotateFile({
+  logger.add(new DailyRotateFile({
     dirname: path.join(__dirname, 'logs'),
     filename: 'application-%DATE%.log',
     datePattern: 'YYYY-MM-DD',
@@ -48,9 +48,11 @@ console.error = (...args) => {
   originalConsoleError.apply(console, args)
 }
 
-const ALLOWED_ORIGINS = process.env.NODE_ENV === 'production'
-  ? ['https://metagro.com.ar', 'https://www.metagro.com.ar', 'https://metagro-srl.vercel.app', 'https://metagro.vercel.app']
-  : ['http://localhost:*', 'http://127.0.0.1:*', 'http://localhost:4000', 'http://127.0.0.1:4000', 'http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:4173', 'http://localhost:8080', 'http://localhost:8081'];
+const ALLOWED_ORIGINS = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map(s => s.trim()).filter(Boolean)
+  : (process.env.NODE_ENV === 'production'
+    ? ['https://metagro.com.ar', 'https://www.metagro.com.ar', 'https://metagro-srl.vercel.app', 'https://metagro.vercel.app', 'https://*.vercel.app']
+    : ['http://localhost:*', 'http://127.0.0.1:*']);
 
 const corsOptions = {
   origin: (origin, cb) => {
