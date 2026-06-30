@@ -1,5 +1,9 @@
-// Usar la misma URL del dominio en producción (Vercel) para que /api/* apunte al backend desplegado aquí.
-const API_BASE = 'https://metagro-api-production.up.railway.app/api';
+// En producción (Vercel) las rutas /api/* se proxean a Render automáticamente por vercel.json.
+// En local apunta directo al backend Express.
+const API_BASE =
+  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:4000/api'
+    : window.location.origin + '/api';
 
 let products = [];
 let useApi = true;
