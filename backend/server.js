@@ -66,9 +66,10 @@ app.use(generalLimiter);
 
 app.use(csrf);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 10000;
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const UPLOAD_DIR = path.join(DATA_DIR, 'uploads');
+global.startTime = Date.now();
 
 function ensureDirs() {
   [DATA_DIR, UPLOAD_DIR].forEach(d => {
@@ -133,6 +134,19 @@ app.use('/api', require('./routes/site.routes'));
 app.use('/api', require('./routes/health.routes'));
 app.use('/api', require('./routes/seo.routes'));
 
+app.get('/api', (req, res) => res.json({ ok: true, service: 'metagro-api', version: process.env.npm_package_version || '2.2.0' }));
+app.get('/api/healthz', (req, res) => res.json({ ok: true, uptime: Math.floor((Date.now() - (global.startTime || Date.now())) / 1000) }));
+
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM recibido, cerrando...');
+  pool.end().then(() => process.exit(0)).catch(() => process.exit(0));
+});
+
+process.on('SIGINT', () => {
+  logger.info('SIGINT recibido, cerrando...');
+  pool.end().then(() => process.exit(0)).catch(() => process.exit(0));
+});
+
 app.use((err, _req, res, _next) => {
   logger.error('Unhandled error', err);
   if (process.env.SENTRY_DSN) {
@@ -187,5 +201,16 @@ setInterval(async () => {
     }
   }
 }, 60 * 1000);
+
+// Catch-all para errores no manejados (no cierra el servidor)
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] Uncaught exception:', err);
+  // No cerramos el servidor para que Render lo mantenga vivo
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('[FATAL] Unhandled rejection:', reason);
+  // No cerramos el servidor para que Render lo mantenga vivo
+});
 
 app.listen(PORT, () => logger.info(`Metagro API on :${PORT}`));
