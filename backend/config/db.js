@@ -77,6 +77,30 @@ async function initDb() {
   `);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_translations_lang ON translations(lang)`);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS refresh_tokens (
+      id BIGSERIAL PRIMARY KEY,
+      token_hash TEXT NOT NULL,
+      user_id TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'admin',
+      revoked BOOLEAN NOT NULL DEFAULT FALSE,
+      expires_at TIMESTAMP NOT NULL
+    )
+  `);
+  await pool.query('CREATE INDEX IF NOT EXISTS idx_refresh_tokens_hash ON refresh_tokens(token_hash)');
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS budgets (
+      id BIGSERIAL PRIMARY KEY,
+      cliente TEXT NOT NULL,
+      email TEXT,
+      telefono TEXT,
+      items JSONB NOT NULL,
+      notas TEXT,
+      created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    )
+  `);
+
   const { rows } = await pool.query('SELECT count(*) as total FROM home_content');
   if (parseInt(rows[0].total, 10) === 0) {
     await pool.query(`
