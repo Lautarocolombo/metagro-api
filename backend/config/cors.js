@@ -5,8 +5,11 @@ const ALLOWED_ORIGINS = process.env.CORS_ORIGIN
     : ['http://localhost:*', 'http://127.0.0.1:*']);
 
 function isWildcardMatch(pattern, originStr) {
+  if (!pattern || !originStr) return false;
+  if (pattern === '*') return true;
+  if (pattern === originStr) return true;
   const i = pattern.indexOf('*');
-  if (i === -1) return originStr === pattern;
+  if (i === -1) return false;
   const prefix = pattern.slice(0, i);
   const suffix = pattern.slice(i + 1);
   return originStr.startsWith(prefix) && originStr.endsWith(suffix);
