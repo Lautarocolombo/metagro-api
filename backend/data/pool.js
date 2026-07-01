@@ -12,10 +12,16 @@ function sanitizeDbUrl(url) {
   }
 }
 
-const rawUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+const rawUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
 const dbUrl = sanitizeDbUrl(rawUrl);
 if (!dbUrl) {
   console.error('[DB] ERROR: No se encontró DATABASE_URL ni POSTGRES_URL.');
+} else {
+  let safeHost = 'unknown';
+  try {
+    safeHost = new URL(rawUrl).hostname;
+  } catch (_) {}
+  console.log('[DB] Usando base de datos:', safeHost);
 }
 
 const pool = new Pool({
@@ -35,7 +41,7 @@ pool.on('error', (err) => {
 
 module.exports = { pool };
 
-async function testConnection() {
+async function checkDbConnection() {
   try {
     const result = await pool.query('SELECT NOW() as now, version() as version');
     console.log('[DB] Conexión OK:', result.rows[0]);
@@ -47,12 +53,12 @@ async function testConnection() {
 }
 
 // Testear conexión al iniciar
-testConnection().then(ok => {
+checkDbConnection().then(ok => {
   console.log('[DB] Test de conexión:', ok ? 'EXITOSO' : 'FALLIDO');
 });
 
-setInterval(() => testConnection().then(ok => {
+setInterval(() => checkDbConnection().then(ok => {
   if (!ok) console.warn('[DB] Reintentando conexión...');
 }), 30000);
 
-module.exports = { pool, testConnection, sanitizeDbUrl };
+module.exports = { pool, checkDbConnection, sanitizeDbUrl };

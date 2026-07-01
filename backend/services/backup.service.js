@@ -24,7 +24,7 @@ async function scheduledBackup(req) {
 }
 
 async function backupDatabase() {
-  const dbUrl = process.env.DATABASE_URL || process.env.PG_URI
+  const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.PG_URI
   if (!dbUrl) {
     console.error('[backup] DATABASE_URL no configurado')
     return false
