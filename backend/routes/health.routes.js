@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const pool = require('../config/db')
+const { checkDbConnection } = require('../config/db')
 const os = require('os')
 
 const START_TIME = Date.now()
@@ -10,7 +10,8 @@ async function getHealth(req, res) {
   let dbStatus = 'ok'
   let dbError = null
   try {
-    await pool.query('SELECT 1')
+    const ok = await checkDbConnection();
+    if (!ok) { dbStatus = 'error'; dbError = 'Connection test failed - check logs for details'; }
   } catch (e) {
     dbStatus = 'error'
     dbError = e.message

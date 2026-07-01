@@ -30,7 +30,29 @@ const pool = new Pool({
 });
 
 pool.on('error', (err) => {
-  console.error('[DB] Pool error:', err);
+  console.error('[DB] Pool error:', err.code, err.message);
 });
 
 module.exports = { pool };
+
+async function testConnection() {
+  try {
+    const result = await pool.query('SELECT NOW() as now, version() as version');
+    console.log('[DB] Conexión OK:', result.rows[0]);
+    return true;
+  } catch (e) {
+    console.error('[DB] ERROR de conexión:', e.code, e.message);
+    return false;
+  }
+}
+
+// Testear conexión al iniciar
+testConnection().then(ok => {
+  console.log('[DB] Test de conexión:', ok ? 'EXITOSO' : 'FALLIDO');
+});
+
+setInterval(() => testConnection().then(ok => {
+  if (!ok) console.warn('[DB] Reintentando conexión...');
+}), 30000);
+
+module.exports = { pool, testConnection, sanitizeDbUrl };

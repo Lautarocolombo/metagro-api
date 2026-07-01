@@ -1,4 +1,4 @@
-const { pool } = require('../data/pool');
+const { pool, checkDbConnection } = require('../data/pool');
 
 async function initDb() {
   await pool.query(`
@@ -138,4 +138,4 @@ async function initDb() {
   }
 }
 
-module.exports = { pool, initDb };
+module.exports = { pool, initDb, checkDbConnection };
