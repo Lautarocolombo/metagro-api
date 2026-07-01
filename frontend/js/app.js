@@ -87,7 +87,7 @@ async function doLogin() {
   try {
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), 15000);
-    const res = await api('/admin/login', { method: 'POST', body: JSON.stringify({ username: u, password: p }), signal: ctrl.signal, headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+    const res = await api('/admin/login', { method: 'POST', body: { username: u, password: p }, signal: ctrl.signal, headers: { 'X-Requested-With': 'XMLHttpRequest' } });
     clearTimeout(tid);
     const data = await res.json();
     if (data.token) {

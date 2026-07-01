@@ -6,10 +6,14 @@ async function api(path, opts = {}) {
   const token = sessionStorage.getItem(APP_CONFIG.STORAGE_KEYS.ADMIN_TOKEN);
   if (token) headers['x-mg-token'] = token;
   const ctrl = opts.signal ? { signal: opts.signal } : {};
+  let body = opts.body || undefined;
+  if (body !== undefined && typeof body !== 'string') {
+    body = JSON.stringify(body);
+  }
   const res = await fetch(APP_CONFIG.API_BASE + path, {
     method: opts.method || 'GET',
     headers,
-    body: opts.body ? JSON.stringify(opts.body) : undefined,
+    body,
     ...ctrl
   });
   if (!res.ok) throw new Error('API ' + res.status);
