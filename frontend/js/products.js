@@ -38,16 +38,16 @@ async function fetchProducts(retries = 3, delay = 2000) {
         products = normalizeProducts(data);
         localStorage.setItem(APP_CONFIG.STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
         useApi = true;
-        const bar = document.getElementById('api-status_bar') || document.getElementById('api-status-bar');
-        if (bar) {
-          const isAdmin = !!document.getElementById('btn-sync-db');
-          bar.textContent = isAdmin ? `✓ ${products.length} productos cargados desde la base de datos Neon` : '';
-          bar.style.background = '#1b3a1b';
-          bar.style.color = '#8f8';
-          if (!isAdmin) bar.classList.remove('show');
-        }
         populateCategoryFilter();
         renderCatalog();
+        if (sessionStorage.getItem('mg_offline_mode') !== 'true') {
+          const countEl = document.getElementById('prod-count-bar');
+          if (countEl) {
+            countEl.textContent = `${products.length} productos actualizados`;
+            countEl.style.color = '#27ae60';
+            setTimeout(() => { if (countEl) { countEl.textContent = `${products.length} productos cargados`; countEl.style.color = ''; } }, 3000);
+          }
+        }
         return;
       }
     } catch { if (attempt === retries) break; await new Promise(r => setTimeout(r, delay * attempt)); }
@@ -67,19 +67,12 @@ async function fetchProducts(retries = 3, delay = 2000) {
         { id: 1, nombre: 'Acople Rápido Aluminio', categoria: 'Acoples', descripcion: 'Acople rápido a palanca de aluminio.', imagen_url: '/productos/Acople Rapido a palanca aluminio.jpg' },
         { id: 2, nombre: 'Carretel con Hilo 500 Mts', categoria: 'Carreteles', descripcion: 'Carretel con hilo 500 metros.', imagen_url: '/productos/Carretel con Hilo 500 Mts.jpg' },
         { id: 3, nombre: 'Bujes Reducción', categoria: 'Bujes', descripcion: 'Buje de reducción para caños.', imagen_url: '/productos/Buje reduccion.jpg' },
-        { id: 4, nombre: 'Llave Esférica Plástica', categoria: 'Llaves', descripcion: 'Llave esférica plástica Duke.', imagen_url: '/productos/Llave ESferica Plastica Duke.jpg' },
-        { id: 5, nombre: 'Poste Quebracho', categoria: 'Postes', descripcion: 'Poste de quebracho para alambrado.', imagen_url: '/productos/Poste Quebracho.JPG' },
-        { id: 6, nombre: 'Varilla Galvanizada', categoria: 'Varillas', descripcion: 'Varilla galvanizada 1/2".', imagen_url: '/productos/Varilla Galvanizada.JPG' },
       ]);
       saveLocal();
     }
   }
-  showError('No se pudo cargar el catálogo en vivo. Mostrando productos guardados.');
-  const bar = document.getElementById('api-status_bar') || document.getElementById('api-status-bar');
-  if (bar) bar.classList.add('show');
   populateCategoryFilter();
   renderCatalog();
-  setTimeout(() => { if (!useApi) fetchProducts(3, 3000); }, 15000);
 }
 
 function saveLocal() {
