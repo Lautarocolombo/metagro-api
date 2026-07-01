@@ -28,7 +28,8 @@ function login(req, res) {
     res.json({ token: accessToken, refreshToken, expiresIn: 900 })
   } catch (e) {
     console.error('[auth] login error:', e)
-    res.status(500).json({ error: 'Server error' })
+    console.error('[auth] login error stack:', e.stack)
+    res.status(500).json({ error: 'Server error', detail: e.message })
   }
 }
 
