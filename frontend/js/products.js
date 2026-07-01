@@ -396,19 +396,20 @@ async function saveProducts() {
   const offline = sessionStorage.getItem('mg_offline_mode') === 'true';
   
   if (offline) {
-    // Modo offline: guardar solo en localStorage
     originalProducts = JSON.parse(JSON.stringify(products));
     hasUnsavedChanges = false;
     updateUnsavedIndicator();
     renderAdminProducts();
     renderCatalog();
-    showToast('✓ Cambios guardados localmente (modo offline)');
+    const failMsg = '✗ No se pudo guardar en Neon (modo offline). Los cambios quedaron solo en este navegador.';
+    showToast(failMsg, 'error');
     const msgEl = document.getElementById('save-msg-prod');
-    if (msgEl) { msgEl.textContent = '✓ Guardado local'; msgEl.classList.add('show'); setTimeout(() => msgEl.classList.remove('show'), 3000); }
+    if (msgEl) { msgEl.textContent = failMsg; msgEl.style.color = '#e74c3c'; msgEl.classList.add('show'); setTimeout(() => { msgEl.classList.remove('show'); msgEl.style.color = ''; }, 4000); }
     return;
   }
   
   let created = 0, updated = 0, deleted = 0;
+  let apiError = null;
   try {
     const currentIds = new Set(products.map(p => p.id).filter(Boolean));
     const originalIds = new Set(originalProducts.map(p => p.id).filter(Boolean));
@@ -419,21 +420,21 @@ async function saveProducts() {
           const saved = await res.json();
           if (saved.id) p.id = saved.id;
           created++;
-        } catch (e) { showToast(`Error creando ${p.name}: ${e.message}`, 'error'); }
+        } catch (e) { apiError = e; showToast(`Error creando ${p.name}: ${e.message}`, 'error'); }
       } else {
         const orig = originalProducts.find(op => op.id === p.id);
         if (orig && JSON.stringify(orig) !== JSON.stringify(p)) {
           try {
             await api(`/products/${p.id}`, { method: 'PUT', body: JSON.stringify(p) });
             updated++;
-          } catch (e) { showToast(`Error actualizando ${p.name}: ${e.message}`, 'error'); }
+          } catch (e) { apiError = e; showToast(`Error actualizando ${p.name}: ${e.message}`, 'error'); }
         }
       }
     }
     for (const p of originalProducts) {
       if (p.id && !currentIds.has(p.id)) {
         try { await api(`/products/${p.id}`, { method: 'DELETE' }); deleted++; }
-        catch (e) { showToast(`Error eliminando ${p.name}: ${e.message}`, 'error'); }
+        catch (e) { apiError = e; showToast(`Error eliminando ${p.name}: ${e.message}`, 'error'); }
       }
     }
     originalProducts = JSON.parse(JSON.stringify(products));
@@ -449,10 +450,21 @@ async function saveProducts() {
   if (created) parts.push(created + ' creados');
   if (updated) parts.push(updated + ' actualizados');
   if (deleted) parts.push(deleted + ' eliminados');
-  const msg = parts.length ? '✓ ' + parts.join(', ') : '✓ Sin cambios pendientes';
-  showToast(msg);
+  
   const msgEl = document.getElementById('save-msg-prod');
-  if (msgEl) { msgEl.textContent = msg; msgEl.classList.add('show'); setTimeout(() => msgEl.classList.remove('show'), 3000); }
+  if (apiError) {
+    const failMsg = '✗ Error al guardar en Neon. Revisá tu conexión.';
+    showToast(failMsg, 'error');
+    if (msgEl) { msgEl.textContent = failMsg; msgEl.style.color = '#e74c3c'; msgEl.classList.add('show'); setTimeout(() => { msgEl.classList.remove('show'); msgEl.style.color = ''; }, 4000); }
+  } else if (parts.length) {
+    const okMsg = '✓ Guardado en Neon: ' + parts.join(', ');
+    showToast(okMsg);
+    if (msgEl) { msgEl.textContent = okMsg; msgEl.style.color = '#27ae60'; msgEl.classList.add('show'); setTimeout(() => { msgEl.classList.remove('show'); msgEl.style.color = ''; }, 4000); }
+  } else {
+    const noChangeMsg = '✓ Sin cambios nuevos para guardar en Neon';
+    showToast(noChangeMsg);
+    if (msgEl) { msgEl.textContent = noChangeMsg; msgEl.style.color = ''; msgEl.classList.add('show'); setTimeout(() => msgEl.classList.remove('show'), 3000); }
+  }
 }
 
 async function openBulkUpload() {

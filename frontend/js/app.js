@@ -340,14 +340,6 @@ function initInlineEvents() {
   document.getElementById('btn-save-local')?.addEventListener('click', saveLocalInfo);
   document.getElementById('btn-save-texts')?.addEventListener('click', saveSiteTexts);
   document.getElementById('btn-save-translations')?.addEventListener('click', saveAllTranslations);
-  document.getElementById('btn-sync-neon')?.addEventListener('click', async () => {
-    const offline = sessionStorage.getItem('mg_offline_mode') === 'true';
-    if (offline) { showToast('Estás en modo offline. Ingresá de nuevo para sincronizar.', 'error'); return; }
-    if (!hasUnsavedChanges) { showToast('No hay cambios pendientes para sincronizar.'); return; }
-    showToast('Sincronizando con Neon...');
-    await saveProducts();
-    showToast('✓ Sincronización completada');
-  });
 
   document.getElementById('btn-close-bulk')?.addEventListener('click', closeBulkUpload);
   document.getElementById('bulk-input')?.addEventListener('change', handleBulkFiles);
