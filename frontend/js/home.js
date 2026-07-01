@@ -204,6 +204,15 @@ async function saveSiteTexts() {
   invalidateSiteTextsCache();
   addHistoryEntry(prevTexts, texts);
   fetchAndApplyTexts();
+  
+  const offline = sessionStorage.getItem('mg_offline_mode') === 'true';
+  if (offline) {
+    showToast('✓ Cambios guardados localmente (modo offline)');
+    const msgEl = document.getElementById('save-msg-texts');
+    if (msgEl) { msgEl.textContent = '✓ Guardado local'; msgEl.classList.add('show'); setTimeout(() => msgEl.classList.remove('show'), 3000); }
+    return;
+  }
+  
   await Promise.allSettled(
     Object.entries(texts).map(([key, value]) =>
       api(`/site-texts/${encodeURIComponent(key)}`, {

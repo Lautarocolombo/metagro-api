@@ -192,7 +192,7 @@ footer { background: #0a0a0a; border-top: 2px solid #1a1a1a; padding: 2.5rem 2re
 .admin-panel { display: none; position: fixed; inset: 0; z-index: 999; background: #0d0d0d; overflow-y: auto; }
 .admin-panel.open { display: block; }
 .admin-topbar { background: var(--black); border-bottom: 2px solid var(--yellow); padding: 0 2rem; height: 58px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
-.admin-topbar-right { display: flex; align-items: center; }
+.offline-indicator { color: #e74c3c; font-size: .82rem; margin-right: 1rem; font-weight: 600; }
 .unsaved-indicator { color: #e74c3c; font-size: .82rem; margin-right: 1rem; font-weight: 600; animation: pulse 1.5s infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
 .admin-topbar-title { font: 900 1.3rem/1 'Barlow Condensed', sans-serif; text-transform: uppercase; color: var(--cream); }

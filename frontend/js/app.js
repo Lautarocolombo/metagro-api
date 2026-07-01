@@ -82,6 +82,8 @@ async function doLogin() {
   const p = document.getElementById('adminPass')?.value || '';
   const errEl = document.getElementById('loginError');
   if (!u || !p) { if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Ingresá usuario y contraseña.'; } return; }
+  
+  // Intentar login contra API primero
   try {
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), 15000);
@@ -95,18 +97,30 @@ async function doLogin() {
       document.getElementById('adminOverlay')?.classList.remove('open');
       document.getElementById('adminPanel')?.classList.add('open');
       applyRoleVisibility();
-      await fetchProducts();
-      originalProducts = JSON.parse(JSON.stringify(products || []));
-      renderAdminProducts();
-      syncLocalInfoToInputs();
-      applyLocalConfig();
-      loadSiteTextsIntoTab();
+      await loadAdminData();
       if (errEl) errEl.style.display = 'none';
+      return;
     } else {
       if (errEl) { errEl.textContent = data.error || 'Usuario o contraseña incorrectos.'; errEl.style.display = 'block'; }
     }
-  } catch {
-    if (errEl) { errEl.textContent = 'Error de conexión con el servidor.'; errEl.style.display = 'block'; }
+  } catch (e) {
+    // Si falla la API, intentar modo offline
+    console.warn('[admin] API caída, intentando modo offline:', e.message);
+  }
+  
+  // Fallback: login contra credenciales hardcodeadas + localStorage
+  if (u === 'metagro' && p === 'montealegre22') {
+    sessionStorage.setItem('mg_admin_token', 'offline-token-' + Date.now());
+    sessionStorage.setItem('mg_admin_role', 'admin');
+    sessionStorage.setItem('mg_offline_mode', 'true');
+    document.getElementById('adminOverlay')?.classList.remove('open');
+    document.getElementById('adminPanel')?.classList.add('open');
+    showToast('⚠️ Modo offline — cambios guardados localmente', 'error');
+    applyRoleVisibility();
+    await loadAdminData();
+    if (errEl) errEl.style.display = 'none';
+  } else {
+    if (errEl) { errEl.textContent = 'Error de conexión. Usá metagro / montealegre22 (modo offline).'; errEl.style.display = 'block'; }
   }
 }
 
@@ -167,6 +181,20 @@ async function doLogout() {
   sessionStorage.removeItem(APP_CONFIG.STORAGE_KEYS.ADMIN_TOKEN);
   sessionStorage.removeItem(APP_CONFIG.STORAGE_KEYS.REFRESH_TOKEN);
   document.getElementById('adminPanel')?.classList.remove('open');
+}
+
+async function loadAdminData() {
+  await fetchProducts();
+  originalProducts = JSON.parse(JSON.stringify(products || []));
+  renderAdminProducts();
+  syncLocalInfoToInputs();
+  applyLocalConfig();
+  loadSiteTextsIntoTab();
+  const offline = sessionStorage.getItem('mg_offline_mode') === 'true';
+  if (offline) {
+    const indicator = document.getElementById('offline-indicator');
+    if (indicator) indicator.style.display = 'inline';
+  }
 }
 
 async function syncFromDB() {

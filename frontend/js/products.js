@@ -400,6 +400,21 @@ async function saveProducts() {
   const invalid = products.filter(p => !p.name || !p.name.trim());
   if (invalid.length) { showToast(`${invalid.length} producto(s) sin nombre. Corregí antes de guardar.`, 'error'); return; }
   saveLocal();
+  const offline = sessionStorage.getItem('mg_offline_mode') === 'true';
+  
+  if (offline) {
+    // Modo offline: guardar solo en localStorage
+    originalProducts = JSON.parse(JSON.stringify(products));
+    hasUnsavedChanges = false;
+    updateUnsavedIndicator();
+    renderAdminProducts();
+    renderCatalog();
+    showToast('✓ Cambios guardados localmente (modo offline)');
+    const msgEl = document.getElementById('save-msg-prod');
+    if (msgEl) { msgEl.textContent = '✓ Guardado local'; msgEl.classList.add('show'); setTimeout(() => msgEl.classList.remove('show'), 3000); }
+    return;
+  }
+  
   let created = 0, updated = 0, deleted = 0;
   try {
     const currentIds = new Set(products.map(p => p.id).filter(Boolean));
