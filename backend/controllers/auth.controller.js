@@ -21,6 +21,8 @@ function login(req, res) {
     const refreshToken = crypto.randomBytes(48).toString('hex')
     const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex')
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    const q = 'INSERT INTO refresh_tokens (token_hash, user_id, role, expires_at) VALUES ($1, $2, $3, $4)'
+    console.log('[auth] login insert:', { ADMIN_USER, role, expiresAt, hasJwt: !!process.env.JWT_SECRET, query: q })
     pool.query(
       'INSERT INTO refresh_tokens (token_hash, user_id, role, expires_at) VALUES ($1, $2, $3, $4)',
       [tokenHash, ADMIN_USER, role, expiresAt]

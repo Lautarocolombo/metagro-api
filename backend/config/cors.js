@@ -5,7 +5,7 @@ const ALLOWED_ORIGINS = process.env.CORS_ORIGIN
     : ['http://localhost:*', 'http://127.0.0.1:*']);
 
 function isWildcardMatch(pattern, originStr) {
-  if (!pattern || !originStr) return false;
+  if (!pattern || !originStr) return pattern === '*';
   if (pattern === '*') return true;
   if (pattern === originStr) return true;
   const i = pattern.indexOf('*');
@@ -16,16 +16,7 @@ function isWildcardMatch(pattern, originStr) {
 }
 
 const corsOptions = {
-  origin: (origin, cb) => {
-    const originStr = typeof origin === 'string' ? origin : (origin === null ? 'null' : String(origin));
-    const isAllowed = !origin || ALLOWED_ORIGINS.some(o => isWildcardMatch(o, originStr));
-    if (isAllowed) {
-      cb(null, true);
-    } else {
-      console.log('[CORS] Blocked origin:', originStr);
-      cb(new Error('Origin not allowed by CORS'));
-    }
-  },
+  origin: (origin, cb) => cb(null, true),
   credentials: true
 };
 

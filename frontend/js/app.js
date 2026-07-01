@@ -87,12 +87,13 @@ async function doLogin() {
   try {
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), 15000);
-    const res = await api('/admin/login', { method: 'POST', body: JSON.stringify({ username: u, password: p }), signal: ctrl.signal });
+    const res = await api('/admin/login', { method: 'POST', body: JSON.stringify({ username: u, password: p }), signal: ctrl.signal, headers: { 'X-Requested-With': 'XMLHttpRequest' } });
     clearTimeout(tid);
     const data = await res.json();
     if (data.token) {
       sessionStorage.setItem('mg_admin_token', data.token);
       if (data.refreshToken) sessionStorage.setItem('mg_refresh_token', data.refreshToken);
+      sessionStorage.removeItem('mg_offline_mode');
       try { const payload = JSON.parse(atob(data.token.split('.')[1])); sessionStorage.setItem('mg_admin_role', payload.role || 'admin'); } catch {}
       document.getElementById('adminOverlay')?.classList.remove('open');
       document.getElementById('adminPanel')?.classList.add('open');
@@ -101,11 +102,13 @@ async function doLogin() {
       if (errEl) errEl.style.display = 'none';
       return;
     } else {
-      if (errEl) { errEl.textContent = data.error || 'Usuario o contraseña incorrectos.'; errEl.style.display = 'block'; }
+      const msg = data.error || 'Usuario o contraseña incorrectos.';
+      if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; }
     }
   } catch (e) {
-    // Si falla la API, intentar modo offline
-    console.warn('[admin] API caída, intentando modo offline:', e.message);
+    const msg = 'Error de conexión: ' + (e.message || 'verificá tu conexión');
+    console.warn('[admin] API login failed:', e.message);
+    if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; }
   }
   
   // Fallback: login contra credenciales hardcodeadas + localStorage
