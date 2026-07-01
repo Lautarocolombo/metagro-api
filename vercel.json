@@ -4,7 +4,7 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/products.json", "destination": "/products.json" },
-    { "source": "/api/(.*)", "destination": "https://metagro-api-ds6r.onrender.com/api/$1" },
+    { "source": "/api/(.*)", "destination": "https://metagro-api-ihgs.onrender.com/api/$1" },
     { "source": "/:path+", "destination": "/index.html" }
   ]
 }
