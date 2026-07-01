@@ -1,4 +1,4 @@
-const pool = require('../config/db')
+const { pool } = require('../config/db')
 const { siteTextSchema, siteChangeSchema } = require('../validators/schemas')
 const { getPublicUrl } = require('../services/storage.service')
 

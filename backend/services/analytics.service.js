@@ -1,4 +1,4 @@
-const pool = require('../config/db')
+const { pool } = require('../config/db')
 const { getTopProducts, getVisits, redis } = require('./cache.service')
 
 async function recordEvent(tipo, datos = {}, req) {

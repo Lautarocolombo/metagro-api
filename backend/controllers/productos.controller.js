@@ -1,4 +1,4 @@
-const pool = require('../config/db')
+const { pool } = require('../config/db')
 const { recordEvent } = require('../services/analytics.service')
 const { getProducts, setProducts, invalidateProducts, getVisits, recordVisit, redis } = require('../services/cache.service')
 const { sendBudgetEmail } = require('../services/pdf.service')
