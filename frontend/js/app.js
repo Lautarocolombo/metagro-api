@@ -197,26 +197,6 @@ async function loadAdminData() {
   }
 }
 
-async function syncFromDB() {
-  const btn = document.getElementById('btn-sync-db');
-  if (btn) btn.textContent = 'Sincronizando...';
-  localStorage.removeItem(APP_CONFIG.STORAGE_KEYS.PRODUCTS);
-  useApi = true;
-  await fetchProducts();
-  originalProducts = JSON.parse(JSON.stringify(products || []));
-  _lastAdminSearchKey = null;
-  renderAdminProducts();
-  const countEl = document.getElementById('prod-count-bar');
-  if (countEl) countEl.textContent = products.length + ' productos cargados';
-  if (btn) btn.textContent = 'Sincronizar DB';
-  showToast('✓ ' + products.length + ' productos cargados desde la DB');
-}
-
-async function syncToDB() {
-  try { await api('/sync-to-db', { method: 'POST' }); showToast('📦 Productos migrados a la base de datos'); }
-  catch (e) { showToast('Error al migrar: ' + (e.message || 'desconocido'), 'error'); }
-}
-
 async function loadTranslationsEditor() {
   try {
     const res = await api('/translations');
@@ -344,8 +324,6 @@ function initInlineEvents() {
 
   document.getElementById('btn-add-product')?.addEventListener('click', addProduct);
   document.getElementById('btn-bulk-upload')?.addEventListener('click', openBulkUpload);
-  document.getElementById('btn-sync-db')?.addEventListener('click', syncFromDB);
-  document.getElementById('btn-sync-to-db')?.addEventListener('click', syncToDB);
   document.getElementById('btn-export-csv')?.addEventListener('click', exportProductsCSV);
   document.getElementById('btn-save-products')?.addEventListener('click', saveProducts);
 
